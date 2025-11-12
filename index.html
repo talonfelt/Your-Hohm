@@ -40,6 +40,14 @@
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
+  <!-- PDF.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.7.76/pdf.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.7.76/pdf.worker.min.js"></script>
+
+  <!-- Three.js -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.168.0/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.168.0/examples/js/controls/OrbitControls.js"></script>
+
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
     :root{
@@ -106,7 +114,7 @@
       <div class="tagline">A Unified Physics Model and Framework</div>
       <div class="subtitle">U.R.H.U.E.0hm — Unfolding Resonant Harmonic Unity Emergence</div>
       <div class="subtitle">Talon Jeffrey Felt</div>
-      <div class="subtitle">September 3rd, 2025 — Updated: November 9th, 2025</div>
+      <div class="subtitle">September 3rd, 2025 — Updated: November 11th, 2025</div>
     </header>
 
     <section class="hero panel">
@@ -134,7 +142,7 @@
 
     <section class="pdf-wrap">
       <h2 class="pdf-title h-underline">Read Online</h2>
-      <iframe class="pdf-viewer" src="URHUE0hm.pdf" title="Your Hohm PDF"></iframe>
+      <div id="pdf-viewer" class="pdf-viewer"></div>
     </section>
 
     <section id="verification" class="verification panel alt">
@@ -146,7 +154,7 @@
         3. Open generated PDF<br/>
         4. Compare Section 7
       </div>
-      <div class="warning"><strong>CRITICAL:</strong> Any discrepancy → email [your-email]</div>
+      <div class="warning"><strong>CRITICAL:</strong> Any discrepancy → email <a href="mailto:your@hohm.cc">your@hohm.cc</a></div>
     </section>
 
     <section class="predictions">
@@ -183,14 +191,12 @@
     <footer>
       <p><strong>Hohm.cc</strong></p>
       <p>If even one prediction lands—our priors must move.</p>
-      <p style="margin-top:10px;font-size:.9rem">Contact: [your-email]</p>
+      <p style="margin-top:10px;font-size:.9rem">Contact: <a href="mailto:your@hohm.cc">your@hohm.cc</a></p>
       <p style="font-size:.85rem">CC BY-NC-ND 4.0</p>
     </footer>
   </div>
 
-  <!-- LIVE TOROIDAL VISUALIZER -->
-  <script src=three.min.js></script> 
-  <script src=OrbitControls.js></script>
+  <!-- TOROIDAL VISUALIZER -->
   <script>
     const c=document.getElementById('toroid-container');
     const scene=new THREE.Scene();scene.background=new THREE.Color(0x04060a);
@@ -244,6 +250,101 @@
       camera.updateProjectionMatrix();
       renderer.setSize(c.clientWidth,c.clientHeight);
     });
+  </script>
+
+  <!-- PDF.js FULL VIEWER -->
+  <script>
+    const url = 'URHUE0hm.pdf';
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.7.76/pdf.worker.min.js';
+
+    let pdfDoc = null,
+        pageNum = 1,
+        pageRendering = false,
+        pageNumPending = null,
+        scale = 1.5,
+        canvas = document.createElement('canvas'),
+        ctx = canvas.getContext('2d');
+
+    const viewer = document.getElementById('pdf-viewer');
+    viewer.appendChild(canvas);
+
+    function renderPage(num) {
+      pageRendering = true;
+      pdfDoc.getPage(num).then(page => {
+        const viewport = page.getViewport({ scale });
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
+
+        const renderContext = { canvasContext: ctx, viewport };
+        const renderTask = page.render(renderContext);
+
+        renderTask.promise.then(() => {
+          pageRendering = false;
+          if (pageNumPending !== null) {
+            renderPage(pageNumPending);
+            pageNumPending = null;
+          }
+        });
+      });
+    }
+
+    function queueRenderPage(num) {
+      if (pageRendering) pageNumPending = num;
+      else renderPage(num);
+    }
+
+    function onPrevPage() { if (pageNum <= 1) return; pageNum--; queueRenderPage(pageNum); }
+    function onNextPage() { if (pageNum >= pdfDoc.numPages) return; pageNum++; queueRenderPage(pageNum); }
+
+    pdfjsLib.getDocument(url).promise.then(pdf => {
+      pdfDoc = pdf;
+      renderPage(pageNum);
+
+      // Add page controls
+      const controls = document.createElement('div');
+      controls.style.cssText = 'position:absolute;bottom:10px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.5);padding:8px 16px;border-radius:12px;color:white;font-family:system-ui;display:flex;gap:12px;align-items:center;';
+      controls.innerHTML = `
+        <button id="prev" style="background:none;border:none;color:white;font-size:1.2rem;">◀</button>
+        <span>Page <span id="page_num">${pageNum}</span> / <span id="page_count">${pdfDoc.numPages}</span></span>
+        <button id="next" style="background:none;border:none;color:white;font-size:1.2rem;">▶</button>
+      `;
+      viewer.style.position = 'relative';
+      viewer.appendChild(controls);
+
+      document.getElementById('prev').addEventListener('click', onPrevPage);
+      document.getElementById('next').addEventListener('click', onNextPage);
+    });
+
+    // Touch/Mouse wheel zoom & pan
+    let startScale = scale;
+    viewer.addEventListener('wheel', e => {
+      e.preventDefault();
+      scale *= e.deltaY > 0 ? 0.9 : 1.1;
+      scale = Math.max(0.5, Math.min(scale, 5));
+      queueRenderPage(pageNum);
+    }, { passive: false });
+
+    // Touch pinch zoom
+    let lastDist = 0;
+    viewer.addEventListener('touchstart', e => {
+      if (e.touches.length === 2) {
+        e.preventDefault();
+        const [t1, t2] = e.touches;
+        lastDist = Math.hypot(t1.pageX - t2.pageX, t1.pageY - t2.pageY);
+        startScale = scale;
+      }
+    }, { passive: false });
+
+    viewer.addEventListener('touchmove', e => {
+      if (e.touches.length === 2) {
+        e.preventDefault();
+        const [t1, t2] = e.touches;
+        const dist = Math.hypot(t1.pageX - t2.pageX, t1.pageY - t2.pageY);
+        scale = startScale * (dist / lastDist);
+        scale = Math.max(0.5, Math.min(scale, 5));
+        queueRenderPage(pageNum);
+      }
+    }, { passive: false });
   </script>
 </body>
 </html>
