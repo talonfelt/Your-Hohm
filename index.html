@@ -40,14 +40,6 @@
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
-  <!-- PDF.js -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.7.76/pdf.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.7.76/pdf.worker.min.js"></script>
-
-  <!-- Three.js -->
-  <script src="https://cdn.jsdelivr.net/npm/three@0.168.0/build/three.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.168.0/examples/js/controls/OrbitControls.js"></script>
-
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
     :root{
@@ -87,6 +79,10 @@
     .card p{color:rgba(240,245,255,.85);margin-bottom:14px}
     .btn{display:inline-flex;align-items:center;gap:10px;padding:12px 16px;border-radius:12px;font-weight:700;text-decoration:none;color:#031018;background:linear-gradient(135deg,var(--accA),var(--accB));box-shadow:var(--glow);border:1px solid rgba(255,255,255,.25)}
     .btn:hover{filter:saturate(110%)}
+    .support-grid{display:grid;gap:16px;margin:28px 0;grid-template-columns:repeat(3,minmax(0,1fr))}
+    .support-card{text-align:center;padding:24px;border-radius:var(--radius-lg);border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.00));backdrop-filter:var(--glass);-webkit-backdrop-filter:var(--glass);box-shadow:var(--soft);transition:transform .2s ease}
+    .support-card:hover{transform:translateY(-3px)}
+    .support-card h3{font-size:1.35rem;margin-bottom:8px}
     .pdf-wrap{margin:38px 0 10px}
     .pdf-title{text-align:center;font-size:1.6rem;margin-bottom:14px}
     .pdf-viewer{width:100%;height:760px;border-radius:var(--radius-lg);border:1px solid var(--line);background:#000;box-shadow:var(--soft)}
@@ -102,8 +98,10 @@
     .insights ul{margin-left:22px;line-height:2}
     .insights li{margin-bottom:8px}
     footer{text-align:center;padding:30px 16px;margin-top:40px;border-top:1px solid var(--line);color:var(--muted)}
-    @media(max-width:1020px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.download-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-    @media(max-width:760px){.container{padding:20px}.pdf-viewer{height:520px}.stats,.download-grid{grid-template-columns:1fr}.panel{padding:18px}}
+    .socials{display:flex;justify-content:center;gap:16px;margin-top:12px}
+    .socials a{color:var(--accB);text-decoration:none;font-weight:600}
+    @media(max-width:1020px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.download-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.support-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:760px){.container{padding:20px}.pdf-viewer{height:520px}.stats,.download-grid,.support-grid{grid-template-columns:1fr}.panel{padding:18px}.socials{flex-direction:column;align-items:center}}
   </style>
 </head>
 <body>
@@ -114,11 +112,11 @@
       <div class="tagline">A Unified Physics Model and Framework</div>
       <div class="subtitle">U.R.H.U.E.0hm — Unfolding Resonant Harmonic Unity Emergence</div>
       <div class="subtitle">Talon Jeffrey Felt</div>
-      <div class="subtitle">September 3rd, 2025 — Updated: November 11th, 2025</div>
+      <div class="subtitle">September 3rd, 2025 — Updated: November 9th, 2025</div>
     </header>
 
+    <!-- HERO SECTION - CLEARED -->
     <section class="hero panel">
-      <h2 class="h-underline">Everything Is the Same Vortex at Different Angles</h2>
       <p>Your Hohm presents a unified theory of physics grounded in a singular, toroidal vibration that is fundamentally tri-directional — “coming”, “going”, and “staying”. Mirrored, simultaneously folding and unfolding, inward and outward, yet eternally still, as the zero point of infinite potentiality.</p>
     </section>
 
@@ -140,9 +138,16 @@
       <article class="card"><h3 class="rgb-blue">Verify Yourself</h3><p>Reproduce the numbers end-to-end.</p><a class="btn" href="#verification">See Instructions</a></article>
     </section>
 
+    <!-- SUPPORT SECTION -->
+    <section class="support-grid">
+      <article class="support-card"><h3>Support the Work</h3><p>Cash App</p><a class="btn" href="https://cash.app/$TalonFelt">$TalonFelt</a></article>
+      <article class="support-card"><h3>Support the Work</h3><p>Venmo</p><a class="btn" href="https://venmo.com/@Talonfelt">@Talonfelt</a></article>
+      <article class="support-card"><h3>Support the Work</h3><p>PayPal</p><a class="btn" href="https://paypal.me/Talonj3f">@Talonj3f</a></article>
+    </section>
+
     <section class="pdf-wrap">
       <h2 class="pdf-title h-underline">Read Online</h2>
-      <div id="pdf-viewer" class="pdf-viewer"></div>
+      <iframe class="pdf-viewer" src="URHUE0hm.pdf" title="Your Hohm PDF"></iframe>
     </section>
 
     <section id="verification" class="verification panel alt">
@@ -154,7 +159,7 @@
         3. Open generated PDF<br/>
         4. Compare Section 7
       </div>
-      <div class="warning"><strong>CRITICAL:</strong> Any discrepancy → email <a href="mailto:your@hohm.cc">your@hohm.cc</a></div>
+      <div class="warning"><strong>CRITICAL:</strong> Any discrepancy → email your@hohm.cc</div>
     </section>
 
     <section class="predictions">
@@ -190,13 +195,18 @@
 
     <footer>
       <p><strong>Hohm.cc</strong></p>
-      <p>If even one prediction lands—our priors must move.</p>
-      <p style="margin-top:10px;font-size:.9rem">Contact: <a href="mailto:your@hohm.cc">your@hohm.cc</a></p>
+      <div class="socials">
+        <a href="https://x.com/TalonJFelt">@TalonJFelt on X</a>
+        <a href="https://instagram.com/TalonFelt">@TalonFelt on Instagram</a>
+      </div>
+      <p style="margin-top:10px;font-size:.9rem">Contact: your@hohm.cc</p>
       <p style="font-size:.85rem">CC BY-NC-ND 4.0</p>
     </footer>
   </div>
 
-  <!-- TOROIDAL VISUALIZER -->
+  <!-- LIVE TOROIDAL VISUALIZER -->
+  <script src="three.min.js"></script> 
+  <script src="OrbitControls.js"></script>
   <script>
     const c=document.getElementById('toroid-container');
     const scene=new THREE.Scene();scene.background=new THREE.Color(0x04060a);
@@ -250,101 +260,6 @@
       camera.updateProjectionMatrix();
       renderer.setSize(c.clientWidth,c.clientHeight);
     });
-  </script>
-
-  <!-- PDF.js FULL VIEWER -->
-  <script>
-    const url = 'URHUE0hm.pdf';
-    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.7.76/pdf.worker.min.js';
-
-    let pdfDoc = null,
-        pageNum = 1,
-        pageRendering = false,
-        pageNumPending = null,
-        scale = 1.5,
-        canvas = document.createElement('canvas'),
-        ctx = canvas.getContext('2d');
-
-    const viewer = document.getElementById('pdf-viewer');
-    viewer.appendChild(canvas);
-
-    function renderPage(num) {
-      pageRendering = true;
-      pdfDoc.getPage(num).then(page => {
-        const viewport = page.getViewport({ scale });
-        canvas.height = viewport.height;
-        canvas.width = viewport.width;
-
-        const renderContext = { canvasContext: ctx, viewport };
-        const renderTask = page.render(renderContext);
-
-        renderTask.promise.then(() => {
-          pageRendering = false;
-          if (pageNumPending !== null) {
-            renderPage(pageNumPending);
-            pageNumPending = null;
-          }
-        });
-      });
-    }
-
-    function queueRenderPage(num) {
-      if (pageRendering) pageNumPending = num;
-      else renderPage(num);
-    }
-
-    function onPrevPage() { if (pageNum <= 1) return; pageNum--; queueRenderPage(pageNum); }
-    function onNextPage() { if (pageNum >= pdfDoc.numPages) return; pageNum++; queueRenderPage(pageNum); }
-
-    pdfjsLib.getDocument(url).promise.then(pdf => {
-      pdfDoc = pdf;
-      renderPage(pageNum);
-
-      // Add page controls
-      const controls = document.createElement('div');
-      controls.style.cssText = 'position:absolute;bottom:10px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.5);padding:8px 16px;border-radius:12px;color:white;font-family:system-ui;display:flex;gap:12px;align-items:center;';
-      controls.innerHTML = `
-        <button id="prev" style="background:none;border:none;color:white;font-size:1.2rem;">◀</button>
-        <span>Page <span id="page_num">${pageNum}</span> / <span id="page_count">${pdfDoc.numPages}</span></span>
-        <button id="next" style="background:none;border:none;color:white;font-size:1.2rem;">▶</button>
-      `;
-      viewer.style.position = 'relative';
-      viewer.appendChild(controls);
-
-      document.getElementById('prev').addEventListener('click', onPrevPage);
-      document.getElementById('next').addEventListener('click', onNextPage);
-    });
-
-    // Touch/Mouse wheel zoom & pan
-    let startScale = scale;
-    viewer.addEventListener('wheel', e => {
-      e.preventDefault();
-      scale *= e.deltaY > 0 ? 0.9 : 1.1;
-      scale = Math.max(0.5, Math.min(scale, 5));
-      queueRenderPage(pageNum);
-    }, { passive: false });
-
-    // Touch pinch zoom
-    let lastDist = 0;
-    viewer.addEventListener('touchstart', e => {
-      if (e.touches.length === 2) {
-        e.preventDefault();
-        const [t1, t2] = e.touches;
-        lastDist = Math.hypot(t1.pageX - t2.pageX, t1.pageY - t2.pageY);
-        startScale = scale;
-      }
-    }, { passive: false });
-
-    viewer.addEventListener('touchmove', e => {
-      if (e.touches.length === 2) {
-        e.preventDefault();
-        const [t1, t2] = e.touches;
-        const dist = Math.hypot(t1.pageX - t2.pageX, t1.pageY - t2.pageY);
-        scale = startScale * (dist / lastDist);
-        scale = Math.max(0.5, Math.min(scale, 5));
-        queueRenderPage(pageNum);
-      }
-    }, { passive: false });
   </script>
 </body>
 </html>
