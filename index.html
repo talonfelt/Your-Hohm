@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Your Hohm — U.R.H.U.E.0hm</title>
+
+  <!-- SEO -->
+  <meta name="description" content="Your Hohm: a unified theory of physics grounded in a singular, toroidal vibration that is fundamentally tri-directional." />
+  <meta property="og:title" content="U.R.H.U.E.0hm — Unfolding Resonant Harmonic Unity Emergence — The Zero Point of Infinite Potentiality" />
+  <meta property="og:description" content="Derivations, verification protocol, and testable predictions." />
+  <meta property="og:type" content="website" />
+
+  <!-- MathJax -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        macros: {
+          s: ['{#1\\!{\\!#2}}', 2],
+          hbar: '\\hslash',
+          varphi: '\\phi',
+          mref: '\\mathrm{ref}',
+          f: '\\digamma', ff: '\\digamma',
+          Sig: '\\Sigma', vep: '\\varepsilon',
+          Xs: '\\s{X}{s}', Lis: '\\s{L}{i,s}', Qis: '\\s{Q}{i,s}', Ris: '\\s{R}{i,s}',
+          thetais: '\\s{\\theta}{i,s}', veps: '\\s{\\varepsilon}{s}',
+          Pir: '\\s{\\Pi}{R}', As: '\\s{A}{s}', pT: '\\s{p}{T}', gi: '\\s{G}{i}',
+          Rin: '\\s{R}{\\infty}', Mn: '\\s{M}{n}', Sn: '\\s{S}{n}', fj: '\\s{\\digamma}{j}',
+          kB: '\\s{k}{B}', Me: '\\s{M}{e}', Mp: '\\s{M}{p}',
+          alphas: '\\s{\\alpha}{s}', phis: '\\s{\\phi}{s}', phiis: '\\s{\\phi}{i,s}',
+          thetas: '\\s{\\theta}{s}', omegas: '\\s{\\omega}{s}', psis: '\\s{\\psi}{s}',
+          Ms: '\\s{m}{s}', Fs: '\\s{\\digamma}{s}', taus: '\\s{\\tau}{s}', iotas: '\\s{\\iota}{s}',
+          Pa: '\\s{P}{a}', Da: '\\s{D}{a}', Za: '\\s{Z}{a}', Qa: '\\s{Q}{a}'
+        }
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- pdf.js for inline PDF rendering -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+
+  <!-- PyScript for Python torus -->
+  <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css">
+  <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    :root{
+      --bg:#04060a;--ink:#f7fbff;--muted:#b7c3d1;--line:rgba(160,190,255,.25);
+      --panel:rgba(12,16,24,.66);--panel-2:rgba(10,14,22,.66);
+      --glass:blur(10px)saturate(115%);--radius-lg:18px;--radius-md:14px;
+      --accA:#8fb3ff;--accB:#7affea;--accC:#ff99e6;
+      --glow:0 0 18px rgba(127,187,255,.55),0 0 36px rgba(122,255,234,.35);
+      --soft:0 10px 30px rgba(0,0,0,.45);
+    }
+
+    body[data-theme="light"]{
+      --bg:#f5f7fc;
+      --ink:#02040a;
+      --muted:#5c6675;
+      --line:rgba(70,90,130,.3);
+      --panel:rgba(255,255,255,.96);
+      --panel-2:rgba(245,248,255,.96);
+      --soft:0 10px 25px rgba(0,0,0,.12);
+    }
+
+    html,body{
+      background:var(--bg);
+      color:var(--ink);
+      font-family:system-ui,sans-serif;
+      line-height:1.6;
+      -webkit-font-smoothing:antialiased
+    }
+    @keyframes pulse{
+      0%,100%{filter:drop-shadow(0 0 0 rgba(127,187,255,.0));opacity:.9}
+      50%{filter:drop-shadow(0 0 10px rgba(122,255,234,.45));opacity:1}
+    }
+    .container{max-width:1160px;margin:0 auto;padding:28px}
+    header{
+      text-align:center;padding:56px 16px 32px;
+      border-bottom:1px solid var(--line);
+      margin-bottom:28px;position:relative
+    }
+    h1{
+      font-size:clamp(2.2rem,4.5vw,3.2rem);
+      letter-spacing:.5px;margin-bottom:10px;
+      text-shadow:0 0 24px rgba(140,180,255,.35)
+    }
+    .tagline{color:rgba(230,240,255,.9);font-size:1.05rem}
+    body[data-theme="light"] .tagline{color:#283044}
+    .subtitle{color:var(--muted);font-size:.95rem;margin-top:6px}
+    .dot{
+      width:12px;height:12px;border-radius:999px;
+      background:linear-gradient(135deg,var(--accA),var(--accB));
+      display:inline-block;margin-right:10px;
+      animation:pulse 3.5s ease-in-out infinite;
+      box-shadow:0 0 16px rgba(127,187,255,.65),0 0 28px rgba(122,255,234,.35);
+      vertical-align:middle
+    }
+    .panel{
+      background:var(--panel);border:1px solid var(--line);
+      border-radius:var(--radius-lg);padding:22px;
+      backdrop-filter:var(--glass);-webkit-backdrop-filter:var(--glass);
+      box-shadow:var(--soft)
+    }
+    .panel.alt{background:var(--panel-2)}
+    .h-underline{
+      display:inline-block;position:relative;
+      padding-bottom:6px;margin-bottom:10px
+    }
+    .h-underline::after{
+      content:"";position:absolute;left:0;bottom:0;height:2px;width:100px;
+      background:linear-gradient(90deg,var(--accA),var(--accB),var(--accC));
+      border-radius:999px;box-shadow:var(--glow)
+    }
+    .rgb-red{color:#ffd6e8;text-shadow:0 0 24px rgba(255,120,160,.6)}
+    .rgb-green{color:#d4ffe6;text-shadow:0 0 24px rgba(120,255,200,.6)}
+    .rgb-blue{color:#d6e0ff;text-shadow:0 0 24px rgba(120,160,255,.6)}
+    .hero{margin:28px 0;padding:26px}
+    .hero p{font-size:1.05rem}
+    .stats{
+      display:grid;gap:16px;margin:26px 0;
+      grid-template-columns:repeat(4,minmax(0,1fr))
+    }
+    .stat{
+      text-align:center;padding:18px;border-radius:var(--radius-md);
+      background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.00));
+      border:1px solid var(--line);box-shadow:var(--soft)
+    }
+    .stat-number{font-weight:800;font-size:1.9rem;margin-bottom:6px}
+    .stat-label{color:var(--muted)}
+    .download-grid{
+      display:grid;gap:16px;margin:28px 0;
+      grid-template-columns:repeat(3,minmax(0,1fr))
+    }
+    .card{
+      text-align:center;padding:24px;border-radius:var(--radius-lg);
+      border:1px solid var(--line);
+      background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.00));
+      backdrop-filter:var(--glass);-webkit-backdrop-filter:var(--glass);
+      box-shadow:var(--soft);transition:transform .2s ease
+    }
+    .card:hover{transform:translateY(-3px)}
+    .card h3{font-size:1.35rem;margin-bottom:8px}
+    .card p{color:rgba(240,245,255,.85);margin-bottom:14px}
+    .btn{
+      display:inline-flex;align-items:center;gap:10px;
+      padding:12px 16px;border-radius:12px;font-weight:700;
+      text-decoration:none;color:#031018;
+      background:linear-gradient(135deg,var(--accA),var(--accB));
+      box-shadow:var(--glow);border:1px solid rgba(255,255,255,.25);cursor:pointer
+    }
+    .btn:hover{filter:saturate(110%)}
+    .support-grid{
+      display:grid;gap:16px;margin:28px 0;
+      grid-template-columns:repeat(3,minmax(0,1fr))
+    }
+    .support-card{
+      text-align:center;padding:24px;border-radius:var(--radius-lg);
+      border:1px solid var(--line);
+      background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.00));
+      backdrop-filter:var(--glass);-webkit-backdrop-filter:var(--glass);
+      box-shadow:var(--soft);transition:transform .2s ease
+    }
+    .support-card:hover{transform:translateY(-3px)}
+    .support-card h3{font-size:1.35rem;margin-bottom:8px}
+
+    .pdf-wrap{margin:38px 0 10px}
+    .pdf-title{text-align:center;font-size:1.6rem;margin-bottom:14px}
+    .pdf-viewer{
+      width:100%;min-height:320px;border-radius:var(--radius-lg);
+      border:1px solid var(--line);background:#000;box-shadow:var(--soft);
+      overflow:hidden;display:flex;align-items:center;justify-content:center
+    }
+    .pdf-toolbar{
+      display:flex;justify-content:space-between;align-items:center;
+      flex-wrap:wrap;gap:10px;margin-bottom:10px
+    }
+    .pdf-toolbar-controls{
+      display:flex;align-items:center;flex-wrap:wrap;gap:8px
+    }
+    .pdf-nav-btn{
+      padding:6px 10px;border-radius:8px;border:1px solid var(--line);
+      background:#0a1018;color:var(--ink);font-size:.85rem;cursor:pointer
+    }
+
+    .verification{margin:30px 0;padding:24px;border-left:3px solid var(--accA)}
+    .verification h2{color:#e6f0ff;margin-bottom:10px}
+    .code{
+      background:rgba(6,10,16,.7);border:1px solid rgba(160,190,255,.35);
+      padding:14px;margin:12px 0;border-radius:12px;overflow-x:auto;
+      font-family:ui-monospace,Menlo,Consolas,"Courier New",monospace
+    }
+    .warning{
+      background:rgba(255,120,120,.12);border:1px solid rgba(255,160,160,.45);
+      padding:14px;color:#ffd6d6;border-radius:12px;margin-top:12px
+    }
+    .predictions{margin:30px 0}
+    .prediction{
+      border-radius:var(--radius-md);padding:18px;margin:14px 0;
+      background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.00));
+      border:1px solid var(--line);box-shadow:var(--soft)
+    }
+    .prediction h3{margin-bottom:6px}
+    .insights{margin:28px 0;padding:22px}
+    .insights ul{margin-left:22px;line-height:2}
+    .insights li{margin-bottom:8px}
+
+    footer{
+      text-align:center;padding:30px 16px;margin-top:40px;
+      border-top:1px solid var(--line);color:var(--muted)
+    }
+    .socials{display:flex;justify-content:center;gap:16px;margin-top:12px}
+    .socials a{color:var(--accB);text-decoration:none;font-weight:600}
+
+    .toroid-section{margin:40px 0;padding:0;border-radius:18px;box-shadow:var(--soft)}
+    .toroid-container{
+      width:100%;height:680px;background:#04060a;
+      border-radius:18px;overflow:hidden;
+    }
+    #toroid-fallback{
+      display:none;margin-top:10px;font-size:.9rem;color:var(--muted);text-align:center;
+    }
+
+    .theme-toggle-wrap{margin-bottom:12px}
+    .theme-toggle{
+      padding:6px 12px;border-radius:999px;border:1px solid var(--line);
+      background:var(--panel-2);color:var(--ink);font-size:.85rem;cursor:pointer
+    }
+
+    @media(max-width:1020px){
+      .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .download-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .support-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .toroid-container{height:520px}
+    }
+    @media(max-width:760px){
+      .container{padding:20px}
+      .pdf-viewer{min-height:260px}
+      .stats,.download-grid,.support-grid{grid-template-columns:1fr}
+      .panel{padding:18px}
+      .socials{flex-direction:column;align-items:center}
+      .toroid-container{height:520px}
+    }
+  </style>
+</head>
+<body data-theme="dark">
+  <div class="container">
+    <header>
+      <div class="theme-toggle-wrap">
+        <button id="theme-toggle" class="theme-toggle">Light mode</button>
+      </div>
+
+      <span class="dot"></span>
+      <h1>YOUR HOHM</h1>
+      <div class="tagline">A Unified Physics Model and Framework</div>
+      <div class="subtitle">U.R.H.U.E.0hm — Unfolding Resonant Harmonic Unity Emergence</div>
+      <div style="margin-top:8px;font-size:1rem;font-weight:700;">
+        Contact: <a href="mailto:your@hohm.cc" style="color:var(--accB);text-decoration:none;">your@hohm.cc</a>
+      </div>
+      <div class="subtitle">Talon Jeffrey Felt</div>
+      <div class="subtitle">September 3rd, 2025 — Updated: November 11th, 2025</div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero panel">
+      <p>Your Hohm presents a unified theory of physics grounded in a singular, toroidal vibration that is fundamentally tri-directional — “coming”, “going”, and “staying”. Mirrored, simultaneously folding and unfolding, inward and outward, yet eternally still, as the zero point of infinite potentiality.</p>
+    </section>
+
+    <!-- STATS -->
+    <section class="stats">
+      <div class="stat"><div class="stat-number rgb-red">6</div><div class="stat-label">Constants Derived</div></div>
+      <div class="stat"><div class="stat-number rgb-green">54</div><div class="stat-label">Orders of Magnitude</div></div>
+      <div class="stat"><div class="stat-number rgb-blue">0.03%</div><div class="stat-label">Ensemble Residual</div></div>
+      <div class="stat"><div class="stat-number">~0</div><div class="stat-label">Tunable Parameters</div></div>
+    </section>
+
+    <!-- DOWNLOAD GRID -->
+    <section class="download-grid">
+      <article class="card">
+        <h3 class="rgb-red">Read the Paper</h3>
+        <p>Complete PDF: derivations, predictions, appendices.</p>
+        <!-- Full original = book -->
+        <a class="btn" href="Your_Hohm-[book].pdf" target="_blank" rel="noopener">
+          Read in new window / Download
+        </a>
+      </article>
+      <article class="card">
+        <h3 class="rgb-green">Get the Source</h3>
+        <p>Full LaTeX sources with macros.</p>
+        <a class="btn" href="Your_Hohm-[latex].zip" download>Download LaTeX</a>
+      </article>
+      <article class="card">
+        <h3 class="rgb-blue">Verify Yourself</h3>
+        <p>Reproduce the numbers end-to-end.</p>
+        <a class="btn" href="#verification">See Instructions</a>
+      </article>
+    </section>
+
+    <!-- PDF SECTION: pdf.js + multi-document selector -->
+    <section class="pdf-wrap">
+      <h2 class="pdf-title h-underline">Read Online</h2>
+
+      <div class="pdf-toolbar">
+        <div class="pdf-toolbar-controls">
+          <button id="pdf-prev" class="pdf-nav-btn">Previous page</button>
+          <button id="pdf-next" class="pdf-nav-btn">Next page</button>
+          <span>
+            Page <span id="pdf-page-number">1</span>
+            <span id="pdf-page-count">/ ?</span>
+            <span id="pdf-ios-note" style="display:none;"> — iOS may limit inline PDF.</span>
+          </span>
+        </div>
+
+        <div class="pdf-toolbar-controls">
+          <label for="pdf-select" style="font-size:.85rem;">Document:</label>
+          <select id="pdf-select"
+                  style="font-size:.85rem;padding:4px 8px;border-radius:8px;border:1px solid var(--line);background:var(--panel-2);color:var(--ink);">
+            <option value="fore">Read First</option>
+            <option value="one">Part One (Original Condensed)</option>
+            <option value="two">Part Two (Addition)</option>
+            <option value="three">Part Three (Addition)</option>
+            <option value="book">Your Hohm (Full Original)</option>
+            <option value="god">First Draft Written (God Theory)</option>
+          </select>
+        </div>
+
+        <a id="pdf-open" class="btn" href="Your_Hohm-[fore].pdf" target="_blank" rel="noopener">
+          Read in new window / Download
+        </a>
+      </div>
+
+      <div class="pdf-viewer" id="pdf-viewer-box">
+        <canvas id="pdf-canvas" style="width:100%;height:auto;display:block;border-radius:var(--radius-lg);"></canvas>
+      </div>
+    </section>
+
+    <!-- VERIFICATION -->
+    <section id="verification" class="verification panel alt">
+      <h2>Verification Protocol</h2>
+      <p><strong>This is a computation, not a copy-paste.</strong></p>
+      <div class="code">
+        1. Download LaTeX source<br/>
+        2. pdflatex your_hohm.tex<br/>
+        3. Open generated PDF<br/>
+        4. Compare Section 7
+      </div>
+      <div class="warning"><strong>CRITICAL:</strong> Any discrepancy → email your@hohm.cc</div>
+    </section>
+
+    <!-- PREDICTIONS -->
+    <section class="predictions">
+      <h2 class="h-underline" style="text-align:center;margin-bottom:16px">Novel Testable Predictions</h2>
+      <article class="prediction">
+        <h3><span style="background:rgba(0,255,255,.28);color:#ffffff;padding:2px 8px;border-radius:8px">1. EIC Jet Asymmetries</span></h3>
+        <p><strong>Prediction:</strong> $A_N = 0.03 \\pm 0.003$ at $\\sqrt{s}=100$ GeV</p>
+        <p><strong>Test:</strong> Polarized $pp$ at the Electron-Ion Collider</p>
+      </article>
+      <article class="prediction">
+        <h3><span style="background:rgba(255,0,255,.28);color:#ffffff;padding:2px 8px;border-radius:8px">2. Phonon Linewidth Temperature Scaling</span></h3>
+        <p><strong>Prediction:</strong> $\\sigma_\\nu \\propto \\sqrt{T}$</p>
+        <p><strong>Test:</strong> Diamond phonons 4 K vs 300 K via Brillouin scattering</p>
+      </article>
+      <article class="prediction">
+        <h3><span style="background:rgba(255,255,0,.28);color:#ffffff;padding:2px 8px;border-radius:8px">3. NMR Hyperfine Shifts</span></h3>
+        <p><strong>Prediction:</strong> $\\delta\\gamma(H_2) \\approx 0.014$ Hz, $\\delta\\gamma(N_2) \\approx 0.035$ Hz</p>
+        <p><strong>Test:</strong> Gas-phase NMR at 500 MHz</p>
+      </article>
+    </section>
+
+    <!-- INSIGHTS -->
+    <section class="insights panel alt">
+      <h2 class="h-underline">Key Insights</h2>
+      <ul>
+        <li><span class="rgb-red"><strong>Particles as horizons</strong></span>: toroidal vortex event horizons, not points.</li>
+        <li><span class="rgb-green"><strong>Forces as perspectives</strong></span>: gravity/EM/strong as angle-dependent measures of one flow.</li>
+        <li><span class="rgb-blue"><strong>Constants as resonances</strong></span>: stable viewing angles of circulation.</li>
+        <li><span class="rgb-red"><strong>Quarks as black-hole analogs</strong></span>: nuclear-scale, topologically confined.</li>
+        <li><span class="rgb-green"><strong>Structured vortex</strong></span>: nested RGB circulation modes yield the particle zoo.</li>
+        <li><span class="rgb-blue"><strong>$\\varphi$-scaling</strong></span>: self-similar rotation encoded by the golden ratio.</li>
+      </ul>
+    </section>
+
+    <!-- SUPPORT SECTION -->
+    <section class="support-grid panel alt" style="margin-top:40px;">
+      <article class="support-card">
+        <h3>Support the Work</h3>
+        <p>Cash App</p>
+        <a class="btn" href="https://cash.app/$TalonFelt">$TalonFelt</a>
+      </article>
+      <article class="support-card">
+        <h3>Support the Work</h3>
+        <p>Venmo</p>
+        <a class="btn" href="https://venmo.com/@Talonfelt">@Talonfelt</a>
+      </article>
+      <article class="support-card">
+        <h3>Support the Work</h3>
+        <p>PayPal</p>
+        <a class="btn" href="https://paypal.me/Talonj3f">@Talonj3f</a>
+      </article>
+    </section>
+
+    <!-- TOROIDAL VISUALIZER (Python-powered) -->
+    <section class="panel alt toroid-section">
+      <h2 class="h-underline">Your Hohm Torus — Interactive Visualization</h2>
+      <p style="color:var(--muted);"><em>Python toroidal wave-function rendered in-browser.</em></p>
+
+      <div class="toroid-container">
+        <canvas id="torus-canvas"
+                style="width:100%;height:100%;display:block;border-radius:18px;"></canvas>
+      </div>
+      <div id="toroid-fallback">Torus visualization could not be initialized on this device.</div>
+
+      <py-script>
+from js import document, window
+from pyodide.ffi import create_proxy
+import math
+
+canvas = document.getElementById("torus-canvas")
+fallback = document.getElementById("toroid-fallback")
+ctx = canvas.getContext("2d")
+
+def resize(event=None):
+    try:
+        rect = canvas.getBoundingClientRect()
+        dpr = getattr(window, "devicePixelRatio", 1) or 1
+        canvas.width = rect.width * dpr
+        canvas.height = rect.height * dpr
+    except Exception as e:
+        if fallback:
+            fallback.textContent = f"Torus resize error: {e}"
+            fallback.style.display = "block"
+
+resize()
+resize_proxy = create_proxy(resize)
+window.addEventListener("resize", resize_proxy)
+
+# Parameters echoing your Pythonista-style setup
+params = {
+    "i": 3.0,
+    "tau": 0.10,
+    "R": 8.0,
+    "r0": 2.0,
+    "mid_r": 3.0,
+    "mod_k": 1.5,
+    "z_spiral": 0.0,
+}
+
+phi_const   = (1 + 5 ** 0.5) / 2.0
+iota_const  = phi_const ** 2
+omega_const = math.pi / phi_const
+theta_const = 2.0 * math.pi / phi_const
+F_const     = 1.0 / (math.pi + 2.0/3.0)
+
+N = 60
+thetas = [2.0 * math.pi * i / N for i in range(N)]
+phis   = [2.0 * math.pi * j / N for j in range(N)]
+
+def compute_surface(t, fold_offset=0):
+    i_fold   = int(round(params["i"])) + fold_offset
+    tau      = float(params["tau"])
+    R        = float(params["R"])
+    r0       = abs(float(params["r0"]))
+    mid_r    = abs(float(params["mid_r"]))
+    mod_k    = abs(float(params["mod_k"]))
+    z_spiral = float(params["z_spiral"])
+
+    if abs(i_fold) > 0:
+        P      = phi_const ** abs(i_fold)
+        P_prev = phi_const ** (abs(i_fold)-1) if abs(i_fold) > 1 else 1.0
+
+        D      = abs(P - phi_const)
+        D_prev = abs(P_prev - phi_const)
+
+        Z      = len(str(int(D))) if D >= 1 else 0
+        Z_prev = len(str(int(D_prev))) if D_prev >= 1 else 0
+
+        Q      = D      / (10.0 ** Z)      if Z      > 0 else D
+        Q_prev = D_prev / (10.0 ** Z_prev) if Z_prev > 0 else D_prev
+
+        V         = phi_const - Q_prev
+        lambda_val = (Q / phi_const) * V if V <= phi_const else (Q / phi_const)
+        Lambda     = max(V - lambda_val, 0.001)
+        A          = max(min(phi_const ** abs(i_fold) / Lambda, 1e8), 0.01)
+    else:
+        Lambda = 1.0
+        A      = 1.0
+
+    s = max(min(phi_const ** abs(i_fold), 1e10), 1e-10)
+    M = math.cos(2.0 * math.pi * omega_const / (phi_const ** min(abs(i_fold), 10)))
+
+    pts = []
+    for phi_val in phis:
+        row = []
+        for theta_val in thetas:
+            phase = (tau * t) + theta_const + theta_val + (omega_const * s)
+            psi   = A * (phi_const ** s) * math.cos(phase) * math.sin(phi_val / iota_const) * M * F_const
+            psi   = max(min(psi, 1.0), -1.0)
+            r     = r0 + mid_r * mod_k * abs(psi)
+
+            x = (R + r * math.cos(theta_val)) * math.cos(phi_val)
+            y = (R + r * math.cos(theta_val)) * math.sin(phi_val)
+            z = r * math.sin(theta_val) + z_spiral * phi_val / (2 * math.pi)
+            row.append((x, y, z, psi))
+        pts.append(row)
+    return pts
+
+def project(x, y, z, ax, ay, width, height, scale):
+    cx, sx = math.cos(ax), math.sin(ax)
+    cy, sy = math.cos(ay), math.sin(ay)
+
+    y2 = y * cx - z * sx
+    z2 = y * sx + z * cx
+
+    x3 = x * cy + z2 * sy
+    z3 = -x * sy + z2 * cy
+
+    dist = 30.0
+    f    = dist / (dist + z3)
+    sx2  = width  * 0.5 + x3 * scale * f
+    sy2  = height * 0.5 - y2 * scale * f
+    return sx2, sy2, f
+
+angle = 0.0
+
+def draw_frame(timestamp):
+    global angle
+    try:
+        width  = canvas.width
+        height = canvas.height
+        if width == 0 or height == 0:
+            resize()
+            width  = canvas.width
+            height = canvas.height
+
+        angle += 0.0008 * (timestamp or 16.0)
+        t = (angle * 0.03) % 27.0
+
+        ctx.fillStyle = "#04060a"
+        ctx.fillRect(0, 0, width, height)
+
+        scale = min(width, height) * 0.09
+        ax    = angle * 0.6
+        ay    = angle * 0.9
+
+        pts = compute_surface(t)
+
+        step_phi   = 2
+        step_theta = 2
+
+        for i_phi in range(0, len(phis), step_phi):
+            ctx.beginPath()
+            first = True
+            for i_theta in range(0, len(thetas), step_theta):
+                x, y, z, psi = pts[i_phi][i_theta]
+                sx2, sy2, f  = project(x, y, z, ax, ay, width, height, scale)
+                if first:
+                    ctx.moveTo(sx2, sy2); first = False
+                else:
+                    ctx.lineTo(sx2, sy2)
+            hue = 200 + 80 * math.sin(i_phi / len(phis) * 2 * math.pi)
+            ctx.strokeStyle = f"hsl({hue:.0f}, 100%, 60%)"
+            ctx.lineWidth   = 1.0
+            ctx.stroke()
+
+        for i_theta in range(0, len(thetas), 4):
+            ctx.beginPath()
+            first = True
+            for i_phi in range(len(phis)):
+                x, y, z, psi = pts[i_phi][i_theta]
+                sx2, sy2, f  = project(x, y, z, ax, ay, width, height, scale)
+                if first:
+                    ctx.moveTo(sx2, sy2); first = False
+                else:
+                    ctx.lineTo(sx2, sy2)
+            ctx.strokeStyle = "rgba(255,255,255,0.18)"
+            ctx.lineWidth   = 0.8
+            ctx.stroke()
+
+        fallback.style.display = "none"
+
+    except Exception as e:
+        fallback.textContent = f"Torus error: {e}"
+        fallback.style.display = "block"
+
+    window.requestAnimationFrame(draw_proxy)
+
+draw_proxy = create_proxy(draw_frame)
+window.requestAnimationFrame(draw_proxy)
+      </py-script>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <p><strong>Hohm.cc</strong></p>
+      <div class="socials">
+        <a href="https://x.com/TalonJFelt">@TalonJFelt on X</a>
+        <a href="https://instagram.com/TalonFelt">@TalonFelt on Instagram</a>
+      </div>
+      <p style="margin-top:10px;font-size:.9rem">Contact: <a href="mailto:your@hohm.cc" style="color:var(--accB);text-decoration:none;">your@hohm.cc</a></p>
+      <p style="font-size:.85rem">CC BY-NC-ND 4.0</p>
+    </footer>
+  </div>
+
+  <!-- THEME TOGGLE -->
+  <script>
+    (function(){
+      const btn = document.getElementById('theme-toggle');
+      if (!btn) return;
+
+      function applyTheme(theme){
+        document.body.setAttribute('data-theme', theme);
+        btn.textContent = theme === 'dark' ? 'Light mode' : 'Dark mode';
+        try { localStorage.setItem('hohm-theme', theme); } catch(e){}
+      }
+
+      let stored = null;
+      try { stored = localStorage.getItem('hohm-theme'); } catch(e){}
+      applyTheme(stored === 'light' ? 'light' : 'dark');
+
+      btn.addEventListener('click', () => {
+        const current = document.body.getAttribute('data-theme') || 'dark';
+        applyTheme(current === 'dark' ? 'light' : 'dark');
+      });
+    })();
+  </script>
+
+  <!-- PDF VIEWER LOGIC (pdf.js, six docs in your order) -->
+  <script>
+    (function(){
+      const pdfjsLib = window['pdfjsLib'];
+      if (!pdfjsLib) return;
+
+      pdfjsLib.GlobalWorkerOptions.workerSrc =
+        'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+
+      const canvas    = document.getElementById('pdf-canvas');
+      const ctx       = canvas.getContext('2d');
+      const prevBtn   = document.getElementById('pdf-prev');
+      const nextBtn   = document.getElementById('pdf-next');
+      const pageSpan  = document.getElementById('pdf-page-number');
+      const countSpan = document.getElementById('pdf-page-count');
+      const iosNote   = document.getElementById('pdf-ios-note');
+      const select    = document.getElementById('pdf-select');
+      const openBtn   = document.getElementById('pdf-open');
+      const viewerBox = document.getElementById('pdf-viewer-box');
+
+      if (!canvas || !prevBtn || !nextBtn || !pageSpan || !select || !viewerBox) return;
+
+      const ua = navigator.userAgent || navigator.vendor || window.opera;
+      const isIOS = /iPad|iPhone|iPod/.test(ua);
+      if (isIOS && iosNote) iosNote.style.display = 'inline';
+
+      // EXACT mapping: your labels -> your files
+      const docs = {
+        'fore':  'Your_Hohm-[fore].pdf',   // Read First
+        'one':   'Your_Hohm-[one].pdf',    // Part One (Original Condensed)
+        'two':   'Your_Hohm-[two].pdf',    // Part Two (Addition)
+        'three': 'Your_Hohm-[three].pdf',  // Part Three (Addition)
+        'book':  'Your_Hohm-[book].pdf',   // Your Hohm (Full Original)
+        'god':   'GodTheory.pdf'           // First Draft Written (God Theory)
+      };
+
+      let pdfDoc        = null;
+      let pageNum       = 1;
+      let pageRendering = false;
+      let pagePending   = null;
+      let currentKey    = 'fore';
+
+      function currentUrl(){ return docs[currentKey]; }
+
+      function renderPage(num){
+        if (!pdfDoc) return;
+        pageRendering = true;
+
+        pdfDoc.getPage(num).then(function(page){
+          const viewport = page.getViewport({scale:1});
+          const boxWidth = viewerBox.clientWidth || viewport.width;
+          const padding  = 20;
+          const desiredWidth = boxWidth - padding;
+          const scale    = desiredWidth / viewport.width;
+
+          const scaledViewport = page.getViewport({scale});
+          canvas.height = scaledViewport.height;
+          canvas.width  = scaledViewport.width;
+
+          const renderContext = {
+            canvasContext: ctx,
+            viewport: scaledViewport
+          };
+
+          const renderTask = page.render(renderContext);
+          renderTask.promise.then(function(){
+            pageRendering = false;
+            pageSpan.textContent = String(num);
+            if (pagePending !== null){
+              const next = pagePending;
+              pagePending = null;
+              renderPage(next);
+            }
+          });
+        });
+      }
+
+      function queueRenderPage(num){
+        if (pageRendering){
+          pagePending = num;
+        } else {
+          renderPage(num);
+        }
+      }
+
+      function loadDocument(){
+        const url = currentUrl();
+        if (openBtn) openBtn.href = url;
+
+        pdfjsLib.getDocument(url).promise.then(function(pdf){
+          pdfDoc = pdf;
+          pageNum = 1;
+          if (countSpan) countSpan.textContent = '/ ' + pdf.numPages;
+          queueRenderPage(pageNum);
+        }).catch(function(err){
+          console.error('PDF load error', err);
+          if (iosNote){
+            iosNote.textContent = 'Failed to load PDF on this device.';
+            iosNote.style.display = 'inline';
+          }
+        });
+      }
+
+      prevBtn.addEventListener('click', function(){
+        if (!pdfDoc || pageNum <= 1) return;
+        pageNum--;
+        queueRenderPage(pageNum);
+      });
+
+      nextBtn.addEventListener('click', function(){
+        if (!pdfDoc || pageNum >= pdfDoc.numPages) return;
+        pageNum++;
+        queueRenderPage(pageNum);
+      });
+
+      select.addEventListener('change', function(){
+        const v = this.value;
+        if (!docs[v]) return;
+        currentKey = v;
+        loadDocument();
+      });
+
+      window.addEventListener('resize', function(){
+        if (pdfDoc){
+          queueRenderPage(pageNum);
+        }
+      });
+
+      // initial load = Read First (fore)
+      loadDocument();
+    })();
+  </script>
+</body>
+</html>
