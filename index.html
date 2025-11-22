@@ -43,9 +43,9 @@
   <!-- pdf.js for inline PDF rendering -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
 
-  <!-- PyScript for Python torus -->
-  <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css">
-  <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+  <!-- Three.js + OrbitControls (torus) -->
+  <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+  <script src="https://unpkg.com/three@0.160.0/examples/js/controls/OrbitControls.js"></script>
 
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
@@ -284,7 +284,6 @@
       <article class="card">
         <h3 class="rgb-red">Read the Paper</h3>
         <p>Complete PDF: derivations, predictions, appendices.</p>
-        <!-- Full original = book -->
         <a class="btn" href="Your_Hohm-[book].pdf" target="_blank" rel="noopener">
           Read in new window / Download
         </a>
@@ -301,7 +300,7 @@
       </article>
     </section>
 
-    <!-- PDF SECTION: pdf.js + multi-document selector -->
+    <!-- PDF SECTION -->
     <section class="pdf-wrap">
       <h2 class="pdf-title h-underline">Read Online</h2>
 
@@ -312,7 +311,7 @@
           <span>
             Page <span id="pdf-page-number">1</span>
             <span id="pdf-page-count">/ ?</span>
-            <span id="pdf-ios-note" style="display:none;"> — iOS may limit inline PDF.</span>
+            <span id="pdf-ios-note" style="display:none;"> — inline PDF may be limited on some devices.</span>
           </span>
         </div>
 
@@ -335,7 +334,7 @@
       </div>
 
       <div class="pdf-viewer" id="pdf-viewer-box">
-        <canvas id="pdf-canvas" style="width:100%;height:auto;display:block;border-radius:var(--radius-lg);"></canvas>
+        <canvas id="pdf-canvas" style="display:block;border-radius:var(--radius-lg);"></canvas>
       </div>
     </section>
 
@@ -404,194 +403,13 @@
       </article>
     </section>
 
-    <!-- TOROIDAL VISUALIZER (Python-powered) -->
+    <!-- TOROIDAL VISUALIZER (pure JS / Three.js) -->
     <section class="panel alt toroid-section">
       <h2 class="h-underline">Your Hohm Torus — Interactive Visualization</h2>
-      <p style="color:var(--muted);"><em>Python toroidal wave-function rendered in-browser.</em></p>
+      <p style="color:var(--muted);"><em>WebGL torus driven by a simple wave on the ring. No Python, no PyScript.</em></p>
 
-      <div class="toroid-container">
-        <canvas id="torus-canvas"
-                style="width:100%;height:100%;display:block;border-radius:18px;"></canvas>
-      </div>
-      <div id="toroid-fallback">Torus visualization could not be initialized on this device.</div>
-
-      <py-script>
-from js import document, window
-from pyodide.ffi import create_proxy
-import math
-
-canvas = document.getElementById("torus-canvas")
-fallback = document.getElementById("toroid-fallback")
-ctx = canvas.getContext("2d")
-
-def resize(event=None):
-    try:
-        rect = canvas.getBoundingClientRect()
-        dpr = getattr(window, "devicePixelRatio", 1) or 1
-        canvas.width = rect.width * dpr
-        canvas.height = rect.height * dpr
-    except Exception as e:
-        if fallback:
-            fallback.textContent = f"Torus resize error: {e}"
-            fallback.style.display = "block"
-
-resize()
-resize_proxy = create_proxy(resize)
-window.addEventListener("resize", resize_proxy)
-
-# Parameters echoing your Pythonista-style setup
-params = {
-    "i": 3.0,
-    "tau": 0.10,
-    "R": 8.0,
-    "r0": 2.0,
-    "mid_r": 3.0,
-    "mod_k": 1.5,
-    "z_spiral": 0.0,
-}
-
-phi_const   = (1 + 5 ** 0.5) / 2.0
-iota_const  = phi_const ** 2
-omega_const = math.pi / phi_const
-theta_const = 2.0 * math.pi / phi_const
-F_const     = 1.0 / (math.pi + 2.0/3.0)
-
-N = 60
-thetas = [2.0 * math.pi * i / N for i in range(N)]
-phis   = [2.0 * math.pi * j / N for j in range(N)]
-
-def compute_surface(t, fold_offset=0):
-    i_fold   = int(round(params["i"])) + fold_offset
-    tau      = float(params["tau"])
-    R        = float(params["R"])
-    r0       = abs(float(params["r0"]))
-    mid_r    = abs(float(params["mid_r"]))
-    mod_k    = abs(float(params["mod_k"]))
-    z_spiral = float(params["z_spiral"])
-
-    if abs(i_fold) > 0:
-        P      = phi_const ** abs(i_fold)
-        P_prev = phi_const ** (abs(i_fold)-1) if abs(i_fold) > 1 else 1.0
-
-        D      = abs(P - phi_const)
-        D_prev = abs(P_prev - phi_const)
-
-        Z      = len(str(int(D))) if D >= 1 else 0
-        Z_prev = len(str(int(D_prev))) if D_prev >= 1 else 0
-
-        Q      = D      / (10.0 ** Z)      if Z      > 0 else D
-        Q_prev = D_prev / (10.0 ** Z_prev) if Z_prev > 0 else D_prev
-
-        V         = phi_const - Q_prev
-        lambda_val = (Q / phi_const) * V if V <= phi_const else (Q / phi_const)
-        Lambda     = max(V - lambda_val, 0.001)
-        A          = max(min(phi_const ** abs(i_fold) / Lambda, 1e8), 0.01)
-    else:
-        Lambda = 1.0
-        A      = 1.0
-
-    s = max(min(phi_const ** abs(i_fold), 1e10), 1e-10)
-    M = math.cos(2.0 * math.pi * omega_const / (phi_const ** min(abs(i_fold), 10)))
-
-    pts = []
-    for phi_val in phis:
-        row = []
-        for theta_val in thetas:
-            phase = (tau * t) + theta_const + theta_val + (omega_const * s)
-            psi   = A * (phi_const ** s) * math.cos(phase) * math.sin(phi_val / iota_const) * M * F_const
-            psi   = max(min(psi, 1.0), -1.0)
-            r     = r0 + mid_r * mod_k * abs(psi)
-
-            x = (R + r * math.cos(theta_val)) * math.cos(phi_val)
-            y = (R + r * math.cos(theta_val)) * math.sin(phi_val)
-            z = r * math.sin(theta_val) + z_spiral * phi_val / (2 * math.pi)
-            row.append((x, y, z, psi))
-        pts.append(row)
-    return pts
-
-def project(x, y, z, ax, ay, width, height, scale):
-    cx, sx = math.cos(ax), math.sin(ax)
-    cy, sy = math.cos(ay), math.sin(ay)
-
-    y2 = y * cx - z * sx
-    z2 = y * sx + z * cx
-
-    x3 = x * cy + z2 * sy
-    z3 = -x * sy + z2 * cy
-
-    dist = 30.0
-    f    = dist / (dist + z3)
-    sx2  = width  * 0.5 + x3 * scale * f
-    sy2  = height * 0.5 - y2 * scale * f
-    return sx2, sy2, f
-
-angle = 0.0
-
-def draw_frame(timestamp):
-    global angle
-    try:
-        width  = canvas.width
-        height = canvas.height
-        if width == 0 or height == 0:
-            resize()
-            width  = canvas.width
-            height = canvas.height
-
-        angle += 0.0008 * (timestamp or 16.0)
-        t = (angle * 0.03) % 27.0
-
-        ctx.fillStyle = "#04060a"
-        ctx.fillRect(0, 0, width, height)
-
-        scale = min(width, height) * 0.09
-        ax    = angle * 0.6
-        ay    = angle * 0.9
-
-        pts = compute_surface(t)
-
-        step_phi   = 2
-        step_theta = 2
-
-        for i_phi in range(0, len(phis), step_phi):
-            ctx.beginPath()
-            first = True
-            for i_theta in range(0, len(thetas), step_theta):
-                x, y, z, psi = pts[i_phi][i_theta]
-                sx2, sy2, f  = project(x, y, z, ax, ay, width, height, scale)
-                if first:
-                    ctx.moveTo(sx2, sy2); first = False
-                else:
-                    ctx.lineTo(sx2, sy2)
-            hue = 200 + 80 * math.sin(i_phi / len(phis) * 2 * math.pi)
-            ctx.strokeStyle = f"hsl({hue:.0f}, 100%, 60%)"
-            ctx.lineWidth   = 1.0
-            ctx.stroke()
-
-        for i_theta in range(0, len(thetas), 4):
-            ctx.beginPath()
-            first = True
-            for i_phi in range(len(phis)):
-                x, y, z, psi = pts[i_phi][i_theta]
-                sx2, sy2, f  = project(x, y, z, ax, ay, width, height, scale)
-                if first:
-                    ctx.moveTo(sx2, sy2); first = False
-                else:
-                    ctx.lineTo(sx2, sy2)
-            ctx.strokeStyle = "rgba(255,255,255,0.18)"
-            ctx.lineWidth   = 0.8
-            ctx.stroke()
-
-        fallback.style.display = "none"
-
-    except Exception as e:
-        fallback.textContent = f"Torus error: {e}"
-        fallback.style.display = "block"
-
-    window.requestAnimationFrame(draw_proxy)
-
-draw_proxy = create_proxy(draw_frame)
-window.requestAnimationFrame(draw_proxy)
-      </py-script>
+      <div id="toroid-container" class="toroid-container"></div>
+      <div id="toroid-fallback">WebGL visualization could not be initialized on this device.</div>
     </section>
 
     <!-- FOOTER -->
@@ -629,7 +447,7 @@ window.requestAnimationFrame(draw_proxy)
     })();
   </script>
 
-  <!-- PDF VIEWER LOGIC (pdf.js, six docs in your order) -->
+  <!-- PDF VIEWER LOGIC: force 4K internal render -->
   <script>
     (function(){
       const pdfjsLib = window['pdfjsLib'];
@@ -655,7 +473,6 @@ window.requestAnimationFrame(draw_proxy)
       const isIOS = /iPad|iPhone|iPod/.test(ua);
       if (isIOS && iosNote) iosNote.style.display = 'inline';
 
-      // EXACT mapping: your labels -> your files
       const docs = {
         'fore':  'Your_Hohm-[fore].pdf',   // Read First
         'one':   'Your_Hohm-[one].pdf',    // Part One (Original Condensed)
@@ -674,32 +491,30 @@ window.requestAnimationFrame(draw_proxy)
       function currentUrl(){ return docs[currentKey]; }
 
       function renderPage(num){
+        if (!pdfDoc) return;
+        pageRendering = true;
         pdfDoc.getPage(num).then(function(page){
+          const viewport = page.getViewport({ scale: 1 });
 
-          // FORCE 4K WIDTH
-          const targetWidth = 4096;
-          const viewport = page.getViewport({scale:1});
-
+          // FORCE ~4K INTERNAL WIDTH
+          const targetWidth = 4096; // "just load 4k"
           const scale = targetWidth / viewport.width;
-          const scaledViewport = page.getViewport({scale});
+          const scaledViewport = page.getViewport({ scale });
 
+          // Internal canvas size at 4K-ish
           canvas.width  = scaledViewport.width;
           canvas.height = scaledViewport.height;
 
-          // CSS shrinks it to fit visually (still crisp)
-          canvas.style.width  = "100%";
-          canvas.style.height = "auto";
+          // Visual size: fit container width, preserve aspect
+          const boxWidth = viewerBox.clientWidth || viewport.width;
+          const visualHeight = (scaledViewport.height / scaledViewport.width) * boxWidth;
+          canvas.style.width  = boxWidth + 'px';
+          canvas.style.height = visualHeight + 'px';
 
           const renderContext = {
             canvasContext: ctx,
             viewport: scaledViewport
           };
-
-          page.render(renderContext).promise.then(() => {
-            pageSpan.textContent = num;
-          });
-        });
-      }
 
           const renderTask = page.render(renderContext);
           renderTask.promise.then(function(){
@@ -765,8 +580,163 @@ window.requestAnimationFrame(draw_proxy)
         }
       });
 
-      // initial load = Read First (fore)
+      // Initial load: Read First (fore)
       loadDocument();
+    })();
+  </script>
+
+  <!-- TORUS LOGIC: pure JS / Three.js -->
+  <script>
+    (function(){
+      const container = document.getElementById('toroid-container');
+      const fallback  = document.getElementById('toroid-fallback');
+      if (!container || !window.THREE){
+        if (fallback) fallback.style.display = 'block';
+        return;
+      }
+
+      try {
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        const w = container.clientWidth  || 600;
+        const h = container.clientHeight || 600;
+        renderer.setSize(w, h);
+        renderer.setPixelRatio(window.devicePixelRatio || 1);
+        renderer.setClearColor(0x04060a, 1.0);
+        container.innerHTML = '';
+        container.appendChild(renderer.domElement);
+
+        const scene = new THREE.Scene();
+
+        const camera = new THREE.PerspectiveCamera(45, w / h, 0.1, 1000);
+        camera.position.set(0, 0, 28);
+
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+        controls.minDistance = 12;
+        controls.maxDistance = 70;
+
+        const light = new THREE.PointLight(0xffffff, 1.1);
+        light.position.set(20, 20, 20);
+        scene.add(light);
+        scene.add(new THREE.AmbientLight(0x404040, 0.7));
+
+        const majorR = 8.0;
+        const minorR = 1.8;
+
+        const geo = new THREE.TorusGeometry(majorR, minorR, 160, 320);
+        const pos = geo.attributes.position;
+        const count = pos.count;
+
+        const colors = new Float32Array(count * 3);
+        const color  = new THREE.Color();
+
+        for (let i = 0; i < count; i++){
+          const u = (i % 320) / 320;
+          color.setHSL(0.6 + 0.4 * Math.sin(u * 2 * Math.PI), 1.0, 0.55);
+          colors[i*3]   = color.r;
+          colors[i*3+1] = color.g;
+          colors[i*3+2] = color.b;
+        }
+        geo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+        const mat = new THREE.MeshPhongMaterial({
+          vertexColors: true,
+          shininess: 80,
+          specular: new THREE.Color(0x88ffff),
+        });
+
+        const torus = new THREE.Mesh(geo, mat);
+        scene.add(torus);
+
+        const origPositions = pos.array.slice();
+
+        const phi  = (1 + Math.sqrt(5)) / 2;   // golden ratio
+        const iota = phi * phi;
+        const omega = Math.PI / phi;
+        const theta_c = 2 * Math.PI / phi;
+
+        function updateWave(time){
+          const v = pos.array;
+          const freq1 = 3.0;
+          const freq2 = 9.0;
+          const freq3 = 27.0;
+
+          for (let i = 0; i < count; i++){
+            const baseX = origPositions[i*3];
+            const baseY = origPositions[i*3+1];
+            const baseZ = origPositions[i*3+2];
+
+            const uIndex = (i % 320);
+            const vIndex = Math.floor(i / 320);
+            const u = uIndex / 320;
+            const vv = vIndex / 160;
+
+            const phase = time + freq1 * u * 2*Math.PI + freq2 * vv * 2*Math.PI;
+            const mod   = Math.sin(phase) * Math.cos(freq3 * (u + vv));
+            const radialMod = 1.0 + 0.35 * mod;
+
+            const r_xy = Math.sqrt(baseX*baseX + baseY*baseY);
+            let angleXY = Math.atan2(baseY, baseX);
+            const baseMinor = r_xy - majorR;
+
+            angleXY += 0.08 * mod;
+            const newMinor = baseMinor * radialMod;
+
+            const newX = (majorR + newMinor) * Math.cos(angleXY);
+            const newY = (majorR + newMinor) * Math.sin(angleXY);
+            const newZ = baseZ * radialMod;
+
+            v[i*3]   = newX;
+            v[i*3+1] = newY;
+            v[i*3+2] = newZ;
+
+            const psi = mod;
+            const hue = (psi + 1) * 0.5; // 0..1
+            const c = new THREE.Color();
+            c.setHSL(0.6 * hue + 0.1, 1.0, 0.5);
+            colors[i*3]   = c.r;
+            colors[i*3+1] = c.g;
+            colors[i*3+2] = c.b;
+          }
+          pos.needsUpdate = true;
+          geo.attributes.color.needsUpdate = true;
+        }
+
+        function onResize(){
+          const w2 = container.clientWidth  || 600;
+          const h2 = container.clientHeight || 600;
+          camera.aspect = w2 / h2;
+          camera.updateProjectionMatrix();
+          renderer.setSize(w2, h2);
+        }
+        window.addEventListener('resize', onResize);
+
+        let lastTime = performance.now();
+        function animate(now){
+          requestAnimationFrame(animate);
+          const dt = (now - lastTime) / 1000;
+          lastTime = now;
+
+          const t = now * 0.0008;
+          updateWave(t);
+
+          torus.rotation.x += 0.05 * dt;
+          torus.rotation.y += 0.08 * dt;
+
+          controls.update();
+          renderer.render(scene, camera);
+        }
+        animate(performance.now());
+
+        if (fallback) fallback.style.display = 'none';
+      } catch (e){
+        console.error('Torus error:', e);
+        if (fallback){
+          fallback.textContent = 'Visualization failed: ' + e;
+          fallback.style.display = 'block';
+        }
+      }
     })();
   </script>
 </body>
