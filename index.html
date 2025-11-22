@@ -674,24 +674,32 @@ window.requestAnimationFrame(draw_proxy)
       function currentUrl(){ return docs[currentKey]; }
 
       function renderPage(num){
-        if (!pdfDoc) return;
-        pageRendering = true;
-
         pdfDoc.getPage(num).then(function(page){
-          const viewport = page.getViewport({scale:1});
-          const boxWidth = viewerBox.clientWidth || viewport.width;
-          const padding  = 20;
-          const desiredWidth = boxWidth - padding;
-          const scale    = desiredWidth / viewport.width;
 
+          // FORCE 4K WIDTH
+          const targetWidth = 4096;
+          const viewport = page.getViewport({scale:1});
+
+          const scale = targetWidth / viewport.width;
           const scaledViewport = page.getViewport({scale});
-          canvas.height = scaledViewport.height;
+
           canvas.width  = scaledViewport.width;
+          canvas.height = scaledViewport.height;
+
+          // CSS shrinks it to fit visually (still crisp)
+          canvas.style.width  = "100%";
+          canvas.style.height = "auto";
 
           const renderContext = {
             canvasContext: ctx,
             viewport: scaledViewport
           };
+
+          page.render(renderContext).promise.then(() => {
+            pageSpan.textContent = num;
+          });
+        });
+      }
 
           const renderTask = page.render(renderContext);
           renderTask.promise.then(function(){
