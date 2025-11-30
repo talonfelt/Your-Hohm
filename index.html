@@ -40,7 +40,7 @@
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
-  <!-- pdf.js for inline PDF rendering -->
+  <!-- pdf.js (kept loaded in case you want to use it later, but not required by current logic) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
 
   <!-- Three.js + OrbitControls (torus) -->
@@ -169,25 +169,6 @@
     .support-card:hover{transform:translateY(-3px)}
     .support-card h3{font-size:1.35rem;margin-bottom:8px}
 
-    .pdf-wrap{margin:38px 0 10px}
-    .pdf-title{text-align:center;font-size:1.6rem;margin-bottom:14px}
-    .pdf-viewer{
-      width:100%;min-height:320px;border-radius:var(--radius-lg);
-      border:1px solid var(--line);background:#000;box-shadow:var(--soft);
-      overflow:hidden;display:flex;align-items:center;justify-content:center
-    }
-    .pdf-toolbar{
-      display:flex;justify-content:space-between;align-items:center;
-      flex-wrap:wrap;gap:10px;margin-bottom:10px
-    }
-    .pdf-toolbar-controls{
-      display:flex;align-items:center;flex-wrap:wrap;gap:8px
-    }
-    .pdf-nav-btn{
-      padding:6px 10px;border-radius:8px;border:1px solid var(--line);
-      background:#0a1018;color:var(--ink);font-size:.85rem;cursor:pointer
-    }
-
     .verification{margin:30px 0;padding:24px;border-left:3px solid var(--accA)}
     .verification h2{color:#e6f0ff;margin-bottom:10px}
     .code{
@@ -240,7 +221,6 @@
     }
     @media(max-width:760px){
       .container{padding:20px}
-      .pdf-viewer{min-height:260px}
       .stats,.download-grid,.support-grid{grid-template-columns:1fr}
       .panel{padding:18px}
       .socials{flex-direction:column;align-items:center}
@@ -284,7 +264,8 @@
       <article class="card">
         <h3 class="rgb-red">Read the Paper</h3>
         <p>Complete PDF: derivations, predictions, appendices.</p>
-        <a class="btn" href="Your_Hohm-[book].pdf" target="_blank" rel="noopener">
+        <!-- ideally point this at the same full PDF in assets/pdf -->
+        <a class="btn" href="assets/pdf/Your_Hohm-[book].pdf" target="_blank" rel="noopener">
           Read in new window / Download
         </a>
       </article>
@@ -300,42 +281,71 @@
       </article>
     </section>
 
-    <!-- PDF SECTION -->
-    <section class="pdf-wrap">
-      <h2 class="pdf-title h-underline">Read Online</h2>
+    <!-- ============ 1. MAIN FULL PAPER SECTION (NO DROPDOWN) ============ -->
+    <section id="full-paper" class="panel alt" style="margin-top:30px;">
+      <h2 class="h-underline">Main Paper — Full Version</h2>
 
-      <div class="pdf-toolbar">
-        <div class="pdf-toolbar-controls">
-          <button id="pdf-prev" class="pdf-nav-btn">Previous page</button>
-          <button id="pdf-next" class="pdf-nav-btn">Next page</button>
-          <span>
-            Page <span id="pdf-page-number">1</span>
-            <span id="pdf-page-count">/ ?</span>
-            <span id="pdf-ios-note" style="display:none;"> — inline PDF may be limited on some devices.</span>
-          </span>
-        </div>
+      <div style="margin-bottom:0.75rem; display:flex; flex-wrap:wrap; gap:0.5rem; align-items:center;">
+        <button id="fullOpenBtn" style="padding:0.4rem 0.8rem;border-radius:10px;border:1px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer;">
+          Open in new window
+        </button>
 
-        <div class="pdf-toolbar-controls">
-          <label for="pdf-select" style="font-size:.85rem;">Document:</label>
-          <select id="pdf-select"
-                  style="font-size:.85rem;padding:4px 8px;border-radius:8px;border:1px solid var(--line);background:var(--panel-2);color:var(--ink);">
-            <option value="fore">Read First</option>
-            <option value="one">Part One (Original Condensed)</option>
-            <option value="two">Part Two (Addition)</option>
-            <option value="three">Part Three (Addition)</option>
-            <option value="book">Your Hohm (Full Original)</option>
-            <option value="god">First Draft Written (God Theory)</option>
-          </select>
-        </div>
-
-        <a id="pdf-open" class="btn" href="Your_Hohm-[fore].pdf" target="_blank" rel="noopener">
-          Read in new window / Download
+        <a id="fullDownloadBtn"
+           style="padding:0.4rem 0.8rem; border:1px solid var(--line); border-radius:10px; text-decoration:none; background:var(--panel-2); color:var(--ink);">
+          ⬇ Download full paper
         </a>
+
+        <button id="fullTurnPageBtn" style="padding:0.4rem 0.8rem;border-radius:10px;border:1px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer;">
+          Turn page ▶
+        </button>
       </div>
 
-      <div class="pdf-viewer" id="pdf-viewer-box">
-        <canvas id="pdf-canvas" style="display:block;border-radius:var(--radius-lg);"></canvas>
+      <iframe id="fullViewer"
+              src=""
+              style="width:100%; height:80vh; border:1px solid var(--line); border-radius:var(--radius-lg); background:#000;">
+      </iframe>
+    </section>
+
+    <!-- ============ 2. GALLERY UNDER FULL PAPER ============ -->
+    <section id="main-gallery" class="panel" style="margin-top:30px;">
+      <h2 class="h-underline">Oscillating Geometry — Featured Gallery</h2>
+
+      <!-- Main image + caption -->
+      <div style="display:flex; flex-direction:column; align-items:center; margin-bottom:1rem;">
+        <img id="galleryMainImg"
+             src=""
+             alt=""
+             style="max-width:100%; max-height:60vh; border-radius:6px; border:1px solid var(--line);">
+        <div id="galleryCaption"
+             style="margin-top:0.5rem; font-size:0.9rem; min-height:1.2em; text-align:center; color:var(--muted);">
+        </div>
+        <button id="galleryNextBtn" style="margin-top:0.5rem; padding:0.3rem 0.8rem; border-radius:10px; border:1px solid var(--line); background:var(--panel-2); color:var(--ink); cursor:pointer;">
+          Next image ▶
+        </button>
       </div>
+
+      <!-- Scrollable thumbnail strip -->
+      <div id="galleryThumbStrip"
+           style="display:flex; overflow-x:auto; gap:0.5rem; padding-bottom:0.5rem;">
+        <!-- JS injects thumbnails -->
+      </div>
+    </section>
+
+    <!-- ============ 3. SECONDARY PDF SECTION (DROPDOWN + VIEWER) ============ -->
+    <section id="secondary-pdfs" class="panel alt" style="margin-top:30px;">
+      <h2 class="h-underline">Other Papers</h2>
+
+      <div style="display:flex; flex-wrap:wrap; align-items:center; gap:0.75rem; margin-bottom:0.5rem;">
+        <label for="secondaryPdfSelector"><strong>Select paper:</strong></label>
+        <select id="secondaryPdfSelector"
+                style="font-size:.9rem; padding:4px 8px; border-radius:8px; border:1px solid var(--line); background:var(--panel); color:var(--ink);">
+        </select>
+      </div>
+
+      <iframe id="secondaryPdfViewer"
+              src=""
+              style="width:100%; height:70vh; border:1px solid var(--line); border-radius:var(--radius-lg); background:#000;">
+      </iframe>
     </section>
 
     <!-- VERIFICATION -->
@@ -447,142 +457,191 @@
     })();
   </script>
 
-  <!-- PDF VIEWER LOGIC: force 4K internal render -->
+  <!-- MAIN PAGE LOGIC: full paper, gallery, secondary PDFs -->
   <script>
-    (function(){
-      const pdfjsLib = window['pdfjsLib'];
-      if (!pdfjsLib) return;
+    // TODO: set these to your actual GitHub username + repo name
+    const OWNER = 'YOUR_GITHUB_USERNAME';
+    const REPO  = 'YOUR_REPO_NAME';
 
-      pdfjsLib.GlobalWorkerOptions.workerSrc =
-        'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+    const PDF_PATH = 'assets/pdf';
+    const IMG_PATH = 'assets/img';
 
-      const canvas    = document.getElementById('pdf-canvas');
-      const ctx       = canvas.getContext('2d');
-      const prevBtn   = document.getElementById('pdf-prev');
-      const nextBtn   = document.getElementById('pdf-next');
-      const pageSpan  = document.getElementById('pdf-page-number');
-      const countSpan = document.getElementById('pdf-page-count');
-      const iosNote   = document.getElementById('pdf-ios-note');
-      const select    = document.getElementById('pdf-select');
-      const openBtn   = document.getElementById('pdf-open');
-      const viewerBox = document.getElementById('pdf-viewer-box');
+    // Full paper filename (must exist in assets/pdf)
+    const FULL_PDF_NAME = 'Your_Hohm-[book].pdf'; // change if your full PDF name differs
 
-      if (!canvas || !prevBtn || !nextBtn || !pageSpan || !select || !viewerBox) return;
+    // Curated images: these show first in the gallery (must exist in assets/img)
+    const CURATED_IMAGES = [
+      'E_005.JPG',
+      'E_007 Large.png',
+      'E_004.PNG',
+      'A_001.PNG',
+      'A_002.PNG'
+    ];
 
-      const ua = navigator.userAgent || navigator.vendor || window.opera;
-      const isIOS = /iPad|iPhone|iPod/.test(ua);
-      if (isIOS && iosNote) iosNote.style.display = 'inline';
+    // Captions per image; blank string = no caption
+    const IMAGE_CAPTIONS = {
+      'E_005.JPG': 'Central harmonic interference pattern',
+      'E_007 Large.png': 'High-density resonance weave',
+      'E_004.PNG': 'Quad-point constructive overlap',
+      'A_001.PNG': 'Foundational 4-node lattice',
+      'A_002.PNG': 'Extended nodal ring'
+      // add more as needed
+    };
 
-      const docs = {
-        'fore':  'Your_Hohm-[fore].pdf',   // Read First
-        'one':   'Your_Hohm-[one].pdf',    // Part One (Original Condensed)
-        'two':   'Your_Hohm-[two].pdf',    // Part Two (Addition)
-        'three': 'Your_Hohm-[three].pdf',  // Part Three (Addition)
-        'book':  'Your_Hohm-[book].pdf',   // Your Hohm (Full Original)
-        'god':   'GodTheory.pdf'           // First Draft Written (God Theory)
-      };
-
-      let pdfDoc        = null;
-      let pageNum       = 1;
-      let pageRendering = false;
-      let pagePending   = null;
-      let currentKey    = 'fore';
-
-      function currentUrl(){ return docs[currentKey]; }
-
-      function renderPage(num){
-        if (!pdfDoc) return;
-        pageRendering = true;
-        pdfDoc.getPage(num).then(function(page){
-          const viewport = page.getViewport({ scale: 1 });
-
-          // FORCE ~4K INTERNAL WIDTH
-          const targetWidth = 4096; // "just load 4k"
-          const scale = targetWidth / viewport.width;
-          const scaledViewport = page.getViewport({ scale });
-
-          // Internal canvas size at 4K-ish
-          canvas.width  = scaledViewport.width;
-          canvas.height = scaledViewport.height;
-
-          // Visual size: fit container width, preserve aspect
-          const boxWidth = viewerBox.clientWidth || viewport.width;
-          const visualHeight = (scaledViewport.height / scaledViewport.width) * boxWidth;
-          canvas.style.width  = boxWidth + 'px';
-          canvas.style.height = visualHeight + 'px';
-
-          const renderContext = {
-            canvasContext: ctx,
-            viewport: scaledViewport
-          };
-
-          const renderTask = page.render(renderContext);
-          renderTask.promise.then(function(){
-            pageRendering = false;
-            pageSpan.textContent = String(num);
-            if (pagePending !== null){
-              const next = pagePending;
-              pagePending = null;
-              renderPage(next);
-            }
-          });
-        });
-      }
-
-      function queueRenderPage(num){
-        if (pageRendering){
-          pagePending = num;
-        } else {
-          renderPage(num);
+    async function fetchRepoFiles(path) {
+      const url = `https://api.github.com/repos/${OWNER}/${REPO}/contents/${path}`;
+      try {
+        const res = await fetch(url);
+        if (!res.ok) {
+          console.error('Failed to fetch', path, res.status);
+          return [];
         }
+        return await res.json();
+      } catch (e) {
+        console.error('fetchRepoFiles error', e);
+        return [];
+      }
+    }
+
+    function isPdf(name) {
+      return name.toLowerCase().endsWith('.pdf');
+    }
+
+    function isImage(name) {
+      const n = name.toLowerCase();
+      return n.endsWith('.png') || n.endsWith('.jpg') || n.endsWith('.jpeg') || n.endsWith('.gif');
+    }
+
+    // 1) MAIN FULL PAPER: OPEN / DOWNLOAD / TURN PAGE
+    function initFullPaper() {
+      const viewer   = document.getElementById('fullViewer');
+      const openBtn  = document.getElementById('fullOpenBtn');
+      const dlLink   = document.getElementById('fullDownloadBtn');
+      const turnBtn  = document.getElementById('fullTurnPageBtn');
+
+      if (!viewer || !openBtn || !dlLink || !turnBtn) return;
+
+      const baseUrl  = `${PDF_PATH}/${FULL_PDF_NAME}`;
+      let currentPage = 1;
+
+      function updateViewer() {
+        viewer.src = `${baseUrl}#page=${currentPage}`;
       }
 
-      function loadDocument(){
-        const url = currentUrl();
-        if (openBtn) openBtn.href = url;
+      openBtn.addEventListener('click', () => {
+        window.open(baseUrl, '_blank');
+      });
 
-        pdfjsLib.getDocument(url).promise.then(function(pdf){
-          pdfDoc = pdf;
-          pageNum = 1;
-          if (countSpan) countSpan.textContent = '/ ' + pdf.numPages;
-          queueRenderPage(pageNum);
-        }).catch(function(err){
-          console.error('PDF load error', err);
-          if (iosNote){
-            iosNote.textContent = 'Failed to load PDF on this device.';
-            iosNote.style.display = 'inline';
-          }
+      dlLink.href = baseUrl;
+      dlLink.download = FULL_PDF_NAME;
+
+      turnBtn.addEventListener('click', () => {
+        currentPage += 1;
+        updateViewer();
+      });
+
+      updateViewer();
+    }
+
+    // 2) MAIN GALLERY: BIG IMAGE + CAPTION + NEXT + SCROLLABLE THUMBS
+    async function initGallery() {
+      const mainImg   = document.getElementById('galleryMainImg');
+      const captionEl = document.getElementById('galleryCaption');
+      const strip     = document.getElementById('galleryThumbStrip');
+      const nextBtn   = document.getElementById('galleryNextBtn');
+
+      if (!mainImg || !captionEl || !strip || !nextBtn) return;
+
+      const files = await fetchRepoFiles(IMG_PATH);
+      const imgFiles = files.filter(f => isImage(f.name));
+
+      if (!imgFiles.length) return;
+
+      const curatedSet = new Set(CURATED_IMAGES);
+      const curated = [];
+      const others  = [];
+      imgFiles.forEach(f => {
+        if (curatedSet.has(f.name)) curated.push(f);
+        else others.push(f);
+      });
+
+      const ordered = [...curated, ...others];
+      let currentIndex = 0;
+
+      function setImageByIndex(i) {
+        const file = ordered[i];
+        if (!file) return;
+        currentIndex = i;
+        const url = `${IMG_PATH}/${file.name}`;
+        mainImg.src = url;
+        mainImg.alt = file.name;
+        captionEl.textContent = IMAGE_CAPTIONS[file.name] || '';
+      }
+
+      // build thumbnails
+      ordered.forEach((file, index) => {
+        const thumb = document.createElement('img');
+        thumb.src = `${IMG_PATH}/${file.name}`;
+        thumb.alt = file.name;
+        thumb.style.height = '80px';
+        thumb.style.cursor = 'pointer';
+        thumb.style.borderRadius = '4px';
+        thumb.style.border = '1px solid var(--line)';
+
+        thumb.addEventListener('click', () => {
+          setImageByIndex(index);
         });
+
+        strip.appendChild(thumb);
+      });
+
+      nextBtn.addEventListener('click', () => {
+        const next = (currentIndex + 1) % ordered.length;
+        setImageByIndex(next);
+      });
+
+      // initialize with first image
+      setImageByIndex(0);
+    }
+
+    // 3) SECONDARY PDFs: DROPDOWN + VIEWER (ALL PDFs EXCEPT FULL)
+    async function initSecondaryPdfs() {
+      const select = document.getElementById('secondaryPdfSelector');
+      const viewer = document.getElementById('secondaryPdfViewer');
+      if (!select || !viewer) return;
+
+      const files = await fetchRepoFiles(PDF_PATH);
+      const pdfFiles = files
+        .filter(f => isPdf(f.name) && f.name !== FULL_PDF_NAME)
+        .sort((a, b) => a.name.localeCompare(b.name));
+
+      pdfFiles.forEach(file => {
+        const opt = document.createElement('option');
+        opt.value = file.name;
+        opt.textContent = file.name;
+        select.appendChild(opt);
+      });
+
+      function setSecondaryPdf(name) {
+        viewer.src = `${PDF_PATH}/${name}`;
       }
 
-      prevBtn.addEventListener('click', function(){
-        if (!pdfDoc || pageNum <= 1) return;
-        pageNum--;
-        queueRenderPage(pageNum);
-      });
+      if (pdfFiles.length) {
+        const first = pdfFiles[0].name;
+        select.value = first;
+        setSecondaryPdf(first);
+      }
 
-      nextBtn.addEventListener('click', function(){
-        if (!pdfDoc || pageNum >= pdfDoc.numPages) return;
-        pageNum++;
-        queueRenderPage(pageNum);
+      select.addEventListener('change', () => {
+        setSecondaryPdf(select.value);
       });
+    }
 
-      select.addEventListener('change', function(){
-        const v = this.value;
-        if (!docs[v]) return;
-        currentKey = v;
-        loadDocument();
-      });
-
-      window.addEventListener('resize', function(){
-        if (pdfDoc){
-          queueRenderPage(pageNum);
-        }
-      });
-
-      // Initial load: Read First (fore)
-      loadDocument();
-    })();
+    document.addEventListener('DOMContentLoaded', () => {
+      initFullPaper();
+      initGallery();
+      initSecondaryPdfs();
+    });
   </script>
 
   <!-- TORUS LOGIC: pure JS / Three.js -->
@@ -651,11 +710,6 @@
 
         const origPositions = pos.array.slice();
 
-        const phi  = (1 + Math.sqrt(5)) / 2;   // golden ratio
-        const iota = phi * phi;
-        const omega = Math.PI / phi;
-        const theta_c = 2 * Math.PI / phi;
-
         function updateWave(time){
           const v = pos.array;
           const freq1 = 3.0;
@@ -692,7 +746,7 @@
             v[i*3+2] = newZ;
 
             const psi = mod;
-            const hue = (psi + 1) * 0.5; // 0..1
+            const hue = (psi + 1) * 0.5;
             const c = new THREE.Color();
             c.setHSL(0.6 * hue + 0.1, 1.0, 0.5);
             colors[i*3]   = c.r;
