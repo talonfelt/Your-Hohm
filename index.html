@@ -550,233 +550,241 @@
   </script>
 
   <!-- PDF VIEWERS (BOTH USE SAME ENGINE) -->
-  <script>
-    (function(){
-      const pdfjsLib = window['pdfjsLib'];
-      if (!pdfjsLib) return;
-
-      pdfjsLib.GlobalWorkerOptions.workerSrc =
-        'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
-
-      const ua = navigator.userAgent || navigator.vendor || window.opera;
-      const isIOS = /iPad|iPhone|iPod/.test(ua);
-
-      function createViewer(cfg){
-        const canvas = document.getElementById(cfg.canvasId);
-        const ctx    = canvas.getContext('2d');
-        const box    = document.getElementById(cfg.boxId);
-        const prev   = document.getElementById(cfg.prevId);
-        const next   = document.getElementById(cfg.nextId);
-        const pageSp = document.getElementById(cfg.pageSpanId);
-        const countSp= document.getElementById(cfg.countSpanId);
-        const iosNote= document.getElementById(cfg.iosNoteId);
-        const openLn = document.getElementById(cfg.openLinkId);
-        const dlLn   = document.getElementById(cfg.downloadLinkId);
-
-        if (!canvas || !box || !prev || !next || !pageSp || !countSp) return;
-
-        if (isIOS && iosNote) iosNote.style.display = 'inline';
-
-        let pdfDoc = null;
-        let pageNum = 1;
-        let pageRendering = false;
-        let pagePending = null;
-        let currentUrl = cfg.initialUrl;
-
-        function setLinks(url){
-          if (openLn) openLn.href = url;
-          if (dlLn)   dlLn.href   = url;
-        }
-
-        function renderPage(num){
-          if (!pdfDoc) return;
-          pageRendering = true;
-
-          pdfDoc.getPage(num).then(function(page){
-            const viewport = page.getViewport({ scale: 1 });
-            const targetWidth = 4096;
-            const scale = targetWidth / viewport.width;
-            const scaledViewport = page.getViewport({ scale: scale });
-
-            canvas.width  = scaledViewport.width;
-            canvas.height = scaledViewport.height;
-
-            const boxWidth = box.clientWidth || viewport.width;
-            const visualHeight = (scaledViewport.height / scaledViewport.width) * boxWidth;
-            canvas.style.width  = boxWidth + 'px';
-            canvas.style.height = visualHeight + 'px';
-
-            const renderContext = {
-              canvasContext: ctx,
-              viewport: scaledViewport
-            };
-
-            const renderTask = page.render(renderContext);
-            renderTask.promise.then(function(){
-              pageRendering = false;
-              pageSp.textContent = String(num);
-              prev.disabled = (num <= 1);
-              next.disabled = (num >= pdfDoc.numPages);
-
-              if (pagePending !== null){
-                const n = pagePending;
-                pagePending = null;
-                renderPage(n);
-              }
-            });
-          });
-        }
-
-        function queueRenderPage(num){
-          if (pageRendering){
-            pagePending = num;
-          } else {
-            renderPage(num);
-          }
-        }
-
-        function loadDocument(url){
-          currentUrl = url;
-          setLinks(url);
-          pdfjsLib.getDocument(url).promise.then(function(pdf){
-            pdfDoc = pdf;
-            pageNum = 1;
-            countSp.textContent = '/ ' + pdf.numPages;
-            queueRenderPage(pageNum);
-          }).catch(function(err){
-            console.error('PDF load error', err);
-            if (iosNote){
-              iosNote.textContent = 'Failed to load PDF on this device.';
-              iosNote.style.display = 'inline';
-            }
-          });
-        }
-
-        prev.addEventListener('click', function(){
-          if (!pdfDoc || pageNum <= 1) return;
-          pageNum--;
-          queueRenderPage(pageNum);
-        });
-
-        next.addEventListener('click', function(){
-          if (!pdfDoc || pageNum >= pdfDoc.numPages) return;
-          pageNum++;
-          queueRenderPage(pageNum);
-        });
-
-        window.addEventListener('resize', function(){
-          if (pdfDoc){
-            queueRenderPage(pageNum);
-          }
-        });
-
-        // public API
-        return {
-          load: loadDocument
-        };
-      }
-
-      // Main viewer (full paper)
-      const mainViewer = createViewer({
-        canvasId: 'main-canvas',
-        boxId: 'main-viewer-box',
-        prevId: 'main-prev',
-        nextId: 'main-next',
-        pageSpanId: 'main-page-number',
-        countSpanId:'main-page-count',
-        iosNoteId:'main-ios-note',
-        openLinkId:'main-open',
-        downloadLinkId:'main-download',
-        initialUrl: 'assets/pdf/Your_Hohm-[full].pdf'
-      });
-      if (mainViewer){
-        mainViewer.load('assets/pdf/Your_Hohm-[full].pdf');
-      }
-
-      // Secondary viewer (dropdown)
-      <!-- AUTO-POPULATED SECONDARY PDF VIEWER -->
+<!-- PDF VIEWERS (main + secondary with auto-populated dropdown) -->
 <script>
-(function() {
-
+(function(){
   const pdfjsLib = window['pdfjsLib'];
   if (!pdfjsLib) return;
 
   pdfjsLib.GlobalWorkerOptions.workerSrc =
     'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
 
-  const repoOwner = 'talonfelt';
-  const repoName  = 'Your-Hohm';
-  const pdfDir    = 'assets/pdf';
-  const apiUrl    = `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${pdfDir}`;
+  const ua    = navigator.userAgent || navigator.vendor || window.opera;
+  const isIOS = /iPad|iPhone|iPod/.test(ua);
 
-  const FULL_PAPER = 'Your_Hohm-[full].pdf';  // never show this in dropdown
+  function createViewer(cfg){
+    const canvas    = document.getElementById(cfg.canvasId);
+    const box       = document.getElementById(cfg.boxId);
+    const prevBtn   = document.getElementById(cfg.prevId);
+    const nextBtn   = document.getElementById(cfg.nextId);
+    const pageSpan  = document.getElementById(cfg.pageSpanId);
+    const countSpan = document.getElementById(cfg.countSpanId);
+    const iosNote   = document.getElementById(cfg.iosNoteId);
+    const openLink  = document.getElementById(cfg.openLinkId);
+    const dlLink    = document.getElementById(cfg.downloadLinkId);
 
-  const secSelect  = document.getElementById('sec-select');
-  const secOpen    = document.getElementById('sec-open');
-  const secDownload= document.getElementById('sec-download');
+    if (!canvas || !box || !prevBtn || !nextBtn || !pageSpan || !countSpan) {
+      console.warn('PDF viewer missing elements for', cfg.canvasId);
+      return null;
+    }
 
-  // Reuse your existing viewer constructor
-  const secViewer = createViewer({
-    canvasId: 'sec-canvas',
-    boxId: 'sec-viewer-box',
-    prevId: 'sec-prev',
-    nextId: 'sec-next',
-    pageSpanId: 'sec-page-number',
-    countSpanId:'sec-page-count',
-    iosNoteId:'sec-ios-note',
-    openLinkId:'sec-open',
-    downloadLinkId:'sec-download',
-    initialUrl: '' // will be replaced once files load
+    if (isIOS && iosNote) iosNote.style.display = 'inline';
+
+    const ctx = canvas.getContext('2d');
+
+    let pdfDoc        = null;
+    let pageNum       = 1;
+    let pageRendering = false;
+    let pagePending   = null;
+    let currentUrl    = cfg.initialUrl || null;
+
+    function setLinks(url){
+      if (openLink) openLink.href = url;
+      if (dlLink)   dlLink.href   = url;
+    }
+
+    function renderPage(num){
+      if (!pdfDoc) return;
+      pageRendering = true;
+
+      pdfDoc.getPage(num).then(function(page){
+        const viewport = page.getViewport({ scale: 1 });
+        const targetWidth = 4096;
+        const scale = targetWidth / viewport.width;
+        const scaledViewport = page.getViewport({ scale: scale });
+
+        canvas.width  = scaledViewport.width;
+        canvas.height = scaledViewport.height;
+
+        const boxWidth = box.clientWidth || viewport.width;
+        const visualHeight = (scaledViewport.height / scaledViewport.width) * boxWidth;
+        canvas.style.width  = boxWidth + 'px';
+        canvas.style.height = visualHeight + 'px';
+
+        const renderContext = {
+          canvasContext: ctx,
+          viewport: scaledViewport
+        };
+
+        const renderTask = page.render(renderContext);
+        renderTask.promise.then(function(){
+          pageRendering = false;
+          pageSpan.textContent = String(num);
+          prevBtn.disabled = (num <= 1);
+          nextBtn.disabled = (num >= pdfDoc.numPages);
+
+          if (pagePending !== null){
+            const next = pagePending;
+            pagePending = null;
+            renderPage(next);
+          }
+        });
+      });
+    }
+
+    function queueRenderPage(num){
+      if (pageRendering){
+        pagePending = num;
+      } else {
+        renderPage(num);
+      }
+    }
+
+    function loadDocument(url){
+      if (!url) return;
+      currentUrl = url;
+      setLinks(url);
+
+      pdfjsLib.getDocument(url).promise.then(function(pdf){
+        pdfDoc = pdf;
+        pageNum = 1;
+        countSpan.textContent = '/ ' + pdf.numPages;
+        queueRenderPage(pageNum);
+      }).catch(function(err){
+        console.error('PDF load error for', url, err);
+        if (iosNote){
+          iosNote.textContent = 'Failed to load PDF on this device.';
+          iosNote.style.display = 'inline';
+        }
+      });
+    }
+
+    prevBtn.addEventListener('click', function(){
+      if (!pdfDoc || pageNum <= 1) return;
+      pageNum--;
+      queueRenderPage(pageNum);
+    });
+
+    nextBtn.addEventListener('click', function(){
+      if (!pdfDoc || pageNum >= pdfDoc.numPages) return;
+      pageNum++;
+      queueRenderPage(pageNum);
+    });
+
+    window.addEventListener('resize', function(){
+      if (pdfDoc){
+        queueRenderPage(pageNum);
+      }
+    });
+
+    return {
+      load: loadDocument
+    };
+  }
+
+  /* ========= MAIN VIEWER (FULL PAPER) ========= */
+
+  const mainViewer = createViewer({
+    canvasId:      'main-canvas',
+    boxId:         'main-viewer-box',
+    prevId:        'main-prev',
+    nextId:        'main-next',
+    pageSpanId:    'main-page-number',
+    countSpanId:   'main-page-count',
+    iosNoteId:     'main-ios-note',
+    openLinkId:    'main-open',
+    downloadLinkId:'main-download',
+    initialUrl:    'assets/pdf/Your_Hohm-[full].pdf'
   });
 
-  // Clear static <option> markup
-  secSelect.innerHTML = '';
+  if (mainViewer){
+    mainViewer.load('assets/pdf/Your_Hohm-[full].pdf');
+  }
 
-  function populateDropdown(files) {
+  /* ========= SECONDARY VIEWER (AUTO-DROPDOWN) ========= */
+
+  const secSelect   = document.getElementById('sec-select');
+  const secOpen     = document.getElementById('sec-open');
+  const secDownload = document.getElementById('sec-download');
+
+  const secViewer = createViewer({
+    canvasId:      'sec-canvas',
+    boxId:         'sec-viewer-box',
+    prevId:        'sec-prev',
+    nextId:        'sec-next',
+    pageSpanId:    'sec-page-number',
+    countSpanId:   'sec-page-count',
+    iosNoteId:     'sec-ios-note',
+    openLinkId:    'sec-open',
+    downloadLinkId:'sec-download',
+    initialUrl:    null
+  });
+
+  if (!secViewer || !secSelect || !secOpen || !secDownload){
+    // If any of these are missing, just bail out of the dropdown logic
+    return;
+  }
+
+  const owner   = 'talonfelt';
+  const repo    = 'Your-Hohm';
+  const pdfDir  = 'assets/pdf';
+  const FULL_PAPER = 'Your_Hohm-[full].pdf';
+  const apiUrl  = `https://api.github.com/repos/${owner}/${repo}/contents/${pdfDir}`;
+
+  function populateDropdown(files){
     const pdfFiles = files.filter(f =>
       f.type === 'file' &&
       /\.pdf$/i.test(f.name) &&
       f.name !== FULL_PAPER
     );
 
-    // Sort alphabetically
     pdfFiles.sort((a, b) => a.name.localeCompare(b.name));
 
-    if (!pdfFiles.length) {
-      secSelect.innerHTML = '<option>No PDFs found</option>';
+    secSelect.innerHTML = '';
+
+    if (!pdfFiles.length){
+      const opt = document.createElement('option');
+      opt.textContent = 'No secondary PDFs found';
+      opt.value = '';
+      secSelect.appendChild(opt);
       return;
     }
 
-    // Build dropdown entries
     pdfFiles.forEach(f => {
       const opt = document.createElement('option');
       opt.value = `${pdfDir}/${f.name}`;
-      opt.textContent = f.name.replace('.pdf', '').replace(/[_-]/g, ' ');
+      opt.textContent = f.name.replace('.pdf','').replace(/[_-]/g,' ');
       secSelect.appendChild(opt);
     });
 
-    // Load the first PDF automatically
-    const first = pdfFiles[0].name;
-    const firstUrl = `${pdfDir}/${first}`;
-
+    // Load first PDF by default
+    const firstUrl = `${pdfDir}/${pdfFiles[0].name}`;
     secOpen.href = firstUrl;
     secDownload.href = firstUrl;
     secViewer.load(firstUrl);
   }
 
-  // When choosing from dropdown
-  secSelect.addEventListener('change', function() {
+  secSelect.addEventListener('change', function(){
     const url = this.value;
+    if (!url) return;
     secOpen.href = url;
     secDownload.href = url;
     secViewer.load(url);
   });
 
-  // Fetch PDF list from GitHub
   fetch(apiUrl)
     .then(r => r.json())
-    .then(populateDropdown)
-    .catch(err => console.error('PDF list load error', err));
+    .then(json => {
+      if (!Array.isArray(json)){
+        console.error('Unexpected PDF JSON', json);
+        return;
+      }
+      populateDropdown(json);
+    })
+    .catch(err => {
+      console.error('PDF dropdown load error', err);
+      // If GitHub API fails, you can still manually hard-code options in HTML if you want.
+    });
 
 })();
 </script>
