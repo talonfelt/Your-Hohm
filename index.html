@@ -40,7 +40,7 @@
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
-  <!-- pdf.js (kept loaded in case you want to use it later, but not required by current logic) -->
+  <!-- pdf.js (can be removed if you never want it) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
 
   <!-- Three.js + OrbitControls (torus) -->
@@ -246,7 +246,7 @@
       <div class="subtitle">September 3rd, 2025 — Updated: November 11th, 2025</div>
     </header>
 
-    <!-- HERO SECTION -->
+    <!-- HERO -->
     <section class="hero panel">
       <p>Your Hohm presents a unified theory of physics grounded in a singular, toroidal vibration that is fundamentally tri-directional — “coming”, “going”, and “staying”. Mirrored, simultaneously folding and unfolding, inward and outward, yet eternally still, as the zero point of infinite potentiality.</p>
     </section>
@@ -264,8 +264,7 @@
       <article class="card">
         <h3 class="rgb-red">Read the Paper</h3>
         <p>Complete PDF: derivations, predictions, appendices.</p>
-        <!-- ideally point this at the same full PDF in assets/pdf -->
-        <a class="btn" href="assets/pdf/Your_Hohm-[book].pdf" target="_blank" rel="noopener">
+        <a class="btn" href="assets/pdf/Your_Hohm-[full].pdf" target="_blank" rel="noopener">
           Read in new window / Download
         </a>
       </article>
@@ -281,12 +280,13 @@
       </article>
     </section>
 
-    <!-- ============ 1. MAIN FULL PAPER SECTION (NO DROPDOWN) ============ -->
+    <!-- 1. MAIN FULL PAPER SECTION -->
     <section id="full-paper" class="panel alt" style="margin-top:30px;">
       <h2 class="h-underline">Main Paper — Full Version</h2>
 
       <div style="margin-bottom:0.75rem; display:flex; flex-wrap:wrap; gap:0.5rem; align-items:center;">
-        <button id="fullOpenBtn" style="padding:0.4rem 0.8rem;border-radius:10px;border:1px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer;">
+        <button id="fullOpenBtn"
+                style="padding:0.4rem 0.8rem;border-radius:10px;border:1px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer;">
           Open in new window
         </button>
 
@@ -295,7 +295,8 @@
           ⬇ Download full paper
         </a>
 
-        <button id="fullTurnPageBtn" style="padding:0.4rem 0.8rem;border-radius:10px;border:1px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer;">
+        <button id="fullTurnPageBtn"
+                style="padding:0.4rem 0.8rem;border-radius:10px;border:1px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer;">
           Turn page ▶
         </button>
       </div>
@@ -306,11 +307,10 @@
       </iframe>
     </section>
 
-    <!-- ============ 2. GALLERY UNDER FULL PAPER ============ -->
+    <!-- 2. GALLERY UNDER FULL PAPER -->
     <section id="main-gallery" class="panel" style="margin-top:30px;">
       <h2 class="h-underline">Oscillating Geometry — Featured Gallery</h2>
 
-      <!-- Main image + caption -->
       <div style="display:flex; flex-direction:column; align-items:center; margin-bottom:1rem;">
         <img id="galleryMainImg"
              src=""
@@ -319,19 +319,18 @@
         <div id="galleryCaption"
              style="margin-top:0.5rem; font-size:0.9rem; min-height:1.2em; text-align:center; color:var(--muted);">
         </div>
-        <button id="galleryNextBtn" style="margin-top:0.5rem; padding:0.3rem 0.8rem; border-radius:10px; border:1px solid var(--line); background:var(--panel-2); color:var(--ink); cursor:pointer;">
+        <button id="galleryNextBtn"
+                style="margin-top:0.5rem; padding:0.3rem 0.8rem; border-radius:10px; border:1px solid var(--line); background:var(--panel-2); color:var(--ink); cursor:pointer;">
           Next image ▶
         </button>
       </div>
 
-      <!-- Scrollable thumbnail strip -->
       <div id="galleryThumbStrip"
            style="display:flex; overflow-x:auto; gap:0.5rem; padding-bottom:0.5rem;">
-        <!-- JS injects thumbnails -->
       </div>
     </section>
 
-    <!-- ============ 3. SECONDARY PDF SECTION (DROPDOWN + VIEWER) ============ -->
+    <!-- 3. SECONDARY PDF SECTION -->
     <section id="secondary-pdfs" class="panel alt" style="margin-top:30px;">
       <h2 class="h-underline">Other Papers</h2>
 
@@ -394,7 +393,7 @@
       </ul>
     </section>
 
-    <!-- SUPPORT SECTION -->
+    <!-- SUPPORT -->
     <section class="support-grid panel alt" style="margin-top:40px;">
       <article class="support-card">
         <h3>Support the Work</h3>
@@ -413,7 +412,7 @@
       </article>
     </section>
 
-    <!-- TOROIDAL VISUALIZER (pure JS / Three.js) -->
+    <!-- TORUS -->
     <section class="panel alt toroid-section">
       <h2 class="h-underline">Your Hohm Torus — Interactive Visualization</h2>
       <p style="color:var(--muted);"><em>WebGL torus driven by a simple wave on the ring. No Python, no PyScript.</em></p>
@@ -457,19 +456,16 @@
     })();
   </script>
 
-  <!-- MAIN PAGE LOGIC: full paper, gallery, secondary PDFs -->
+  <!-- MAIN PAGE LOGIC (full paper, gallery, secondary PDFs) -->
   <script>
-    // TODO: set these to your actual GitHub username + repo name
-    const OWNER = 'YOUR_GITHUB_USERNAME';
-    const REPO  = 'YOUR_REPO_NAME';
+    const OWNER = 'talonfelt';
+    const REPO  = 'Your-Hohm';
 
     const PDF_PATH = 'assets/pdf';
     const IMG_PATH = 'assets/img';
 
-    // Full paper filename (must exist in assets/pdf)
-    const FULL_PDF_NAME = 'Your_Hohm-[book].pdf'; // change if your full PDF name differs
+    const FULL_PDF_NAME = 'Your_Hohm-[full].pdf';
 
-    // Curated images: these show first in the gallery (must exist in assets/img)
     const CURATED_IMAGES = [
       'E_005.JPG',
       'E_007 Large.png',
@@ -478,14 +474,12 @@
       'A_002.PNG'
     ];
 
-    // Captions per image; blank string = no caption
     const IMAGE_CAPTIONS = {
       'E_005.JPG': 'Central harmonic interference pattern',
       'E_007 Large.png': 'High-density resonance weave',
       'E_004.PNG': 'Quad-point constructive overlap',
       'A_001.PNG': 'Foundational 4-node lattice',
       'A_002.PNG': 'Extended nodal ring'
-      // add more as needed
     };
 
     async function fetchRepoFiles(path) {
@@ -512,7 +506,6 @@
       return n.endsWith('.png') || n.endsWith('.jpg') || n.endsWith('.jpeg') || n.endsWith('.gif');
     }
 
-    // 1) MAIN FULL PAPER: OPEN / DOWNLOAD / TURN PAGE
     function initFullPaper() {
       const viewer   = document.getElementById('fullViewer');
       const openBtn  = document.getElementById('fullOpenBtn');
@@ -543,7 +536,6 @@
       updateViewer();
     }
 
-    // 2) MAIN GALLERY: BIG IMAGE + CAPTION + NEXT + SCROLLABLE THUMBS
     async function initGallery() {
       const mainImg   = document.getElementById('galleryMainImg');
       const captionEl = document.getElementById('galleryCaption');
@@ -562,7 +554,7 @@
       const others  = [];
       imgFiles.forEach(f => {
         if (curatedSet.has(f.name)) curated.push(f);
-        else others.push(f);
+        else if (f.name !== '.keep') others.push(f);
       });
 
       const ordered = [...curated, ...others];
@@ -578,7 +570,6 @@
         captionEl.textContent = IMAGE_CAPTIONS[file.name] || '';
       }
 
-      // build thumbnails
       ordered.forEach((file, index) => {
         const thumb = document.createElement('img');
         thumb.src = `${IMG_PATH}/${file.name}`;
@@ -600,11 +591,9 @@
         setImageByIndex(next);
       });
 
-      // initialize with first image
       setImageByIndex(0);
     }
 
-    // 3) SECONDARY PDFs: DROPDOWN + VIEWER (ALL PDFs EXCEPT FULL)
     async function initSecondaryPdfs() {
       const select = document.getElementById('secondaryPdfSelector');
       const viewer = document.getElementById('secondaryPdfViewer');
@@ -644,7 +633,7 @@
     });
   </script>
 
-  <!-- TORUS LOGIC: pure JS / Three.js -->
+  <!-- TORUS LOGIC -->
   <script>
     (function(){
       const container = document.getElementById('toroid-container');
