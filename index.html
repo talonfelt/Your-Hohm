@@ -694,73 +694,125 @@
   </script>
 
   <!-- GALLERY LOGIC -->
-  <script>
-    (function(){
-      const images = [
-        {
-          src: 'assets/img/E_001 Large.png',
-          caption: 'Primary interference lattice — main field motif.'
-        },
-        { src: 'assets/img/A_001.PNG', caption: '' },
-        { src: 'assets/img/A_002.PNG', caption: '' },
-        { src: 'assets/img/A_003.PNG', caption: '' },
-        { src: 'assets/img/A_004.PNG', caption: '' },
-        { src: 'assets/img/A_005.PNG', caption: '' },
-        { src: 'assets/img/A_006.PNG', caption: '' },
-        { src: 'assets/img/A_007.PNG', caption: '' },
-        { src: 'assets/img/E_003.PNG', caption: '' },
-        { src: 'assets/img/E_004.PNG', caption: '' },
-        { src: 'assets/img/E_005.JPG', caption: '' },
-        { src: 'assets/img/E_007 Large.png', caption: '' },
-        { src: 'assets/img/E_008.PNG', caption: '' }
-      ];
+  <!-- GALLERY LOGIC — dynamic from assets/img via GitHub API -->
+<script>
+  (function(){
+    const mainImg    = document.getElementById('gallery-main-img');
+    const captionEl  = document.getElementById('gallery-caption');
+    const strip      = document.getElementById('gallery-strip');
+    const nextBtn    = document.getElementById('gallery-next');
 
-      const mainImg    = document.getElementById('gallery-main-img');
-      const captionEl  = document.getElementById('gallery-caption');
-      const strip      = document.getElementById('gallery-strip');
-      const nextBtn    = document.getElementById('gallery-next');
+    if (!mainImg || !captionEl || !strip || !nextBtn) return;
 
-      if (!mainImg || !captionEl || !strip || !nextBtn || !images.length) return;
+    // 🔧 EDIT THESE TWO if your GitHub repo is named differently
+    const owner   = 'talonfelt';
+    const repo    = 'Your-Hohm';
+    const dirPath = 'assets/img';
 
-      let currentIndex = 0;
-      const thumbs = [];
+    const apiUrl  = `https://api.github.com/repos/${owner}/${repo}/contents/${dirPath}`;
 
-      function setImage(index){
-        const img = images[index];
-        if (!img) return;
-        currentIndex = index;
-        mainImg.src = img.src;
-        captionEl.textContent = img.caption || '';
-        thumbs.forEach((th, i) => {
-          th.classList.toggle('active', i === index);
-        });
+    // Optional captions per file (exact filename keys)
+    const captions = {
+      'E_001 Large.png': 'Primary interference lattice — main field motif.'
+      // 'A_001.PNG': 'Some caption',
+      // 'E_003.PNG': 'Another caption',
+      // add more as needed
+    };
+
+    let images = [];
+    let thumbs = [];
+    let currentIndex = 0;
+
+    function setImage(index){
+      const img = images[index];
+      if (!img) return;
+      currentIndex = index;
+      mainImg.src = img.src;
+      mainImg.alt = img.name;
+      captionEl.textContent = img.caption || '';
+      thumbs.forEach((th, i) => {
+        th.classList.toggle('active', i === index);
+      });
+    }
+
+    function buildGallery(files){
+      // keep only image files
+      const imgFiles = files.filter(f =>
+        f.type === 'file' &&
+        /\.(png|jpe?g|gif|webp)$/i.test(f.name)
+      );
+
+      if (!imgFiles.length) return;
+
+      // sort by name
+      imgFiles.sort((a, b) => a.name.localeCompare(b.name));
+
+      // force E_001 Large.png to be first if present
+      const heroName = 'E_001 Large.png';
+      const heroIdx = imgFiles.findIndex(f => f.name === heroName);
+      if (heroIdx > 0){
+        const [hero] = imgFiles.splice(heroIdx, 1);
+        imgFiles.unshift(hero);
       }
+
+      images = imgFiles.map(f => ({
+        name: f.name,
+        src: `${dirPath}/${f.name}`,
+        caption: captions[f.name] || ''
+      }));
+
+      strip.innerHTML = '';
+      thumbs = [];
 
       images.forEach((img, idx) => {
         const wrap = document.createElement('div');
         wrap.className = 'gallery-thumb';
         wrap.dataset.index = idx;
+
         const im = document.createElement('img');
         im.src = img.src;
-        im.alt = 'Gallery thumbnail ' + (idx + 1);
+        im.alt = img.name;
+
         wrap.appendChild(im);
         wrap.addEventListener('click', () => setImage(idx));
+
         strip.appendChild(wrap);
         thumbs.push(wrap);
       });
 
-      nextBtn.addEventListener('click', () => {
-        const next = (currentIndex + 1) % images.length;
-        setImage(next);
-        const activeThumb = thumbs[next];
-        if (activeThumb && activeThumb.scrollIntoView){
-          activeThumb.scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'});
-        }
-      });
-
       setImage(0);
-    })();
-  </script>
+    }
+
+    nextBtn.addEventListener('click', () => {
+      if (!images.length) return;
+      const next = (currentIndex + 1) % images.length;
+      setImage(next);
+      const activeThumb = thumbs[next];
+      if (activeThumb && activeThumb.scrollIntoView){
+        activeThumb.scrollIntoView({
+          behavior:'smooth',
+          inline:'center',
+          block:'nearest'
+        });
+      }
+    });
+
+    // Fetch list of files in assets/img from GitHub
+    fetch(apiUrl)
+      .then(resp => resp.json())
+      .then(json => {
+        if (!Array.isArray(json)) {
+          console.error('Unexpected gallery JSON', json);
+          return;
+        }
+        buildGallery(json);
+      })
+      .catch(err => {
+        console.error('Gallery load error', err);
+        // If this fails, the rest of the page still works; gallery just won’t populate.
+      });
+  })();
+</script>
 
   <!-- TORUS LOGIC -->
   <script>
