@@ -694,28 +694,92 @@
       }
 
       // Secondary viewer (dropdown)
-      const secSelect = document.getElementById('sec-select');
-      const secViewer = createViewer({
-        canvasId: 'sec-canvas',
-        boxId: 'sec-viewer-box',
-        prevId: 'sec-prev',
-        nextId: 'sec-next',
-        pageSpanId: 'sec-page-number',
-        countSpanId:'sec-page-count',
-        iosNoteId:'sec-ios-note',
-        openLinkId:'sec-open',
-        downloadLinkId:'sec-download',
-        initialUrl: secSelect ? secSelect.value : 'assets/pdf/Your_Hohm-[fore].pdf'
-      });
+      <!-- AUTO-POPULATED SECONDARY PDF VIEWER -->
+<script>
+(function() {
 
-      if (secViewer && secSelect){
-        secViewer.load(secSelect.value);
-        secSelect.addEventListener('change', function(){
-          secViewer.load(this.value);
-        });
-      }
-    })();
-  </script>
+  const pdfjsLib = window['pdfjsLib'];
+  if (!pdfjsLib) return;
+
+  pdfjsLib.GlobalWorkerOptions.workerSrc =
+    'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+
+  const repoOwner = 'talonfelt';
+  const repoName  = 'Your-Hohm';
+  const pdfDir    = 'assets/pdf';
+  const apiUrl    = `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${pdfDir}`;
+
+  const FULL_PAPER = 'Your_Hohm-[full].pdf';  // never show this in dropdown
+
+  const secSelect  = document.getElementById('sec-select');
+  const secOpen    = document.getElementById('sec-open');
+  const secDownload= document.getElementById('sec-download');
+
+  // Reuse your existing viewer constructor
+  const secViewer = createViewer({
+    canvasId: 'sec-canvas',
+    boxId: 'sec-viewer-box',
+    prevId: 'sec-prev',
+    nextId: 'sec-next',
+    pageSpanId: 'sec-page-number',
+    countSpanId:'sec-page-count',
+    iosNoteId:'sec-ios-note',
+    openLinkId:'sec-open',
+    downloadLinkId:'sec-download',
+    initialUrl: '' // will be replaced once files load
+  });
+
+  // Clear static <option> markup
+  secSelect.innerHTML = '';
+
+  function populateDropdown(files) {
+    const pdfFiles = files.filter(f =>
+      f.type === 'file' &&
+      /\.pdf$/i.test(f.name) &&
+      f.name !== FULL_PAPER
+    );
+
+    // Sort alphabetically
+    pdfFiles.sort((a, b) => a.name.localeCompare(b.name));
+
+    if (!pdfFiles.length) {
+      secSelect.innerHTML = '<option>No PDFs found</option>';
+      return;
+    }
+
+    // Build dropdown entries
+    pdfFiles.forEach(f => {
+      const opt = document.createElement('option');
+      opt.value = `${pdfDir}/${f.name}`;
+      opt.textContent = f.name.replace('.pdf', '').replace(/[_-]/g, ' ');
+      secSelect.appendChild(opt);
+    });
+
+    // Load the first PDF automatically
+    const first = pdfFiles[0].name;
+    const firstUrl = `${pdfDir}/${first}`;
+
+    secOpen.href = firstUrl;
+    secDownload.href = firstUrl;
+    secViewer.load(firstUrl);
+  }
+
+  // When choosing from dropdown
+  secSelect.addEventListener('change', function() {
+    const url = this.value;
+    secOpen.href = url;
+    secDownload.href = url;
+    secViewer.load(url);
+  });
+
+  // Fetch PDF list from GitHub
+  fetch(apiUrl)
+    .then(r => r.json())
+    .then(populateDropdown)
+    .catch(err => console.error('PDF list load error', err));
+
+})();
+</script>
 
   <!-- GALLERY LOGIC -->
   <!-- GALLERY LOGIC — dynamic from assets/img via GitHub API -->
