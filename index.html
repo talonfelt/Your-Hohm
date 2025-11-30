@@ -40,10 +40,10 @@
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
-  <!-- pdf.js is no longer used by the new viewer, but harmless if left -->
+  <!-- pdf.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
 
-  <!-- Three.js + OrbitControls (torus) -->
+  <!-- Three.js + OrbitControls -->
   <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
   <script src="https://unpkg.com/three@0.160.0/examples/js/controls/OrbitControls.js"></script>
 
@@ -57,38 +57,29 @@
       --glow:0 0 18px rgba(127,187,255,.55),0 0 36px rgba(122,255,234,.35);
       --soft:0 10px 30px rgba(0,0,0,.45);
     }
-
     body[data-theme="light"]{
-      --bg:#f5f7fc;
-      --ink:#02040a;
-      --muted:#5c6675;
-      --line:rgba(70,90,130,.3);
-      --panel:rgba(255,255,255,.96);
-      --panel-2:rgba(245,248,255,.96);
+      --bg:#f5f7fc;--ink:#02040a;--muted:#5c6675;--line:rgba(70,90,130,.3);
+      --panel:rgba(255,255,255,.96);--panel-2:rgba(245,248,255,.96);
       --soft:0 10px 25px rgba(0,0,0,.12);
     }
-
     html,body{
-      background:var(--bg);
-      color:var(--ink);
-      font-family:system-ui,sans-serif;
-      line-height:1.6;
-      -webkit-font-smoothing:antialiased
+      background:var(--bg);color:var(--ink);
+      font-family:system-ui,sans-serif;line-height:1.6;
+      -webkit-font-smoothing:antialiased;
     }
     @keyframes pulse{
-      0%,100%{filter:drop-shadow(0 0 0 rgba(127,187,255,.0));opacity:.9}
+      0%,100%{filter:drop-shadow(0 0 0 rgba(127,187,255,0));opacity:.9}
       50%{filter:drop-shadow(0 0 10px rgba(122,255,234,.45));opacity:1}
     }
     .container{max-width:1160px;margin:0 auto;padding:28px}
     header{
       text-align:center;padding:56px 16px 32px;
-      border-bottom:1px solid var(--line);
-      margin-bottom:28px;position:relative
+      border-bottom:1px solid var(--line);margin-bottom:28px;position:relative;
     }
     h1{
       font-size:clamp(2.2rem,4.5vw,3.2rem);
       letter-spacing:.5px;margin-bottom:10px;
-      text-shadow:0 0 24px rgba(140,180,255,.35)
+      text-shadow:0 0 24px rgba(140,180,255,.35);
     }
     .tagline{color:rgba(230,240,255,.9);font-size:1.05rem}
     body[data-theme="light"] .tagline{color:#283044}
@@ -99,50 +90,47 @@
       display:inline-block;margin-right:10px;
       animation:pulse 3.5s ease-in-out infinite;
       box-shadow:0 0 16px rgba(127,187,255,.65),0 0 28px rgba(122,255,234,.35);
-      vertical-align:middle
+      vertical-align:middle;
     }
+    .theme-toggle-wrap{margin-bottom:12px}
+    .theme-toggle{
+      padding:6px 12px;border-radius:999px;border:1px solid var(--line);
+      background:var(--panel-2);color:var(--ink);font-size:.85rem;cursor:pointer;
+    }
+
     .panel{
       background:var(--panel);border:1px solid var(--line);
       border-radius:var(--radius-lg);padding:22px;
       backdrop-filter:var(--glass);-webkit-backdrop-filter:var(--glass);
-      box-shadow:var(--soft)
+      box-shadow:var(--soft);
     }
     .panel.alt{background:var(--panel-2)}
-    .h-underline{
-      display:inline-block;position:relative;
-      padding-bottom:6px;margin-bottom:10px
-    }
-    .h-underline::after{
-      content:"";position:absolute;left:0;bottom:0;height:2px;width:100px;
-      background:linear-gradient(90deg,var(--accA),var(--accB),var(--accC));
-      border-radius:999px;box-shadow:var(--glow)
-    }
-    .rgb-red{color:#ffd6e8;text-shadow:0 0 24px rgba(255,120,160,.6)}
-    .rgb-green{color:#d4ffe6;text-shadow:0 0 24px rgba(120,255,200,.6)}
-    .rgb-blue{color:#d6e0ff;text-shadow:0 0 24px rgba(120,160,255,.6)}
+
     .hero{margin:28px 0;padding:26px}
     .hero p{font-size:1.05rem}
+
     .stats{
       display:grid;gap:16px;margin:26px 0;
-      grid-template-columns:repeat(4,minmax(0,1fr))
+      grid-template-columns:repeat(4,minmax(0,1fr));
     }
     .stat{
       text-align:center;padding:18px;border-radius:var(--radius-md);
       background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.00));
-      border:1px solid var(--line);box-shadow:var(--soft)
+      border:1px solid var(--line);box-shadow:var(--soft);
     }
     .stat-number{font-weight:800;font-size:1.9rem;margin-bottom:6px}
     .stat-label{color:var(--muted)}
+
     .download-grid{
       display:grid;gap:16px;margin:28px 0;
-      grid-template-columns:repeat(3,minmax(0,1fr))
+      grid-template-columns:repeat(3,minmax(0,1fr));
     }
     .card{
       text-align:center;padding:24px;border-radius:var(--radius-lg);
       border:1px solid var(--line);
       background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.00));
       backdrop-filter:var(--glass);-webkit-backdrop-filter:var(--glass);
-      box-shadow:var(--soft);transition:transform .2s ease
+      box-shadow:var(--soft);transition:transform .2s ease;
     }
     .card:hover{transform:translateY(-3px)}
     .card h3{font-size:1.35rem;margin-bottom:8px}
@@ -152,66 +140,132 @@
       padding:12px 16px;border-radius:12px;font-weight:700;
       text-decoration:none;color:#031018;
       background:linear-gradient(135deg,var(--accA),var(--accB));
-      box-shadow:var(--glow);border:1px solid rgba(255,255,255,.25);cursor:pointer
+      box-shadow:var(--glow);border:1px solid rgba(255,255,255,.25);cursor:pointer;
     }
     .btn:hover{filter:saturate(110%)}
-    .support-grid{
-      display:grid;gap:16px;margin:28px 0;
-      grid-template-columns:repeat(3,minmax(0,1fr))
-    }
-    .support-card{
-      text-align:center;padding:24px;border-radius:var(--radius-lg);
-      border:1px solid var(--line);
-      background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.00));
-      backdrop-filter:var(--glass);-webkit-backdrop-filter:var(--glass);
-      box-shadow:var(--soft);transition:transform .2s ease
-    }
-    .support-card:hover{transform:translateY(-3px)}
-    .support-card h3{font-size:1.35rem;margin-bottom:8px}
 
+    .h-underline{
+      display:inline-block;position:relative;
+      padding-bottom:6px;margin-bottom:10px;
+    }
+    .h-underline::after{
+      content:"";position:absolute;left:0;bottom:0;height:2px;width:100px;
+      background:linear-gradient(90deg,var(--accA),var(--accB),var(--accC));
+      border-radius:999px;box-shadow:var(--glow);
+    }
+
+    .rgb-red{color:#ffd6e8;text-shadow:0 0 24px rgba(255,120,160,.6)}
+    .rgb-green{color:#d4ffe6;text-shadow:0 0 24px rgba(120,255,200,.6)}
+    .rgb-blue{color:#d6e0ff;text-shadow:0 0 24px rgba(120,160,255,.6)}
+
+    /* PDF viewers */
+    .pdf-section{margin:34px 0;padding:24px}
+    .pdf-title{text-align:center;font-size:1.6rem;margin-bottom:14px}
+    .pdf-toolbar{
+      display:flex;justify-content:space-between;align-items:center;
+      flex-wrap:wrap;gap:10px;margin-bottom:10px;
+    }
+    .pdf-toolbar-controls{
+      display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+    }
+    .pdf-nav-btn{
+      padding:6px 10px;border-radius:8px;border:1px solid var(--line);
+      background:#0a1018;color:var(--ink);font-size:.85rem;cursor:pointer;
+    }
+    .pdf-nav-btn:disabled{opacity:.4;cursor:default}
+    .pdf-viewer-box{
+      width:100%;min-height:320px;border-radius:var(--radius-lg);
+      border:1px solid var(--line);background:#000;
+      box-shadow:var(--soft);overflow:hidden;
+      display:flex;align-items:center;justify-content:center;
+    }
+    .pdf-viewer-box canvas{display:block;border-radius:var(--radius-lg)}
+
+    /* Gallery */
+    .gallery-section{margin:18px 0 40px}
+    .gallery-main{
+      text-align:center;margin-bottom:16px;
+    }
+    .gallery-main img{
+      max-width:100%;height:auto;border-radius:var(--radius-lg);
+      border:1px solid var(--line);box-shadow:var(--soft);
+    }
+    .gallery-caption{
+      margin-top:8px;font-size:.9rem;color:var(--muted);
+      min-height:1.2em;
+    }
+    .gallery-strip{
+      display:flex;gap:8px;overflow-x:auto;
+      padding:8px 4px;margin-bottom:10px;
+    }
+    .gallery-thumb{
+      flex:0 0 auto;width:90px;height:70px;border-radius:10px;
+      overflow:hidden;border:1px solid var(--line);cursor:pointer;
+      opacity:.65;transition:opacity .15s ease,transform .15s ease;
+    }
+    .gallery-thumb img{
+      width:100%;height:100%;object-fit:cover;display:block;
+    }
+    .gallery-thumb.active{opacity:1;transform:scale(1.02)}
+    .gallery-next-btn{
+      padding:6px 12px;border-radius:999px;border:1px solid var(--line);
+      background:#0a1018;color:var(--ink);font-size:.85rem;cursor:pointer;
+      display:inline-flex;align-items:center;gap:6px;
+    }
+
+    /* Verification and insights */
     .verification{margin:30px 0;padding:24px;border-left:3px solid var(--accA)}
     .verification h2{color:#e6f0ff;margin-bottom:10px}
     .code{
       background:rgba(6,10,16,.7);border:1px solid rgba(160,190,255,.35);
       padding:14px;margin:12px 0;border-radius:12px;overflow-x:auto;
-      font-family:ui-monospace,Menlo,Consolas,"Courier New",monospace
+      font-family:ui-monospace,Menlo,Consolas,"Courier New",monospace;
     }
     .warning{
       background:rgba(255,120,120,.12);border:1px solid rgba(255,160,160,.45);
-      padding:14px;color:#ffd6d6;border-radius:12px;margin-top:12px
+      padding:14px;color:#ffd6d6;border-radius:12px;margin-top:12px;
     }
     .predictions{margin:30px 0}
     .prediction{
       border-radius:var(--radius-md);padding:18px;margin:14px 0;
       background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.00));
-      border:1px solid var(--line);box-shadow:var(--soft)
+      border:1px solid var(--line);box-shadow:var(--soft);
     }
     .prediction h3{margin-bottom:6px}
     .insights{margin:28px 0;padding:22px}
     .insights ul{margin-left:22px;line-height:2}
     .insights li{margin-bottom:8px}
 
-    footer{
-      text-align:center;padding:30px 16px;margin-top:40px;
-      border-top:1px solid var(--line);color:var(--muted)
+    /* Support & torus */
+    .support-grid{
+      display:grid;gap:16px;margin:28px 0;
+      grid-template-columns:repeat(3,minmax(0,1fr));
     }
-    .socials{display:flex;justify-content:center;gap:16px;margin-top:12px}
-    .socials a{color:var(--accB);text-decoration:none;font-weight:600}
+    .support-card{
+      text-align:center;padding:24px;border-radius:var(--radius-lg);
+      border:1px solid var(--line);
+      background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.00));
+      backdrop-filter:var(--glass);-webkit-backdrop-filter:var(--glass);
+      box-shadow:var(--soft);transition:transform .2s ease;
+    }
+    .support-card:hover{transform:translateY(-3px)}
 
-    .toroid-section{margin:40px 0;padding:0;border-radius:18px;box-shadow:var(--soft)}
+    .toroid-section{margin:40px 0;padding:24px;border-radius:18px;box-shadow:var(--soft)}
     .toroid-container{
-      width:100%;height:680px;background:#04060a;
+      width:100%;height:600px;background:#04060a;
       border-radius:18px;overflow:hidden;
     }
     #toroid-fallback{
-      display:none;margin-top:10px;font-size:.9rem;color:var(--muted);text-align:center;
+      display:none;margin-top:10px;font-size:.9rem;
+      color:var(--muted);text-align:center;
     }
 
-    .theme-toggle-wrap{margin-bottom:12px}
-    .theme-toggle{
-      padding:6px 12px;border-radius:999px;border:1px solid var(--line);
-      background:var(--panel-2);color:var(--ink);font-size:.85rem;cursor:pointer
+    footer{
+      text-align:center;padding:30px 16px;margin-top:40px;
+      border-top:1px solid var(--line);color:var(--muted);
     }
+    .socials{display:flex;justify-content:center;gap:16px;margin-top:12px}
+    .socials a{color:var(--accB);text-decoration:none;font-weight:600}
 
     @media(max-width:1020px){
       .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -223,8 +277,9 @@
       .container{padding:20px}
       .stats,.download-grid,.support-grid{grid-template-columns:1fr}
       .panel{padding:18px}
+      .pdf-viewer-box{min-height:260px}
       .socials{flex-direction:column;align-items:center}
-      .toroid-container{height:520px}
+      .toroid-container{height:480px}
     }
   </style>
 </head>
@@ -234,7 +289,6 @@
       <div class="theme-toggle-wrap">
         <button id="theme-toggle" class="theme-toggle">Light mode</button>
       </div>
-
       <span class="dot"></span>
       <h1>YOUR HOHM</h1>
       <div class="tagline">A Unified Physics Model and Framework</div>
@@ -246,7 +300,7 @@
       <div class="subtitle">September 3rd, 2025 — Updated: November 11th, 2025</div>
     </header>
 
-    <!-- HERO SECTION -->
+    <!-- HERO -->
     <section class="hero panel">
       <p>Your Hohm presents a unified theory of physics grounded in a singular, toroidal vibration that is fundamentally tri-directional — “coming”, “going”, and “staying”. Mirrored, simultaneously folding and unfolding, inward and outward, yet eternally still, as the zero point of infinite potentiality.</p>
     </section>
@@ -262,89 +316,102 @@
     <!-- DOWNLOAD GRID -->
     <section class="download-grid">
       <article class="card">
-        <h3 class="rgb-red">Read the Paper</h3>
+        <h3 class="rgb-red">Read the Full Paper</h3>
         <p>Complete PDF: derivations, predictions, appendices.</p>
-        <a class="btn" href="assets/pdf/Your_Hohm-[full].pdf" target="_blank" rel="noopener">
-          Read in new window / Download
+        <a id="main-pdf-link" class="btn" href="assets/pdf/Your_Hohm-[full].pdf" target="_blank" rel="noopener">
+          Open full paper
         </a>
       </article>
       <article class="card">
-        <h3 class="rgb-green">Get the Source</h3>
+        <h3 class="rgb-green">Get the LaTeX</h3>
         <p>Full LaTeX sources with macros.</p>
-        <a class="btn" href="assets/pdf/Your_Hohm-[full].zip" download>Download LaTeX</a>
+        <a class="btn" href="assets/pdf/Your_Hohm-[full].zip" download>Download LaTeX source</a>
       </article>
       <article class="card">
-        <h3 class="rgb-blue">Verify Yourself</h3>
+        <h3 class="rgb-blue">Verification Protocol</h3>
         <p>Reproduce the numbers end-to-end.</p>
-        <a class="btn" href="#verification">See Instructions</a>
+        <a class="btn" href="#verification">See verification steps</a>
       </article>
     </section>
 
-    <!-- 1. MAIN FULL PAPER SECTION -->
-    <section id="full-paper" class="panel alt" style="margin-top:30px;">
-      <h2 class="h-underline">Main Paper — Full Version</h2>
+    <!-- MAIN PAPER VIEWER -->
+    <section id="main-paper" class="pdf-section panel">
+      <h2 class="pdf-title h-underline">Full Paper — Inline Viewer</h2>
 
-      <div style="margin-bottom:0.75rem; display:flex; flex-wrap:wrap; gap:0.5rem; align-items:center;">
-        <button id="fullOpenBtn"
-                style="padding:0.4rem 0.8rem;border-radius:10px;border:1px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer;">
-          Open in new window
-        </button>
-
-        <a id="fullDownloadBtn"
-           style="padding:0.4rem 0.8rem; border:1px solid var(--line); border-radius:10px; text-decoration:none; background:var(--panel-2); color:var(--ink);">
-          ⬇ Download full paper
-        </a>
-
-        <button id="fullTurnPageBtn"
-                style="padding:0.4rem 0.8rem;border-radius:10px;border:1px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer;">
-          Turn page ▶
-        </button>
+      <div class="pdf-toolbar">
+        <div class="pdf-toolbar-controls">
+          <button id="main-prev" class="pdf-nav-btn">Previous page</button>
+          <button id="main-next" class="pdf-nav-btn">Next page</button>
+          <span>
+            Page <span id="main-page-number">1</span>
+            <span id="main-page-count">/ ?</span>
+            <span id="main-ios-note" style="display:none;"> — inline PDF may be limited on some devices.</span>
+          </span>
+        </div>
+        <div class="pdf-toolbar-controls">
+          <a id="main-open" class="btn" href="assets/pdf/Your_Hohm-[full].pdf" target="_blank" rel="noopener">Open in new window</a>
+          <a id="main-download" class="btn" href="assets/pdf/Your_Hohm-[full].pdf" download>Download PDF</a>
+        </div>
       </div>
 
-      <iframe id="fullViewer"
-              src=""
-              style="width:100%; height:80vh; border:1px solid var(--line); border-radius:var(--radius-lg); background:#000;">
-      </iframe>
+      <div class="pdf-viewer-box" id="main-viewer-box">
+        <canvas id="main-canvas"></canvas>
+      </div>
     </section>
 
-    <!-- 2. GALLERY UNDER FULL PAPER -->
-    <section id="main-gallery" class="panel" style="margin-top:30px;">
-      <h2 class="h-underline">Oscillating Geometry — Featured Gallery</h2>
+    <!-- GALLERY -->
+    <section id="gallery" class="gallery-section panel alt">
+      <h2 class="pdf-title h-underline">Field Interference Gallery</h2>
 
-      <div style="display:flex; flex-direction:column; align-items:center; margin-bottom:1rem;">
-        <img id="galleryMainImg"
-             src=""
-             alt=""
-             style="max-width:100%; max-height:60vh; border-radius:6px; border:1px solid var(--line);">
-        <div id="galleryCaption"
-             style="margin-top:0.5rem; font-size:0.9rem; min-height:1.2em; text-align:center; color:var(--muted);">
-        </div>
-        <button id="galleryNextBtn"
-                style="margin-top:0.5rem; padding:0.3rem 0.8rem; border-radius:10px; border:1px solid var(--line); background:var(--panel-2); color:var(--ink); cursor:pointer;">
+      <div class="gallery-main">
+        <img id="gallery-main-img" src="" alt="Your Hohm gallery image" />
+        <div id="gallery-caption" class="gallery-caption"></div>
+      </div>
+
+      <div id="gallery-strip" class="gallery-strip"></div>
+
+      <div style="text-align:right;margin-top:4px;">
+        <button id="gallery-next" class="gallery-next-btn">
           Next image ▶
         </button>
       </div>
-
-      <div id="galleryThumbStrip"
-           style="display:flex; overflow-x:auto; gap:0.5rem; padding-bottom:0.5rem;">
-      </div>
     </section>
 
-    <!-- 3. SECONDARY PDF SECTION -->
-    <section id="secondary-pdfs" class="panel alt" style="margin-top:30px;">
-      <h2 class="h-underline">Other Papers</h2>
+    <!-- SECONDARY PDF VIEWER -->
+    <section id="secondary-pdfs" class="pdf-section panel">
+      <h2 class="pdf-title h-underline">Condensed & Supplementary PDFs</h2>
 
-      <div style="display:flex; flex-wrap:wrap; align-items:center; gap:0.75rem; margin-bottom:0.5rem;">
-        <label for="secondaryPdfSelector"><strong>Select paper:</strong></label>
-        <select id="secondaryPdfSelector"
-                style="font-size:.9rem; padding:4px 8px; border-radius:8px; border:1px solid var(--line); background:var(--panel); color:var(--ink);">
-        </select>
+      <div class="pdf-toolbar">
+        <div class="pdf-toolbar-controls">
+          <button id="sec-prev" class="pdf-nav-btn">Previous page</button>
+          <button id="sec-next" class="pdf-nav-btn">Next page</button>
+          <span>
+            Page <span id="sec-page-number">1</span>
+            <span id="sec-page-count">/ ?</span>
+            <span id="sec-ios-note" style="display:none;"> — inline PDF may be limited on some devices.</span>
+          </span>
+        </div>
+
+        <div class="pdf-toolbar-controls">
+          <label for="sec-select" style="font-size:.85rem;">Document:</label>
+          <select id="sec-select"
+                  style="font-size:.85rem;padding:4px 8px;border-radius:8px;border:1px solid var(--line);background:var(--panel-2);color:var(--ink);">
+            <option value="assets/pdf/Your_Hohm-[fore].pdf">Read First — Foreword</option>
+            <option value="assets/pdf/Your_Hohm-[one].pdf">Part One — Original Condensed</option>
+            <option value="assets/pdf/Your-Hohm-[two].pdf">Part Two — Addition</option>
+            <option value="assets/pdf/Your_Hohm-[three].pdf">Part Three — Addition</option>
+          </select>
+        </div>
+
+        <div class="pdf-toolbar-controls">
+          <a id="sec-open" class="btn" href="assets/pdf/Your_Hohm-[fore].pdf" target="_blank" rel="noopener">Open in new window</a>
+          <a id="sec-download" class="btn" href="assets/pdf/Your_Hohm-[fore].pdf" download>Download</a>
+        </div>
       </div>
 
-      <iframe id="secondaryPdfViewer"
-              src=""
-              style="width:100%; height:70vh; border:1px solid var(--line); border-radius:var(--radius-lg); background:#000;">
-      </iframe>
+      <div class="pdf-viewer-box" id="sec-viewer-box">
+        <canvas id="sec-canvas"></canvas>
+      </div>
     </section>
 
     <!-- VERIFICATION -->
@@ -353,30 +420,31 @@
       <p><strong>This is a computation, not a copy-paste.</strong></p>
       <div class="code">
         1. Download LaTeX source<br/>
-        2. pdflatex your_hohm.tex<br/>
-        3. Open generated PDF<br/>
-        4. Compare Section 7
+        2. Unzip <code>Your_Hohm-[full].zip</code><br/>
+        3. Build with your LaTeX toolchain (pdflatex / lualatex)<br/>
+        4. Compare the constants and tables to the published PDF<br/>
+        5. Any discrepancy → email <code>your@hohm.cc</code>
       </div>
-      <div class="warning"><strong>CRITICAL:</strong> Any discrepancy → email your@hohm.cc</div>
+      <div class="warning"><strong>CRITICAL:</strong> If you find even a single mismatch, document it and reach out. The point is to be reproducible.</div>
     </section>
 
     <!-- PREDICTIONS -->
     <section class="predictions">
-      <h2 class="h-underline" style="text-align:center;margin-bottom:16px">Novel Testable Predictions</h2>
+      <h2 class="h-underline" style="text-align:center;margin-bottom:16px;">Novel Testable Predictions</h2>
       <article class="prediction">
         <h3><span style="background:rgba(0,255,255,.28);color:#ffffff;padding:2px 8px;border-radius:8px">1. EIC Jet Asymmetries</span></h3>
         <p><strong>Prediction:</strong> $A_N = 0.03 \\pm 0.003$ at $\\sqrt{s}=100$ GeV</p>
-        <p><strong>Test:</strong> Polarized $pp$ at the Electron-Ion Collider</p>
+        <p><strong>Test:</strong> Polarized $pp$ at the Electron-Ion Collider.</p>
       </article>
       <article class="prediction">
         <h3><span style="background:rgba(255,0,255,.28);color:#ffffff;padding:2px 8px;border-radius:8px">2. Phonon Linewidth Temperature Scaling</span></h3>
         <p><strong>Prediction:</strong> $\\sigma_\\nu \\propto \\sqrt{T}$</p>
-        <p><strong>Test:</strong> Diamond phonons 4 K vs 300 K via Brillouin scattering</p>
+        <p><strong>Test:</strong> Diamond phonons 4 K vs 300 K via Brillouin scattering.</p>
       </article>
       <article class="prediction">
         <h3><span style="background:rgba(255,255,0,.28);color:#ffffff;padding:2px 8px;border-radius:8px">3. NMR Hyperfine Shifts</span></h3>
         <p><strong>Prediction:</strong> $\\delta\\gamma(H_2) \\approx 0.014$ Hz, $\\delta\\gamma(N_2) \\approx 0.035$ Hz</p>
-        <p><strong>Test:</strong> Gas-phase NMR at 500 MHz</p>
+        <p><strong>Test:</strong> Gas-phase NMR at 500 MHz.</p>
       </article>
     </section>
 
@@ -393,8 +461,8 @@
       </ul>
     </section>
 
-    <!-- SUPPORT SECTION -->
-    <section class="support-grid panel alt" style="margin-top:40px;">
+    <!-- SUPPORT -->
+    <section class="support-grid panel alt">
       <article class="support-card">
         <h3>Support the Work</h3>
         <p>Cash App</p>
@@ -412,11 +480,10 @@
       </article>
     </section>
 
-    <!-- TOROIDAL VISUALIZER (pure JS / Three.js) -->
+    <!-- TORUS -->
     <section class="panel alt toroid-section">
       <h2 class="h-underline">Your Hohm Torus — Interactive Visualization</h2>
-      <p style="color:var(--muted);"><em>WebGL torus driven by a simple wave on the ring. No Python, no PyScript.</em></p>
-
+      <p style="color:var(--muted);"><em>WebGL torus driven by a simple wave on the ring.</em></p>
       <div id="toroid-container" class="toroid-container"></div>
       <div id="toroid-fallback">WebGL visualization could not be initialized on this device.</div>
     </section>
@@ -428,7 +495,9 @@
         <a href="https://x.com/Talon3X">@Talon3X on X</a>
         <a href="https://instagram.com/TalonFelt">@TalonFelt on Instagram</a>
       </div>
-      <p style="margin-top:10px;font-size:.9rem">Contact: <a href="mailto:your@hohm.cc" style="color:var(--accB);text-decoration:none;">your@hohm.cc</a></p>
+      <p style="margin-top:10px;font-size:.9rem">
+        Contact: <a href="mailto:your@hohm.cc" style="color:var(--accB);text-decoration:none;">your@hohm.cc</a>
+      </p>
       <p style="font-size:.85rem">CC BY-NC-ND 4.0</p>
     </footer>
   </div>
@@ -456,184 +525,244 @@
     })();
   </script>
 
-  <!-- MAIN PAGE LOGIC (full paper, gallery, secondary PDFs) -->
+  <!-- PDF VIEWERS (BOTH USE SAME ENGINE) -->
   <script>
-    const OWNER = 'talonfelt';
-    const REPO  = 'Your-Hohm';
+    (function(){
+      const pdfjsLib = window['pdfjsLib'];
+      if (!pdfjsLib) return;
 
-    const PDF_PATH = 'assets/pdf';
-    const IMG_PATH = 'assets/img';
+      pdfjsLib.GlobalWorkerOptions.workerSrc =
+        'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
 
-    const FULL_PDF_NAME = 'Your_Hohm-[full].pdf';
+      const ua = navigator.userAgent || navigator.vendor || window.opera;
+      const isIOS = /iPad|iPhone|iPod/.test(ua);
 
-    const CURATED_IMAGES = [
-      'E_005.JPG',
-      'E_007 Large.png',
-      'E_004.PNG',
-      'A_001.PNG',
-      'A_002.PNG'
-    ];
+      function createViewer(cfg){
+        const canvas = document.getElementById(cfg.canvasId);
+        const ctx    = canvas.getContext('2d');
+        const box    = document.getElementById(cfg.boxId);
+        const prev   = document.getElementById(cfg.prevId);
+        const next   = document.getElementById(cfg.nextId);
+        const pageSp = document.getElementById(cfg.pageSpanId);
+        const countSp= document.getElementById(cfg.countSpanId);
+        const iosNote= document.getElementById(cfg.iosNoteId);
+        const openLn = document.getElementById(cfg.openLinkId);
+        const dlLn   = document.getElementById(cfg.downloadLinkId);
 
-    const IMAGE_CAPTIONS = {
-      'E_005.JPG': 'Central harmonic interference pattern',
-      'E_007 Large.png': 'High-density resonance weave',
-      'E_004.PNG': 'Quad-point constructive overlap',
-      'A_001.PNG': 'Foundational 4-node lattice',
-      'A_002.PNG': 'Extended nodal ring'
-    };
+        if (!canvas || !box || !prev || !next || !pageSp || !countSp) return;
 
-    async function fetchRepoFiles(path) {
-      const url = `https://api.github.com/repos/${OWNER}/${REPO}/contents/${path}`;
-      try {
-        const res = await fetch(url);
-        if (!res.ok) {
-          console.error('Failed to fetch', path, res.status);
-          return [];
+        if (isIOS && iosNote) iosNote.style.display = 'inline';
+
+        let pdfDoc = null;
+        let pageNum = 1;
+        let pageRendering = false;
+        let pagePending = null;
+        let currentUrl = cfg.initialUrl;
+
+        function setLinks(url){
+          if (openLn) openLn.href = url;
+          if (dlLn)   dlLn.href   = url;
         }
-        return await res.json();
-      } catch (e) {
-        console.error('fetchRepoFiles error', e);
-        return [];
-      }
-    }
 
-    function isPdf(name) {
-      return name.toLowerCase().endsWith('.pdf');
-    }
+        function renderPage(num){
+          if (!pdfDoc) return;
+          pageRendering = true;
 
-    function isImage(name) {
-      const n = name.toLowerCase();
-      return n.endsWith('.png') || n.endsWith('.jpg') || n.endsWith('.jpeg') || n.endsWith('.gif');
-    }
+          pdfDoc.getPage(num).then(function(page){
+            const viewport = page.getViewport({ scale: 1 });
+            const targetWidth = 4096;
+            const scale = targetWidth / viewport.width;
+            const scaledViewport = page.getViewport({ scale: scale });
 
-    function initFullPaper() {
-      const viewer   = document.getElementById('fullViewer');
-      const openBtn  = document.getElementById('fullOpenBtn');
-      const dlLink   = document.getElementById('fullDownloadBtn');
-      const turnBtn  = document.getElementById('fullTurnPageBtn');
+            canvas.width  = scaledViewport.width;
+            canvas.height = scaledViewport.height;
 
-      if (!viewer || !openBtn || !dlLink || !turnBtn) return;
+            const boxWidth = box.clientWidth || viewport.width;
+            const visualHeight = (scaledViewport.height / scaledViewport.width) * boxWidth;
+            canvas.style.width  = boxWidth + 'px';
+            canvas.style.height = visualHeight + 'px';
 
-      const baseUrl  = `${PDF_PATH}/${FULL_PDF_NAME}`;
-      let currentPage = 1;
+            const renderContext = {
+              canvasContext: ctx,
+              viewport: scaledViewport
+            };
 
-      function updateViewer() {
-        viewer.src = `${baseUrl}#page=${currentPage}`;
-      }
+            const renderTask = page.render(renderContext);
+            renderTask.promise.then(function(){
+              pageRendering = false;
+              pageSp.textContent = String(num);
+              prev.disabled = (num <= 1);
+              next.disabled = (num >= pdfDoc.numPages);
 
-      openBtn.addEventListener('click', () => {
-        window.open(baseUrl, '_blank');
-      });
+              if (pagePending !== null){
+                const n = pagePending;
+                pagePending = null;
+                renderPage(n);
+              }
+            });
+          });
+        }
 
-      dlLink.href = baseUrl;
-      dlLink.download = FULL_PDF_NAME;
+        function queueRenderPage(num){
+          if (pageRendering){
+            pagePending = num;
+          } else {
+            renderPage(num);
+          }
+        }
 
-      turnBtn.addEventListener('click', () => {
-        currentPage += 1;
-        updateViewer();
-      });
+        function loadDocument(url){
+          currentUrl = url;
+          setLinks(url);
+          pdfjsLib.getDocument(url).promise.then(function(pdf){
+            pdfDoc = pdf;
+            pageNum = 1;
+            countSp.textContent = '/ ' + pdf.numPages;
+            queueRenderPage(pageNum);
+          }).catch(function(err){
+            console.error('PDF load error', err);
+            if (iosNote){
+              iosNote.textContent = 'Failed to load PDF on this device.';
+              iosNote.style.display = 'inline';
+            }
+          });
+        }
 
-      updateViewer();
-    }
-
-    async function initGallery() {
-      const mainImg   = document.getElementById('galleryMainImg');
-      const captionEl = document.getElementById('galleryCaption');
-      const strip     = document.getElementById('galleryThumbStrip');
-      const nextBtn   = document.getElementById('galleryNextBtn');
-
-      if (!mainImg || !captionEl || !strip || !nextBtn) return;
-
-      const files = await fetchRepoFiles(IMG_PATH);
-      const imgFiles = files.filter(f => isImage(f.name));
-
-      if (!imgFiles.length) return;
-
-      const curatedSet = new Set(CURATED_IMAGES);
-      const curated = [];
-      const others  = [];
-      imgFiles.forEach(f => {
-        if (curatedSet.has(f.name)) curated.push(f);
-        else if (f.name !== '.keep') others.push(f);
-      });
-
-      const ordered = [...curated, ...others];
-      let currentIndex = 0;
-
-      function setImageByIndex(i) {
-        const file = ordered[i];
-        if (!file) return;
-        currentIndex = i;
-        const url = `${IMG_PATH}/${file.name}`;
-        mainImg.src = url;
-        mainImg.alt = file.name;
-        captionEl.textContent = IMAGE_CAPTIONS[file.name] || '';
-      }
-
-      ordered.forEach((file, index) => {
-        const thumb = document.createElement('img');
-        thumb.src = `${IMG_PATH}/${file.name}`;
-        thumb.alt = file.name;
-        thumb.style.height = '80px';
-        thumb.style.cursor = 'pointer';
-        thumb.style.borderRadius = '4px';
-        thumb.style.border = '1px solid var(--line)';
-
-        thumb.addEventListener('click', () => {
-          setImageByIndex(index);
+        prev.addEventListener('click', function(){
+          if (!pdfDoc || pageNum <= 1) return;
+          pageNum--;
+          queueRenderPage(pageNum);
         });
 
-        strip.appendChild(thumb);
+        next.addEventListener('click', function(){
+          if (!pdfDoc || pageNum >= pdfDoc.numPages) return;
+          pageNum++;
+          queueRenderPage(pageNum);
+        });
+
+        window.addEventListener('resize', function(){
+          if (pdfDoc){
+            queueRenderPage(pageNum);
+          }
+        });
+
+        // public API
+        return {
+          load: loadDocument
+        };
+      }
+
+      // Main viewer (full paper)
+      const mainViewer = createViewer({
+        canvasId: 'main-canvas',
+        boxId: 'main-viewer-box',
+        prevId: 'main-prev',
+        nextId: 'main-next',
+        pageSpanId: 'main-page-number',
+        countSpanId:'main-page-count',
+        iosNoteId:'main-ios-note',
+        openLinkId:'main-open',
+        downloadLinkId:'main-download',
+        initialUrl: 'assets/pdf/Your_Hohm-[full].pdf'
+      });
+      if (mainViewer){
+        mainViewer.load('assets/pdf/Your_Hohm-[full].pdf');
+      }
+
+      // Secondary viewer (dropdown)
+      const secSelect = document.getElementById('sec-select');
+      const secViewer = createViewer({
+        canvasId: 'sec-canvas',
+        boxId: 'sec-viewer-box',
+        prevId: 'sec-prev',
+        nextId: 'sec-next',
+        pageSpanId: 'sec-page-number',
+        countSpanId:'sec-page-count',
+        iosNoteId:'sec-ios-note',
+        openLinkId:'sec-open',
+        downloadLinkId:'sec-download',
+        initialUrl: secSelect ? secSelect.value : 'assets/pdf/Your_Hohm-[fore].pdf'
+      });
+
+      if (secViewer && secSelect){
+        secViewer.load(secSelect.value);
+        secSelect.addEventListener('change', function(){
+          secViewer.load(this.value);
+        });
+      }
+    })();
+  </script>
+
+  <!-- GALLERY LOGIC -->
+  <script>
+    (function(){
+      const images = [
+        {
+          src: 'assets/img/E_001 Large.png',
+          caption: 'Primary interference lattice — main field motif.'
+        },
+        { src: 'assets/img/A_001.PNG', caption: '' },
+        { src: 'assets/img/A_002.PNG', caption: '' },
+        { src: 'assets/img/A_003.PNG', caption: '' },
+        { src: 'assets/img/A_004.PNG', caption: '' },
+        { src: 'assets/img/A_005.PNG', caption: '' },
+        { src: 'assets/img/A_006.PNG', caption: '' },
+        { src: 'assets/img/A_007.PNG', caption: '' },
+        { src: 'assets/img/E_003.PNG', caption: '' },
+        { src: 'assets/img/E_004.PNG', caption: '' },
+        { src: 'assets/img/E_005.JPG', caption: '' },
+        { src: 'assets/img/E_007 Large.png', caption: '' },
+        { src: 'assets/img/E_008.PNG', caption: '' }
+      ];
+
+      const mainImg    = document.getElementById('gallery-main-img');
+      const captionEl  = document.getElementById('gallery-caption');
+      const strip      = document.getElementById('gallery-strip');
+      const nextBtn    = document.getElementById('gallery-next');
+
+      if (!mainImg || !captionEl || !strip || !nextBtn || !images.length) return;
+
+      let currentIndex = 0;
+      const thumbs = [];
+
+      function setImage(index){
+        const img = images[index];
+        if (!img) return;
+        currentIndex = index;
+        mainImg.src = img.src;
+        captionEl.textContent = img.caption || '';
+        thumbs.forEach((th, i) => {
+          th.classList.toggle('active', i === index);
+        });
+      }
+
+      images.forEach((img, idx) => {
+        const wrap = document.createElement('div');
+        wrap.className = 'gallery-thumb';
+        wrap.dataset.index = idx;
+        const im = document.createElement('img');
+        im.src = img.src;
+        im.alt = 'Gallery thumbnail ' + (idx + 1);
+        wrap.appendChild(im);
+        wrap.addEventListener('click', () => setImage(idx));
+        strip.appendChild(wrap);
+        thumbs.push(wrap);
       });
 
       nextBtn.addEventListener('click', () => {
-        const next = (currentIndex + 1) % ordered.length;
-        setImageByIndex(next);
+        const next = (currentIndex + 1) % images.length;
+        setImage(next);
+        const activeThumb = thumbs[next];
+        if (activeThumb && activeThumb.scrollIntoView){
+          activeThumb.scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'});
+        }
       });
 
-      setImageByIndex(0);
-    }
-
-    async function initSecondaryPdfs() {
-      const select = document.getElementById('secondaryPdfSelector');
-      const viewer = document.getElementById('secondaryPdfViewer');
-      if (!select || !viewer) return;
-
-      const files = await fetchRepoFiles(PDF_PATH);
-      const pdfFiles = files
-        .filter(f => isPdf(f.name) && f.name !== FULL_PDF_NAME)
-        .sort((a, b) => a.name.localeCompare(b.name));
-
-      pdfFiles.forEach(file => {
-        const opt = document.createElement('option');
-        opt.value = file.name;
-        opt.textContent = file.name;
-        select.appendChild(opt);
-      });
-
-      function setSecondaryPdf(name) {
-        viewer.src = `${PDF_PATH}/${name}`;
-      }
-
-      if (pdfFiles.length) {
-        const first = pdfFiles[0].name;
-        select.value = first;
-        setSecondaryPdf(first);
-      }
-
-      select.addEventListener('change', () => {
-        setSecondaryPdf(select.value);
-      });
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      initFullPaper();
-      initGallery();
-      initSecondaryPdfs();
-    });
+      setImage(0);
+    })();
   </script>
 
-  <!-- TORUS LOGIC: pure JS / Three.js -->
+  <!-- TORUS LOGIC -->
   <script>
     (function(){
       const container = document.getElementById('toroid-container');
@@ -643,9 +772,9 @@
         return;
       }
 
-      try {
+      try{
         const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-        const w = container.clientWidth  || 600;
+        const w = container.clientWidth || 600;
         const h = container.clientHeight || 600;
         renderer.setSize(w, h);
         renderer.setPixelRatio(window.devicePixelRatio || 1);
@@ -654,7 +783,6 @@
         container.appendChild(renderer.domElement);
 
         const scene = new THREE.Scene();
-
         const camera = new THREE.PerspectiveCamera(45, w / h, 0.1, 1000);
         camera.position.set(0, 0, 28);
 
@@ -691,7 +819,7 @@
         const mat = new THREE.MeshPhongMaterial({
           vertexColors: true,
           shininess: 80,
-          specular: new THREE.Color(0x88ffff),
+          specular: new THREE.Color(0x88ffff)
         });
 
         const torus = new THREE.Mesh(geo, mat);
@@ -747,7 +875,7 @@
         }
 
         function onResize(){
-          const w2 = container.clientWidth  || 600;
+          const w2 = container.clientWidth || 600;
           const h2 = container.clientHeight || 600;
           camera.aspect = w2 / h2;
           camera.updateProjectionMatrix();
@@ -773,7 +901,7 @@
         animate(performance.now());
 
         if (fallback) fallback.style.display = 'none';
-      } catch (e){
+      } catch(e){
         console.error('Torus error:', e);
         if (fallback){
           fallback.textContent = 'Visualization failed: ' + e;
