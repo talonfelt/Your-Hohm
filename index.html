@@ -392,41 +392,51 @@
     </section>
 
     <!-- SECONDARY PDF VIEWER -->
-    <section id="secondary-pdfs" class="pdf-section panel">
-      <h2 class="pdf-title h-underline">Condensed & Supplementary PDFs</h2>
+    <!-- SECONDARY PDF VIEWER -->
+<section id="secondary-pdfs" class="pdf-section panel">
+  <h2 class="pdf-title h-underline">Condensed & Supplementary PDFs</h2>
 
-      <div class="pdf-toolbar">
-        <div class="pdf-toolbar-controls">
-          <button id="sec-prev" class="pdf-nav-btn">Previous page</button>
-          <button id="sec-next" class="pdf-nav-btn">Next page</button>
-          <span>
-            Page <span id="sec-page-number">1</span>
-            <span id="sec-page-count">/ ?</span>
-            <span id="sec-ios-note" style="display:none;"> — inline PDF may be limited on some devices.</span>
-          </span>
-        </div>
+  <!-- Top: dropdown + open/download -->
+  <div class="pdf-toolbar" style="margin-bottom:14px;">
+    <div class="pdf-toolbar-controls">
+      <label for="sec-select" style="font-size:.85rem;margin-right:6px;">Document:</label>
+      <select id="sec-select"
+              style="font-size:.85rem;padding:4px 8px;border-radius:8px;border:1px solid var(--line);background:var(--panel-2);color:var(--ink);">
+        <option value="assets/pdf/Your_Hohm-[fore].pdf">Read First — Foreword</option>
+        <option value="assets/pdf/Your_Hohm-[one].pdf">Part One — Original Condensed</option>
+        <option value="assets/pdf/Your-Hohm-[two].pdf">Part Two — Addition</option>
+        <option value="assets/pdf/Your_Hohm-[three].pdf">Part Three — Addition</option>
+      </select>
+    </div>
 
-        <div class="pdf-toolbar-controls">
-          <label for="sec-select" style="font-size:.85rem;">Document:</label>
-          <select id="sec-select"
-                  style="font-size:.85rem;padding:4px 8px;border-radius:8px;border:1px solid var(--line);background:var(--panel-2);color:var(--ink);">
-            <option value="assets/pdf/Your_Hohm-[fore].pdf">Read First — Foreword</option>
-            <option value="assets/pdf/Your_Hohm-[one].pdf">Part One — Original Condensed</option>
-            <option value="assets/pdf/Your-Hohm-[two].pdf">Part Two — Addition</option>
-            <option value="assets/pdf/Your_Hohm-[three].pdf">Part Three — Addition</option>
-          </select>
-        </div>
+    <div class="pdf-toolbar-controls">
+      <a id="sec-open" class="btn" href="assets/pdf/Your_Hohm-[fore].pdf" target="_blank" rel="noopener">
+        Open in new window
+      </a>
+      <a id="sec-download" class="btn" href="assets/pdf/Your_Hohm-[fore].pdf" download>
+        Download
+      </a>
+    </div>
+  </div>
 
-        <div class="pdf-toolbar-controls">
-          <a id="sec-open" class="btn" href="assets/pdf/Your_Hohm-[fore].pdf" target="_blank" rel="noopener">Open in new window</a>
-          <a id="sec-download" class="btn" href="assets/pdf/Your_Hohm-[fore].pdf" download>Download</a>
-        </div>
-      </div>
+  <!-- Viewer on top -->
+  <div class="pdf-viewer-box" id="sec-viewer-box">
+    <canvas id="sec-canvas"></canvas>
+  </div>
 
-      <div class="pdf-viewer-box" id="sec-viewer-box">
-        <canvas id="sec-canvas"></canvas>
-      </div>
-    </section>
+  <!-- Navigation directly under the viewer -->
+  <div class="pdf-toolbar" style="margin-top:10px;">
+    <div class="pdf-toolbar-controls">
+      <button id="sec-prev" class="pdf-nav-btn">◀ Previous page</button>
+      <button id="sec-next" class="pdf-nav-btn">Next page ▶</button>
+      <span style="margin-left:8px;">
+        Page <span id="sec-page-number">1</span>
+        <span id="sec-page-count">/ ?</span>
+        <span id="sec-ios-note" style="display:none;"> — inline PDF may be limited on some devices.</span>
+      </span>
+    </div>
+  </div>
+</section>
 
     <!-- VERIFICATION -->
     <section id="verification" class="verification panel alt">
