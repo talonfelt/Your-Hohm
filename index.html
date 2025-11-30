@@ -40,7 +40,7 @@
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
-  <!-- pdf.js (can be removed if you never want it) -->
+  <!-- pdf.js is no longer used by the new viewer, but harmless if left -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
 
   <!-- Three.js + OrbitControls (torus) -->
@@ -246,7 +246,7 @@
       <div class="subtitle">September 3rd, 2025 — Updated: November 11th, 2025</div>
     </header>
 
-    <!-- HERO -->
+    <!-- HERO SECTION -->
     <section class="hero panel">
       <p>Your Hohm presents a unified theory of physics grounded in a singular, toroidal vibration that is fundamentally tri-directional — “coming”, “going”, and “staying”. Mirrored, simultaneously folding and unfolding, inward and outward, yet eternally still, as the zero point of infinite potentiality.</p>
     </section>
@@ -271,7 +271,7 @@
       <article class="card">
         <h3 class="rgb-green">Get the Source</h3>
         <p>Full LaTeX sources with macros.</p>
-        <a class="btn" href="Your_Hohm-[latex].zip" download>Download LaTeX</a>
+        <a class="btn" href="assets/pdf/Your_Hohm-[latex].zip" download>Download LaTeX</a>
       </article>
       <article class="card">
         <h3 class="rgb-blue">Verify Yourself</h3>
@@ -393,7 +393,7 @@
       </ul>
     </section>
 
-    <!-- SUPPORT -->
+    <!-- SUPPORT SECTION -->
     <section class="support-grid panel alt" style="margin-top:40px;">
       <article class="support-card">
         <h3>Support the Work</h3>
@@ -412,7 +412,7 @@
       </article>
     </section>
 
-    <!-- TORUS -->
+    <!-- TOROIDAL VISUALIZER (pure JS / Three.js) -->
     <section class="panel alt toroid-section">
       <h2 class="h-underline">Your Hohm Torus — Interactive Visualization</h2>
       <p style="color:var(--muted);"><em>WebGL torus driven by a simple wave on the ring. No Python, no PyScript.</em></p>
@@ -633,7 +633,7 @@
     });
   </script>
 
-  <!-- TORUS LOGIC -->
+  <!-- TORUS LOGIC: pure JS / Three.js -->
   <script>
     (function(){
       const container = document.getElementById('toroid-container');
