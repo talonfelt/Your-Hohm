@@ -335,29 +335,43 @@
     </section>
 
     <!-- MAIN PAPER VIEWER -->
-    <section id="main-paper" class="pdf-section panel">
-      <h2 class="pdf-title h-underline">Full Paper — Inline Viewer</h2>
+    <!-- MAIN PAPER VIEWER -->
+<section id="main-paper" class="pdf-section panel">
+  <h2 class="pdf-title h-underline">Full Paper — Inline Viewer</h2>
 
-      <div class="pdf-toolbar">
-        <div class="pdf-toolbar-controls">
-          <button id="main-prev" class="pdf-nav-btn">Previous page</button>
-          <button id="main-next" class="pdf-nav-btn">Next page</button>
-          <span>
-            Page <span id="main-page-number">1</span>
-            <span id="main-page-count">/ ?</span>
-            <span id="main-ios-note" style="display:none;"> — inline PDF may be limited on some devices.</span>
-          </span>
-        </div>
-        <div class="pdf-toolbar-controls">
-          <a id="main-open" class="btn" href="assets/pdf/Your_Hohm-[full].pdf" target="_blank" rel="noopener">Open in new window</a>
-          <a id="main-download" class="btn" href="assets/pdf/Your_Hohm-[full].pdf" download>Download PDF</a>
-        </div>
-      </div>
+  <!-- Top: just a small info row and open/download -->
+  <div class="pdf-toolbar" style="margin-bottom:14px;">
+    <div class="pdf-toolbar-controls" style="font-size:.85rem;opacity:.85;">
+      <span>Document: <strong>Full Your Hohm paper</strong></span>
+    </div>
+    <div class="pdf-toolbar-controls">
+      <a id="main-open" class="btn" href="assets/pdf/Your_Hohm-[full].pdf" target="_blank" rel="noopener">
+        Open in new window
+      </a>
+      <a id="main-download" class="btn" href="assets/pdf/Your_Hohm-[full].pdf" download>
+        Download PDF
+      </a>
+    </div>
+  </div>
 
-      <div class="pdf-viewer-box" id="main-viewer-box">
-        <canvas id="main-canvas"></canvas>
-      </div>
-    </section>
+  <!-- Viewer on top -->
+  <div class="pdf-viewer-box" id="main-viewer-box">
+    <canvas id="main-canvas"></canvas>
+  </div>
+
+  <!-- Navigation directly under the viewer -->
+  <div class="pdf-toolbar" style="margin-top:10px;">
+    <div class="pdf-toolbar-controls">
+      <button id="main-prev" class="pdf-nav-btn">◀ Previous page</button>
+      <button id="main-next" class="pdf-nav-btn">Next page ▶</button>
+      <span style="margin-left:8px;">
+        Page <span id="main-page-number">1</span>
+        <span id="main-page-count">/ ?</span>
+        <span id="main-ios-note" style="display:none;"> — inline PDF may be limited on some devices.</span>
+      </span>
+    </div>
+  </div>
+</section>
 
     <!-- GALLERY -->
     <section id="gallery" class="gallery-section panel alt">
