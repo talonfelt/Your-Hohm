@@ -5,13 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Your Hohm — U.R.H.U.E.0hm</title>
 
-  <!-- SEO -->
   <meta name="description" content="Your Hohm: a unified theory of physics grounded in a singular, toroidal vibration that is fundamentally tri-directional." />
   <meta property="og:title" content="U.R.H.U.E.0hm — Unfolding Resonant Harmonic Unity Emergence — The Zero Point of Infinite Potentiality" />
   <meta property="og:description" content="Derivations, verification protocol, and testable predictions." />
   <meta property="og:type" content="website" />
 
-  <!-- MathJax -->
   <script>
     MathJax = {
       tex: {
@@ -40,10 +38,8 @@
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
-  <!-- pdf.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
 
-  <!-- Three.js + OrbitControls -->
   <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
   <script src="https://unpkg.com/three@0.160.0/examples/js/controls/OrbitControls.js"></script>
 
@@ -300,12 +296,10 @@
       <div class="subtitle">September 3rd, 2025 — Updated: November 11th, 2025</div>
     </header>
 
-    <!-- HERO -->
     <section class="hero panel">
       <p>Your Hohm presents a unified theory of physics grounded in a singular, toroidal vibration that is fundamentally tri-directional — “coming”, “going”, and “staying”. Mirrored, simultaneously folding and unfolding, inward and outward, yet eternally still, as the zero point of infinite potentiality.</p>
     </section>
 
-    <!-- STATS -->
     <section class="stats">
       <div class="stat"><div class="stat-number rgb-red">6</div><div class="stat-label">Constants Derived</div></div>
       <div class="stat"><div class="stat-number rgb-green">54</div><div class="stat-label">Orders of Magnitude</div></div>
@@ -313,16 +307,39 @@
       <div class="stat"><div class="stat-number">~0</div><div class="stat-label">Tunable Parameters</div></div>
     </section>
 
-    <!-- DOWNLOAD GRID -->
+    <section id="aim-paper-window" class="pdf-section panel">
+      <h2 class="pdf-title h-underline">Axiom, And First Principles Derivation</h2>
+      <div class="pdf-toolbar" style="margin-bottom:14px;">
+        <div class="pdf-toolbar-controls" style="font-size:.85rem;opacity:.85;">
+          <span>Document: <strong>AIM: Axiom and Derivation paper</strong></span>
+        </div>
+        <div class="pdf-toolbar-controls">
+          <a id="aim-open" class="btn" href="assets/pdf/aim.pdf" target="_blank" rel="noopener">Open window</a>
+          <a id="aim-download" class="btn" href="assets/pdf/aim.pdf" download>Download</a>
+        </div>
+      </div>
+      <div class="pdf-viewer-box" id="aim-viewer-box">
+        <canvas id="aim-canvas"></canvas>
+      </div>
+      <div class="pdf-toolbar" style="margin-top:10px;">
+        <div class="pdf-toolbar-controls">
+          <button id="aim-prev" class="pdf-nav-btn">◀ Previous</button>
+          <button id="aim-next" class="pdf-nav-btn">Next ▶</button>
+          <span style="margin-left:8px;">
+            Page <span id="aim-page-number">1</span>
+            <span id="aim-page-count">/ ?</span>
+          </span>
+        </div>
+      </div>
+    </section>
+
     <section class="download-grid">
       <article class="card">
         <h3 class="rgb-red">Read the Full Paper</h3>
         <p>Complete PDF: derivations, predictions, appendices.</p>
-        <a id="main-pdf-link" class="btn" href="assets/pdf/aim.pdf" target="_blank" rel="noopener">
-          Open full paper
-        </a>
+        <a id="main-pdf-link" class="btn" href="assets/pdf/Your_Hohm-[full].pdf" target="_blank" rel="noopener">Open full paper</a>
       </article>
-     <article class="card">
+      <article class="card">
         <h3 class="rgb-green">Get the LaTeX</h3>
         <p>Full LaTeX sources with macros.</p>
         <a class="btn" href="assets/pdf/aim.zip" download>Download LaTeX source</a>
@@ -334,767 +351,269 @@
       </article>
     </section>
     
-    <!-- AIM PAPER VIEWER -->
-    <!-- AIM PAPER VIEWER -->
-<section id="AIM-paper" class="pdf-section panel">
-  <h2 class="pdf-title h-underline">Axiom, And First Principles Derivation</h2>
+    <section id="main-paper" class="pdf-section panel">
+      <h2 class="pdf-title h-underline">Full Paper — Inline Viewer</h2>
+      <div class="pdf-toolbar" style="margin-bottom:14px;">
+        <div class="pdf-toolbar-controls" style="font-size:.85rem;opacity:.85;">
+          <span>Document: <strong>Full Your Hohm paper</strong></span>
+        </div>
+        <div class="pdf-toolbar-controls">
+          <a id="main-open" class="btn" href="assets/pdf/Your_Hohm-[full].pdf" target="_blank" rel="noopener">Open window</a>
+          <a id="main-download" class="btn" href="assets/pdf/Your_Hohm-[full].pdf" download>Download</a>
+        </div>
+      </div>
+      <div class="pdf-viewer-box" id="main-viewer-box">
+        <canvas id="main-canvas"></canvas>
+      </div>
+      <div class="pdf-toolbar" style="margin-top:10px;">
+        <div class="pdf-toolbar-controls">
+          <button id="main-prev" class="pdf-nav-btn">◀ Previous</button>
+          <button id="main-next" class="pdf-nav-btn">Next ▶</button>
+          <span style="margin-left:8px;">
+            Page <span id="main-page-number">1</span>
+            <span id="main-page-count">/ ?</span>
+          </span>
+        </div>
+      </div>
+    </section>
 
-  <!-- Top: just a small info row and open/download -->
-  <div class="pdf-toolbar" style="margin-bottom:14px;">
-    <div class="pdf-toolbar-controls" style="font-size:.85rem;opacity:.85;">
-      <span>Document: <strong>AIM: Axiom and Derivation paper</strong></span>
-    </div>
-    <div class="pdf-toolbar-controls">
-      <a id="main-open" class="btn" href="assets/pdf/aim.pdf" target="_blank" rel="noopener">
-        Open in new window
-      </a>
-      <a id="main-download" class="btn" href="assets/pdf/aim.pdf" download>
-        Download PDF
-      </a>
-    </div>
-  </div>
-
-  <!-- Viewer on top -->
-  <div class="pdf-viewer-box" id="main-viewer-box">
-    <canvas id="main-canvas"></canvas>
-  </div>
-
-  <!-- Navigation directly under the viewer -->
-  <div class="pdf-toolbar" style="margin-top:10px;">
-    <div class="pdf-toolbar-controls">
-      <button id="main-prev" class="pdf-nav-btn">◀ Previous page</button>
-      <button id="main-next" class="pdf-nav-btn">Next page ▶</button>
-      <span style="margin-left:8px;">
-        Page <span id="main-page-number">1</span>
-        <span id="main-page-count">/ ?</span>
-        <span id="main-ios-note" style="display:none;"> — inline PDF may be limited on some devices.</span>
-      </span>
-    </div>
-  </div>
-</section>
-
-    <!-- MAIN PAPER VIEWER -->
-    <!-- MAIN PAPER VIEWER -->
-<section id="main-paper" class="pdf-section panel">
-  <h2 class="pdf-title h-underline">Full Paper — Inline Viewer</h2>
-
-  <!-- Top: just a small info row and open/download -->
-  <div class="pdf-toolbar" style="margin-bottom:14px;">
-    <div class="pdf-toolbar-controls" style="font-size:.85rem;opacity:.85;">
-      <span>Document: <strong>Full Your Hohm paper</strong></span>
-    </div>
-    <div class="pdf-toolbar-controls">
-      <a id="main-open" class="btn" href="assets/pdf/Your_Hohm-[full].pdf" target="_blank" rel="noopener">
-        Open in new window
-      </a>
-      <a id="main-download" class="btn" href="assets/pdf/Your_Hohm-[full].pdf" download>
-        Download PDF
-      </a>
-    </div>
-  </div>
-
-  <!-- Viewer on top -->
-  <div class="pdf-viewer-box" id="main-viewer-box">
-    <canvas id="main-canvas"></canvas>
-  </div>
-
-  <!-- Navigation directly under the viewer -->
-  <div class="pdf-toolbar" style="margin-top:10px;">
-    <div class="pdf-toolbar-controls">
-      <button id="main-prev" class="pdf-nav-btn">◀ Previous page</button>
-      <button id="main-next" class="pdf-nav-btn">Next page ▶</button>
-      <span style="margin-left:8px;">
-        Page <span id="main-page-number">1</span>
-        <span id="main-page-count">/ ?</span>
-        <span id="main-ios-note" style="display:none;"> — inline PDF may be limited on some devices.</span>
-      </span>
-    </div>
-  </div>
-</section>
-
-    <!-- GALLERY -->
     <section id="gallery" class="gallery-section panel alt">
       <h2 class="pdf-title h-underline">Field Interference Gallery</h2>
-
       <div class="gallery-main">
         <img id="gallery-main-img" src="" alt="Your Hohm gallery image" />
         <div id="gallery-caption" class="gallery-caption"></div>
       </div>
-
       <div id="gallery-strip" class="gallery-strip"></div>
-
       <div style="text-align:right;margin-top:4px;">
-        <button id="gallery-next" class="gallery-next-btn">
-          Next image ▶
-        </button>
+        <button id="gallery-next" class="gallery-next-btn">Next image ▶</button>
       </div>
     </section>
 
-    <!-- SECONDARY PDF VIEWER -->
-    <!-- SECONDARY PDF VIEWER -->
-<section id="secondary-pdfs" class="pdf-section panel">
-  <h2 class="pdf-title h-underline">Condensed & Supplementary PDFs</h2>
+    <section id="secondary-pdfs" class="pdf-section panel">
+      <h2 class="pdf-title h-underline">Condensed & Supplementary PDFs</h2>
+      <div class="pdf-toolbar" style="margin-bottom:14px;">
+        <div class="pdf-toolbar-controls">
+          <label for="sec-select" style="font-size:.85rem;margin-right:6px;">Document:</label>
+          <select id="sec-select" style="font-size:.85rem;padding:4px 8px;border-radius:8px;border:1px solid var(--line);background:var(--panel-2);color:var(--ink);">
+            <option value="assets/pdf/Your_Hohm-[fore].pdf">Read First — Foreword</option>
+          </select>
+        </div>
+        <div class="pdf-toolbar-controls">
+          <a id="sec-open" class="btn" href="#" target="_blank" rel="noopener">Open window</a>
+          <a id="sec-download" class="btn" href="#" download>Download</a>
+        </div>
+      </div>
+      <div class="pdf-viewer-box" id="sec-viewer-box">
+        <canvas id="sec-canvas"></canvas>
+      </div>
+      <div class="pdf-toolbar" style="margin-top:10px;">
+        <div class="pdf-toolbar-controls">
+          <button id="sec-prev" class="pdf-nav-btn">◀ Previous</button>
+          <button id="sec-next" class="pdf-nav-btn">Next ▶</button>
+          <span style="margin-left:8px;">
+            Page <span id="sec-page-number">1</span>
+            <span id="sec-page-count">/ ?</span>
+          </span>
+        </div>
+      </div>
+    </section>
 
-  <!-- Top: dropdown + open/download -->
-  <div class="pdf-toolbar" style="margin-bottom:14px;">
-    <div class="pdf-toolbar-controls">
-      <label for="sec-select" style="font-size:.85rem;margin-right:6px;">Document:</label>
-      <select id="sec-select"
-              style="font-size:.85rem;padding:4px 8px;border-radius:8px;border:1px solid var(--line);background:var(--panel-2);color:var(--ink);">
-        <option value="assets/pdf/Your_Hohm-[fore].pdf">Read First — Foreword</option>
-        <option value="assets/pdf/Your_Hohm-[one].pdf">Part One — Original Condensed</option>
-        <option value="assets/pdf/Your-Hohm-[two].pdf">Part Two — Addition</option>
-        <option value="assets/pdf/Your_Hohm-[three].pdf">Part Three — Addition</option>
-      </select>
-    </div>
-
-    <div class="pdf-toolbar-controls">
-      <a id="sec-open" class="btn" href="assets/pdf/Your_Hohm-[fore].pdf" target="_blank" rel="noopener">
-        Open in new window
-      </a>
-      <a id="sec-download" class="btn" href="assets/pdf/Your_Hohm-[fore].pdf" download>
-        Download
-      </a>
-    </div>
-  </div>
-
-  <!-- Viewer on top -->
-  <div class="pdf-viewer-box" id="sec-viewer-box">
-    <canvas id="sec-canvas"></canvas>
-  </div>
-
-  <!-- Navigation directly under the viewer -->
-  <div class="pdf-toolbar" style="margin-top:10px;">
-    <div class="pdf-toolbar-controls">
-      <button id="sec-prev" class="pdf-nav-btn">◀ Previous page</button>
-      <button id="sec-next" class="pdf-nav-btn">Next page ▶</button>
-      <span style="margin-left:8px;">
-        Page <span id="sec-page-number">1</span>
-        <span id="sec-page-count">/ ?</span>
-        <span id="sec-ios-note" style="display:none;"> — inline PDF may be limited on some devices.</span>
-      </span>
-    </div>
-  </div>
-</section>
-
-    <!-- VERIFICATION -->
     <section id="verification" class="verification panel alt">
       <h2>Verification Protocol</h2>
-      <p><strong>This is a computation, not a copy-paste.</strong></p>
       <div class="code">
         1. Download LaTeX source<br/>
         2. Unzip <code>Your_Hohm-[full].zip</code><br/>
-        3. Build with your LaTeX toolchain (pdflatex / lualatex)<br/>
-        4. Compare the constants and tables to the published PDF<br/>
-        5. Any discrepancy → email <code>your@hohm.cc</code>
+        3. Build with your LaTeX toolchain<br/>
+        4. Compare constants to published PDF
       </div>
-      <div class="warning"><strong>CRITICAL:</strong> If you find even a single mismatch, document it and reach out. The point is to be reproducible.</div>
     </section>
 
-    <!-- PREDICTIONS -->
     <section class="predictions">
       <h2 class="h-underline" style="text-align:center;margin-bottom:16px;">Novel Testable Predictions</h2>
       <article class="prediction">
-        <h3><span style="background:rgba(0,255,255,.28);color:#ffffff;padding:2px 8px;border-radius:8px">1. EIC Jet Asymmetries</span></h3>
-        <p><strong>Prediction:</strong> $A_N = 0.03 \\pm 0.003$ at $\\sqrt{s}=100$ GeV</p>
-        <p><strong>Test:</strong> Polarized $pp$ at the Electron-Ion Collider.</p>
-      </article>
-      <article class="prediction">
-        <h3><span style="background:rgba(255,0,255,.28);color:#ffffff;padding:2px 8px;border-radius:8px">2. Phonon Linewidth Temperature Scaling</span></h3>
-        <p><strong>Prediction:</strong> $\\sigma_\\nu \\propto \\sqrt{T}$</p>
-        <p><strong>Test:</strong> Diamond phonons 4 K vs 300 K via Brillouin scattering.</p>
-      </article>
-      <article class="prediction">
-        <h3><span style="background:rgba(255,255,0,.28);color:#ffffff;padding:2px 8px;border-radius:8px">3. NMR Hyperfine Shifts</span></h3>
-        <p><strong>Prediction:</strong> $\\delta\\gamma(H_2) \\approx 0.014$ Hz, $\\delta\\gamma(N_2) \\approx 0.035$ Hz</p>
-        <p><strong>Test:</strong> Gas-phase NMR at 500 MHz.</p>
+        <h3>EIC Jet Asymmetries</h3>
+        <p>$A_N = 0.03 \pm 0.003$ at $\sqrt{s}=100$ GeV</p>
       </article>
     </section>
 
-    <!-- INSIGHTS -->
-    <section class="insights panel alt">
-      <h2 class="h-underline">Key Insights</h2>
-      <ul>
-        <li><span class="rgb-red"><strong>Particles as horizons</strong></span>: toroidal vortex event horizons, not points.</li>
-        <li><span class="rgb-green"><strong>Forces as perspectives</strong></span>: gravity/EM/strong as angle-dependent measures of one flow.</li>
-        <li><span class="rgb-blue"><strong>Constants as resonances</strong></span>: stable viewing angles of circulation.</li>
-        <li><span class="rgb-red"><strong>Quarks as black-hole analogs</strong></span>: nuclear-scale, topologically confined.</li>
-        <li><span class="rgb-green"><strong>Structured vortex</strong></span>: nested RGB circulation modes yield the particle zoo.</li>
-        <li><span class="rgb-blue"><strong>$\\varphi$-scaling</strong></span>: self-similar rotation encoded by the golden ratio.</li>
-      </ul>
-    </section>
-
-    <!-- SUPPORT -->
-    <section class="support-grid panel alt">
-      <article class="support-card">
-        <h3>Support the Work</h3>
-        <p>Cash App</p>
-        <a class="btn" href="https://cash.app/$TalonFelt">$TalonFelt</a>
-      </article>
-      <article class="support-card">
-        <h3>Support the Work</h3>
-        <p>Venmo</p>
-        <a class="btn" href="https://venmo.com/@Talonfelt">@Talonfelt</a>
-      </article>
-      <article class="support-card">
-        <h3>Support the Work</h3>
-        <p>PayPal</p>
-        <a class="btn" href="https://paypal.me/Talonj3f">@Talonj3f</a>
-      </article>
-    </section>
-
-    <!-- TORUS -->
     <section class="panel alt toroid-section">
       <h2 class="h-underline">Your Hohm Torus — Interactive Visualization</h2>
-      <p style="color:var(--muted);"><em>WebGL torus driven by a simple wave on the ring.</em></p>
       <div id="toroid-container" class="toroid-container"></div>
-      <div id="toroid-fallback">WebGL visualization could not be initialized on this device.</div>
+      <div id="toroid-fallback">WebGL initialization failed.</div>
     </section>
 
-    <!-- FOOTER -->
     <footer>
       <p><strong>Hohm.cc</strong></p>
       <div class="socials">
         <a href="https://x.com/3TalonJFelt">@3TalonJFelt on X</a>
-        <a href="https://instagram.com/TalonFelt">@TalonFelt on Instagram</a>
+        <a href="https://instagram.com/TalonFelt">Instagram</a>
       </div>
-      <p style="margin-top:10px;font-size:.9rem">
-        Contact: <a href="mailto:your@hohm.cc" style="color:var(--accB);text-decoration:none;">your@hohm.cc</a>
-      </p>
-      <p style="font-size:.85rem">CC BY-NC-ND 4.0</p>
     </footer>
   </div>
 
-  <!-- THEME TOGGLE -->
   <script>
+    /* THEME TOGGLE */
     (function(){
       const btn = document.getElementById('theme-toggle');
-      if (!btn) return;
-
       function applyTheme(theme){
         document.body.setAttribute('data-theme', theme);
         btn.textContent = theme === 'dark' ? 'Light mode' : 'Dark mode';
-        try { localStorage.setItem('hohm-theme', theme); } catch(e){}
+        localStorage.setItem('hohm-theme', theme);
       }
-
-      let stored = null;
-      try { stored = localStorage.getItem('hohm-theme'); } catch(e){}
-      applyTheme(stored === 'light' ? 'light' : 'dark');
-
-      btn.addEventListener('click', () => {
-        const current = document.body.getAttribute('data-theme') || 'dark';
-        applyTheme(current === 'dark' ? 'light' : 'dark');
-      });
+      applyTheme(localStorage.getItem('hohm-theme') === 'light' ? 'light' : 'dark');
+      btn.addEventListener('click', () => applyTheme(document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'));
     })();
-  </script>
 
-  <!-- PDF VIEWERS (BOTH USE SAME ENGINE) -->
-<!-- PDF VIEWERS (main + secondary with auto-populated dropdown) -->
-<script>
-(function(){
-  const pdfjsLib = window['pdfjsLib'];
-  if (!pdfjsLib) return;
+    /* PDF VIEWERS */
+    (function(){
+      const pdfjsLib = window['pdfjsLib'];
+      pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
 
-  pdfjsLib.GlobalWorkerOptions.workerSrc =
-    'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+      function createViewer(cfg){
+        const canvas = document.getElementById(cfg.canvasId);
+        const box = document.getElementById(cfg.boxId);
+        const prevBtn = document.getElementById(cfg.prevId);
+        const nextBtn = document.getElementById(cfg.nextId);
+        const pageSpan = document.getElementById(cfg.pageSpanId);
+        const countSpan = document.getElementById(cfg.countSpanId);
+        const openLink = document.getElementById(cfg.openLinkId);
+        const dlLink = document.getElementById(cfg.downloadLinkId);
 
-  const ua    = navigator.userAgent || navigator.vendor || window.opera;
-  const isIOS = /iPad|iPhone|iPod/.test(ua);
+        if (!canvas || !box) return null;
+        const ctx = canvas.getContext('2d');
+        let pdfDoc = null, pageNum = 1, pageRendering = false, pagePending = null;
 
-  function createViewer(cfg){
-    const canvas    = document.getElementById(cfg.canvasId);
-    const box       = document.getElementById(cfg.boxId);
-    const prevBtn   = document.getElementById(cfg.prevId);
-    const nextBtn   = document.getElementById(cfg.nextId);
-    const pageSpan  = document.getElementById(cfg.pageSpanId);
-    const countSpan = document.getElementById(cfg.countSpanId);
-    const iosNote   = document.getElementById(cfg.iosNoteId);
-    const openLink  = document.getElementById(cfg.openLinkId);
-    const dlLink    = document.getElementById(cfg.downloadLinkId);
-
-    if (!canvas || !box || !prevBtn || !nextBtn || !pageSpan || !countSpan) {
-      console.warn('PDF viewer missing elements for', cfg.canvasId);
-      return null;
-    }
-
-    if (isIOS && iosNote) iosNote.style.display = 'inline';
-
-    const ctx = canvas.getContext('2d');
-
-    let pdfDoc        = null;
-    let pageNum       = 1;
-    let pageRendering = false;
-    let pagePending   = null;
-    let currentUrl    = cfg.initialUrl || null;
-
-    function setLinks(url){
-      if (openLink) openLink.href = url;
-      if (dlLink)   dlLink.href   = url;
-    }
-
-    function renderPage(num){
-      if (!pdfDoc) return;
-      pageRendering = true;
-
-      pdfDoc.getPage(num).then(function(page){
-        const viewport = page.getViewport({ scale: 1 });
-        const targetWidth = 4096;
-        const scale = targetWidth / viewport.width;
-        const scaledViewport = page.getViewport({ scale: scale });
-
-        canvas.width  = scaledViewport.width;
-        canvas.height = scaledViewport.height;
-
-        const boxWidth = box.clientWidth || viewport.width;
-        const visualHeight = (scaledViewport.height / scaledViewport.width) * boxWidth;
-        canvas.style.width  = boxWidth + 'px';
-        canvas.style.height = visualHeight + 'px';
-
-        const renderContext = {
-          canvasContext: ctx,
-          viewport: scaledViewport
-        };
-
-        const renderTask = page.render(renderContext);
-        renderTask.promise.then(function(){
-          pageRendering = false;
-          pageSpan.textContent = String(num);
-          prevBtn.disabled = (num <= 1);
-          nextBtn.disabled = (num >= pdfDoc.numPages);
-
-          if (pagePending !== null){
-            const next = pagePending;
-            pagePending = null;
-            renderPage(next);
-          }
-        });
-      });
-    }
-
-    function queueRenderPage(num){
-      if (pageRendering){
-        pagePending = num;
-      } else {
-        renderPage(num);
-      }
-    }
-
-    function loadDocument(url){
-      if (!url) return;
-      currentUrl = url;
-      setLinks(url);
-
-      pdfjsLib.getDocument(url).promise.then(function(pdf){
-        pdfDoc = pdf;
-        pageNum = 1;
-        countSpan.textContent = '/ ' + pdf.numPages;
-        queueRenderPage(pageNum);
-      }).catch(function(err){
-        console.error('PDF load error for', url, err);
-        if (iosNote){
-          iosNote.textContent = 'Failed to load PDF on this device.';
-          iosNote.style.display = 'inline';
+        function renderPage(num){
+          pageRendering = true;
+          pdfDoc.getPage(num).then(page => {
+            const viewport = page.getViewport({ scale: 2 });
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+            canvas.style.width = box.clientWidth + 'px';
+            canvas.style.height = (viewport.height / viewport.width * box.clientWidth) + 'px';
+            page.render({ canvasContext: ctx, viewport }).promise.then(() => {
+              pageRendering = false;
+              pageSpan.textContent = num;
+              prevBtn.disabled = (num <= 1);
+              nextBtn.disabled = (num >= pdfDoc.numPages);
+              if (pagePending !== null) { renderPage(pagePending); pagePending = null; }
+            });
+          });
         }
-      });
-    }
 
-    prevBtn.addEventListener('click', function(){
-      if (!pdfDoc || pageNum <= 1) return;
-      pageNum--;
-      queueRenderPage(pageNum);
-    });
-
-    nextBtn.addEventListener('click', function(){
-      if (!pdfDoc || pageNum >= pdfDoc.numPages) return;
-      pageNum++;
-      queueRenderPage(pageNum);
-    });
-
-    window.addEventListener('resize', function(){
-      if (pdfDoc){
-        queueRenderPage(pageNum);
-      }
-    });
-
-    return {
-      load: loadDocument
-    };
-  }
-
-  /* ========= MAIN VIEWER (FULL PAPER) ========= */
-
-  const mainViewer = createViewer({
-    canvasId:      'main-canvas',
-    boxId:         'main-viewer-box',
-    prevId:        'main-prev',
-    nextId:        'main-next',
-    pageSpanId:    'main-page-number',
-    countSpanId:   'main-page-count',
-    iosNoteId:     'main-ios-note',
-    openLinkId:    'main-open',
-    downloadLinkId:'main-download',
-    initialUrl:    'assets/pdf/Your_Hohm-[full].pdf'
-  });
-
-  if (mainViewer){
-    mainViewer.load('assets/pdf/Your_Hohm-[full].pdf');
-  }
-
-  /* ========= SECONDARY VIEWER (AUTO-DROPDOWN) ========= */
-
-  const secSelect   = document.getElementById('sec-select');
-  const secOpen     = document.getElementById('sec-open');
-  const secDownload = document.getElementById('sec-download');
-
-  const secViewer = createViewer({
-    canvasId:      'sec-canvas',
-    boxId:         'sec-viewer-box',
-    prevId:        'sec-prev',
-    nextId:        'sec-next',
-    pageSpanId:    'sec-page-number',
-    countSpanId:   'sec-page-count',
-    iosNoteId:     'sec-ios-note',
-    openLinkId:    'sec-open',
-    downloadLinkId:'sec-download',
-    initialUrl:    null
-  });
-
-  if (!secViewer || !secSelect || !secOpen || !secDownload){
-    // If any of these are missing, just bail out of the dropdown logic
-    return;
-  }
-
-  const owner   = 'talonfelt';
-  const repo    = 'Your-Hohm';
-  const pdfDir  = 'assets/pdf';
-  const FULL_PAPER = 'Your_Hohm-[full].pdf';
-  const apiUrl  = `https://api.github.com/repos/${owner}/${repo}/contents/${pdfDir}`;
-
-  function populateDropdown(files){
-    const pdfFiles = files.filter(f =>
-      f.type === 'file' &&
-      /\.pdf$/i.test(f.name) &&
-      f.name !== FULL_PAPER
-    );
-
-    pdfFiles.sort((a, b) => a.name.localeCompare(b.name));
-
-    secSelect.innerHTML = '';
-
-    if (!pdfFiles.length){
-      const opt = document.createElement('option');
-      opt.textContent = 'No secondary PDFs found';
-      opt.value = '';
-      secSelect.appendChild(opt);
-      return;
-    }
-
-    pdfFiles.forEach(f => {
-      const opt = document.createElement('option');
-      opt.value = `${pdfDir}/${f.name}`;
-      opt.textContent = f.name.replace('.pdf','').replace(/[_-]/g,' ');
-      secSelect.appendChild(opt);
-    });
-
-    // Load first PDF by default
-    const firstUrl = `${pdfDir}/${pdfFiles[0].name}`;
-    secOpen.href = firstUrl;
-    secDownload.href = firstUrl;
-    secViewer.load(firstUrl);
-  }
-
-  secSelect.addEventListener('change', function(){
-    const url = this.value;
-    if (!url) return;
-    secOpen.href = url;
-    secDownload.href = url;
-    secViewer.load(url);
-  });
-
-  fetch(apiUrl)
-    .then(r => r.json())
-    .then(json => {
-      if (!Array.isArray(json)){
-        console.error('Unexpected PDF JSON', json);
-        return;
-      }
-      populateDropdown(json);
-    })
-    .catch(err => {
-      console.error('PDF dropdown load error', err);
-      // If GitHub API fails, you can still manually hard-code options in HTML if you want.
-    });
-
-})();
-</script>
-
-  <!-- GALLERY LOGIC -->
-  <!-- GALLERY LOGIC — dynamic from assets/img via GitHub API -->
-<script>
-  (function(){
-    const mainImg    = document.getElementById('gallery-main-img');
-    const captionEl  = document.getElementById('gallery-caption');
-    const strip      = document.getElementById('gallery-strip');
-    const nextBtn    = document.getElementById('gallery-next');
-
-    if (!mainImg || !captionEl || !strip || !nextBtn) return;
-
-    // 🔧 EDIT THESE TWO if your GitHub repo is named differently
-    const owner   = 'talonfelt';
-    const repo    = 'Your-Hohm';
-    const dirPath = 'assets/img';
-
-    const apiUrl  = `https://api.github.com/repos/${owner}/${repo}/contents/${dirPath}`;
-
-    // Optional captions per file (exact filename keys)
-    const captions = {
-      'E_001 Large.png': 'Primary interference lattice — main field motif.'
-      // 'A_001.PNG': 'Some caption',
-      // 'E_003.PNG': 'Another caption',
-      // add more as needed
-    };
-
-    let images = [];
-    let thumbs = [];
-    let currentIndex = 0;
-
-    function setImage(index){
-      const img = images[index];
-      if (!img) return;
-      currentIndex = index;
-      mainImg.src = img.src;
-      mainImg.alt = img.name;
-      captionEl.textContent = img.caption || '';
-      thumbs.forEach((th, i) => {
-        th.classList.toggle('active', i === index);
-      });
-    }
-
-    function buildGallery(files){
-      // keep only image files
-      const imgFiles = files.filter(f =>
-        f.type === 'file' &&
-        /\.(png|jpe?g|gif|webp)$/i.test(f.name)
-      );
-
-      if (!imgFiles.length) return;
-
-      // sort by name
-      imgFiles.sort((a, b) => a.name.localeCompare(b.name));
-
-      // force E_001 Large.png to be first if present
-      const heroName = 'E_001 Large.png';
-      const heroIdx = imgFiles.findIndex(f => f.name === heroName);
-      if (heroIdx > 0){
-        const [hero] = imgFiles.splice(heroIdx, 1);
-        imgFiles.unshift(hero);
-      }
-
-      images = imgFiles.map(f => ({
-        name: f.name,
-        src: `${dirPath}/${f.name}`,
-        caption: captions[f.name] || ''
-      }));
-
-      strip.innerHTML = '';
-      thumbs = [];
-
-      images.forEach((img, idx) => {
-        const wrap = document.createElement('div');
-        wrap.className = 'gallery-thumb';
-        wrap.dataset.index = idx;
-
-        const im = document.createElement('img');
-        im.src = img.src;
-        im.alt = img.name;
-
-        wrap.appendChild(im);
-        wrap.addEventListener('click', () => setImage(idx));
-
-        strip.appendChild(wrap);
-        thumbs.push(wrap);
-      });
-
-      setImage(0);
-    }
-
-    nextBtn.addEventListener('click', () => {
-      if (!images.length) return;
-      const next = (currentIndex + 1) % images.length;
-      setImage(next);
-      const activeThumb = thumbs[next];
-      if (activeThumb && activeThumb.scrollIntoView){
-        activeThumb.scrollIntoView({
-          behavior:'smooth',
-          inline:'center',
-          block:'nearest'
-        });
-      }
-    });
-
-    // Fetch list of files in assets/img from GitHub
-    fetch(apiUrl)
-      .then(resp => resp.json())
-      .then(json => {
-        if (!Array.isArray(json)) {
-          console.error('Unexpected gallery JSON', json);
-          return;
+        function load(url){
+          if (!url) return;
+          if (openLink) openLink.href = url;
+          if (dlLink) dlLink.href = url;
+          pdfjsLib.getDocument(url).promise.then(pdf => {
+            pdfDoc = pdf;
+            countSpan.textContent = '/ ' + pdf.numPages;
+            renderPage(1);
+          });
         }
-        buildGallery(json);
-      })
-      .catch(err => {
-        console.error('Gallery load error', err);
-        // If this fails, the rest of the page still works; gallery just won’t populate.
-      });
-  })();
-</script>
 
-  <!-- TORUS LOGIC -->
-  <script>
+        prevBtn.addEventListener('click', () => { if (pageNum > 1) renderPage(--pageNum); });
+        nextBtn.addEventListener('click', () => { if (pageNum < pdfDoc.numPages) renderPage(++pageNum); });
+
+        return { load };
+      }
+
+      const aimV = createViewer({
+        canvasId: 'aim-canvas', boxId: 'aim-viewer-box', prevId: 'aim-prev', nextId: 'aim-next',
+        pageSpanId: 'aim-page-number', countSpanId: 'aim-page-count', openLinkId: 'aim-open', downloadLinkId: 'aim-download'
+      });
+      const mainV = createViewer({
+        canvasId: 'main-canvas', boxId: 'main-viewer-box', prevId: 'main-prev', nextId: 'main-next',
+        pageSpanId: 'main-page-number', countSpanId: 'main-page-count', openLinkId: 'main-open', downloadLinkId: 'main-download'
+      });
+      const secV = createViewer({
+        canvasId: 'sec-canvas', boxId: 'sec-viewer-box', prevId: 'sec-prev', nextId: 'sec-next',
+        pageSpanId: 'sec-page-number', countSpanId: 'sec-page-count', openLinkId: 'sec-open', downloadLinkId: 'sec-download'
+      });
+
+      if (aimV) aimV.load('assets/pdf/aim.pdf');
+      if (mainV) mainV.load('assets/pdf/Your_Hohm-[full].pdf');
+
+      // Dropdown logic for secondary dock
+      const secSelect = document.getElementById('sec-select');
+      const owner = 'talonfelt', repo = 'Your-Hohm', pdfDir = 'assets/pdf';
+      fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${pdfDir}`)
+        .then(r => r.json()).then(json => {
+          if (!Array.isArray(json)) return;
+          secSelect.innerHTML = '';
+          const pdfs = json.filter(f => f.name.endsWith('.pdf') && f.name !== 'aim.pdf' && !f.name.includes('full'));
+          pdfs.forEach(f => {
+            const opt = document.createElement('option');
+            opt.value = `${pdfDir}/${f.name}`;
+            opt.textContent = f.name.replace('.pdf','').replace(/[_-]/g,' ');
+            secSelect.appendChild(opt);
+          });
+          if (pdfs.length) secV.load(secSelect.value);
+        });
+      secSelect.addEventListener('change', () => secV.load(secSelect.value));
+    })();
+
+    /* GALLERY LOGIC */
+    (function(){
+      const mainImg = document.getElementById('gallery-main-img'), captionEl = document.getElementById('gallery-caption');
+      const strip = document.getElementById('gallery-strip'), nextBtn = document.getElementById('gallery-next');
+      if (!mainImg || !strip) return;
+      const owner = 'talonfelt', repo = 'Your-Hohm', dirPath = 'assets/img';
+      let images = [], currentIndex = 0, thumbs = [];
+
+      function setImage(idx){
+        currentIndex = idx;
+        mainImg.src = images[idx].src;
+        captionEl.textContent = images[idx].name;
+        thumbs.forEach((t, i) => t.classList.toggle('active', i === idx));
+      }
+
+      fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${dirPath}`)
+        .then(r => r.json()).then(json => {
+          images = json.filter(f => /\.(png|jpe?g|webp)$/i.test(f.name)).map(f => ({ name: f.name, src: `${dirPath}/${f.name}` }));
+          images.forEach((img, i) => {
+            const t = document.createElement('div'); t.className = 'gallery-thumb';
+            const im = document.createElement('img'); im.src = img.src; t.appendChild(im);
+            t.onclick = () => setImage(i); strip.appendChild(t); thumbs.push(t);
+          });
+          if (images.length) setImage(0);
+        });
+      nextBtn.onclick = () => setImage((currentIndex + 1) % images.length);
+    })();
+
+    /* TOROID VISUALIZATION (ORIGINAL WAVE LOGIC) */
     (function(){
       const container = document.getElementById('toroid-container');
-      const fallback  = document.getElementById('toroid-fallback');
-      if (!container || !window.THREE){
-        if (fallback) fallback.style.display = 'block';
-        return;
-      }
-
-      try{
+      if (!container || !window.THREE) return;
+      try {
         const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-        const w = container.clientWidth || 600;
-        const h = container.clientHeight || 600;
-        renderer.setSize(w, h);
-        renderer.setPixelRatio(window.devicePixelRatio || 1);
-        renderer.setClearColor(0x04060a, 1.0);
-        container.innerHTML = '';
-        container.appendChild(renderer.domElement);
-
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(45, w / h, 0.1, 1000);
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        renderer.setClearColor(0x04060a, 1.0); container.appendChild(renderer.domElement);
+        const scene = new THREE.Scene(), camera = new THREE.PerspectiveCamera(45, container.clientWidth/container.clientHeight, 0.1, 1000);
         camera.position.set(0, 0, 28);
-
         const controls = new THREE.OrbitControls(camera, renderer.domElement);
-        controls.enableDamping = true;
-        controls.dampingFactor = 0.05;
-        controls.minDistance = 12;
-        controls.maxDistance = 70;
-
-        const light = new THREE.PointLight(0xffffff, 1.1);
-        light.position.set(20, 20, 20);
-        scene.add(light);
+        const majorR = 8.0, minorR = 1.8, geo = new THREE.TorusGeometry(majorR, minorR, 160, 320);
+        const pos = geo.attributes.position, orig = pos.array.slice();
+        const mat = new THREE.MeshPhongMaterial({ vertexColors: true, shininess: 80 });
+        const colors = new Float32Array(pos.count * 3); geo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+        const torus = new THREE.Mesh(geo, mat); scene.add(torus);
         scene.add(new THREE.AmbientLight(0x404040, 0.7));
+        const light = new THREE.PointLight(0xffffff, 1.1); light.position.set(20,20,20); scene.add(light);
 
-        const majorR = 8.0;
-        const minorR = 1.8;
-
-        const geo = new THREE.TorusGeometry(majorR, minorR, 160, 320);
-        const pos = geo.attributes.position;
-        const count = pos.count;
-
-        const colors = new Float32Array(count * 3);
-        const color  = new THREE.Color();
-
-        for (let i = 0; i < count; i++){
-          const u = (i % 320) / 320;
-          color.setHSL(0.6 + 0.4 * Math.sin(u * 2 * Math.PI), 1.0, 0.55);
-          colors[i*3]   = color.r;
-          colors[i*3+1] = color.g;
-          colors[i*3+2] = color.b;
-        }
-        geo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-
-        const mat = new THREE.MeshPhongMaterial({
-          vertexColors: true,
-          shininess: 80,
-          specular: new THREE.Color(0x88ffff)
-        });
-
-        const torus = new THREE.Mesh(geo, mat);
-        scene.add(torus);
-
-        const origPositions = pos.array.slice();
-
-        function updateWave(time){
-          const v = pos.array;
-          const freq1 = 3.0;
-          const freq2 = 9.0;
-          const freq3 = 27.0;
-
-          for (let i = 0; i < count; i++){
-            const baseX = origPositions[i*3];
-            const baseY = origPositions[i*3+1];
-            const baseZ = origPositions[i*3+2];
-
-            const uIndex = (i % 320);
-            const vIndex = Math.floor(i / 320);
-            const u = uIndex / 320;
-            const vv = vIndex / 160;
-
-            const phase = time + freq1 * u * 2*Math.PI + freq2 * vv * 2*Math.PI;
-            const mod   = Math.sin(phase) * Math.cos(freq3 * (u + vv));
-            const radialMod = 1.0 + 0.35 * mod;
-
-            const r_xy = Math.sqrt(baseX*baseX + baseY*baseY);
-            let angleXY = Math.atan2(baseY, baseX);
-            const baseMinor = r_xy - majorR;
-
-            angleXY += 0.08 * mod;
-            const newMinor = baseMinor * radialMod;
-
-            const newX = (majorR + newMinor) * Math.cos(angleXY);
-            const newY = (majorR + newMinor) * Math.sin(angleXY);
-            const newZ = baseZ * radialMod;
-
-            v[i*3]   = newX;
-            v[i*3+1] = newY;
-            v[i*3+2] = newZ;
-
-            const psi = mod;
-            const hue = (psi + 1) * 0.5;
-            const c = new THREE.Color();
-            c.setHSL(0.6 * hue + 0.1, 1.0, 0.5);
-            colors[i*3]   = c.r;
-            colors[i*3+1] = c.g;
-            colors[i*3+2] = c.b;
+        function update(time){
+          for (let i = 0; i < pos.count; i++){
+            const u = (i % 320) / 320, v = Math.floor(i / 320) / 160;
+            const phase = time + 3 * u * 2*Math.PI + 9 * v * 2*Math.PI;
+            const mod = Math.sin(phase) * Math.cos(27 * (u + v)), rMod = 1.0 + 0.35 * mod;
+            pos.array[i*3] = orig[i*3] * rMod; pos.array[i*3+1] = orig[i*3+1] * rMod; pos.array[i*3+2] = orig[i*3+2] * rMod;
+            const c = new THREE.Color(); c.setHSL(0.6 * ((mod+1)*0.5) + 0.1, 1.0, 0.5);
+            colors[i*3] = c.r; colors[i*3+1] = c.g; colors[i*3+2] = c.b;
           }
-          pos.needsUpdate = true;
-          geo.attributes.color.needsUpdate = true;
+          pos.needsUpdate = true; geo.attributes.color.needsUpdate = true;
         }
-
-        function onResize(){
-          const w2 = container.clientWidth || 600;
-          const h2 = container.clientHeight || 600;
-          camera.aspect = w2 / h2;
-          camera.updateProjectionMatrix();
-          renderer.setSize(w2, h2);
-        }
-        window.addEventListener('resize', onResize);
-
-        let lastTime = performance.now();
-        function animate(now){
-          requestAnimationFrame(animate);
-          const dt = (now - lastTime) / 1000;
-          lastTime = now;
-
-          const t = now * 0.0008;
-          updateWave(t);
-
-          torus.rotation.x += 0.05 * dt;
-          torus.rotation.y += 0.08 * dt;
-
-          controls.update();
-          renderer.render(scene, camera);
-        }
-        animate(performance.now());
-
-        if (fallback) fallback.style.display = 'none';
-      } catch(e){
-        console.error('Torus error:', e);
-        if (fallback){
-          fallback.textContent = 'Visualization failed: ' + e;
-          fallback.style.display = 'block';
-        }
-      }
+        function animate(t){ requestAnimationFrame(animate); update(t * 0.0008); torus.rotation.x += 0.005; renderer.render(scene, camera); }
+        animate(0);
+      } catch(e) { document.getElementById('toroid-fallback').style.display = 'block'; }
     })();
   </script>
 </body>
